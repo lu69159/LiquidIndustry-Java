@@ -167,5 +167,58 @@ public class LIblocks {
         }};
 
         //region 电力
+        CDJD = new PowerNode("超导节点"){{
+            requirements(Category.power, with(Items.titanium, 1, Items.lead, 2, LIitems.CDZ, 1));
+            health = 120;
+            maxNodes = 18;
+            laserRange = 20;
+            underBullets = true;
+            crushFragile = true;
+        }};
+        DXCDJD = new PowerNode("大型超导节点"){{
+            requirements(Category.power, with(Items.titanium, 4, Items.silicon, 5, LIitems.CDZ, 2));
+            health = 480;
+            size = 2;
+            maxNodes = 30;
+            laserRange = 45;
+        }};
+        CDDLT = new PowerNode("超导电力塔"){{
+            requirements(Category.power, with(Items.titanium, 8, Items.silicon, 5, Items.surgeAlloy, 3, LIitems.CDZ, 5));
+            health = 600;
+            size = 2;
+            maxNodes = 5;
+            laserRange = 120;
+            schematicPriority = -15;
+        }};
+        CDDC = new Battery("超导电池"){{
+            requirements(Category.power, with(Items.titanium, 5, Items.lead, 5, LIitems.CDZ, 1));
+            health = 120;
+            consumePowerBuffered(20000f);
+            baseExplosiveness = 3f;
+            emptyLightColor = Color.valueOf("00A9A9");
+            fullLightColor =  Color.valueOf("00FFFF");
+        }};
+        DXCDDC = new Battery("超导电池"){{
+            requirements(Category.power, with(Items.titanium, 30, Items.lead, 50, Items.silicon, 30, LIitems.CDZ, 5));
+            health = 1080;
+            size = 3;
+            consumePowerBuffered(250000f);
+            baseExplosiveness = 15f;
+            emptyLightColor = Color.valueOf("00A9A9");
+            fullLightColor =  Color.valueOf("00FFFF");
+        }};
+        TFDJ = new ConsumeGenerator("碳发电机"){{
+            requirements(Category.power, with(Items.copper, 4, Items.lead, 30));
+            health = 120;
+            size = 2;
+            powerProduction = 3f;
+            itemDuration = 60 * 7.5f;
+            ambientSound = Sounds.loopSmelter;
+            ambientSoundVolume = 0.04f;
+            generateEffect = Fx.generatespark;
+
+            consumeItem(Items.graphite);
+            drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
+        }};
     }
 }
