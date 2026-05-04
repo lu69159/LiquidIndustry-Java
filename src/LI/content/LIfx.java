@@ -95,50 +95,44 @@ public class LIfx {
         alpha(e.fout() * 1);
         rect(region, unit.x, unit.y, region.width * 0.8f, region.height * 0.8f, unit.rotation - 90);
     }),
-    moderateReactorExplosion = new Effect(480f, 300f, e -> {
-
-        e.scaled(20f, wave -> {
-            float fin = wave.fin();
-            color(Color.valueOf("A97BFF"), Color.valueOf("FFFFFF"), fin);
-            stroke(Interp.pow5Out.apply(16f, 0f, fin));
-            circle(e.x, e.y, Interp.pow5Out.apply(0f, 300f, fin));
-        });
-
-        e.scaled(480f, particles1 -> {
-            float fin = particles1.fin();
-            color(Color.valueOf("A97BFF80"), Color.valueOf("A97BFF00"), fin);
-
-            rand.setSeed(e.id);
-            for(int i = 0; i < 30; i++){
-                float l = 250f * fin;
-                float angle = rand.range(180f);
-                float dist = rand.random(l);
-                float x = e.x + trnsx(angle, dist);
-                float y = e.y + trnsy(angle, dist);
-
-                float size = Interp.pow3In.apply(40f, 0f, fin) * 2;
-                rect(Core.atlas.find("circle"), x, y, size, size);
-            }
-        });
-
-        e.scaled(50f, particles2 -> {
-            float fin = particles2.fin();
-            color(Color.valueOf("C9A0FF"));
-            stroke(Interp.pow2In.apply(2f, 0f, fin));
-
-            rand.setSeed(e.id + 100);
-            for(int i = 0; i < 20; i++){
-                float l = 180f * fin + 40f;
-                float angle = rand.range(180f);
-                float dist = rand.random(l);
-                float x = e.x + trnsx(angle, dist);
-                float y = e.y + trnsy(angle, dist);
-
-                float len = Interp.pow2In.apply(120f, 0f, fin);
-                lineAngle(x, y, Mathf.angle(x - e.x, y - e.y), len, true);
-            }
-        });
-    }),
+    moderateReactorExplosion = new MultiEffect(
+        new WaveEffect(){{
+            lifetime = 20f;
+            sizeFrom = 0f;
+            sizeTo = 300f;
+            strokeFrom = 16f;
+            strokeTo = 0f;
+            colorFrom = Color.valueOf("A97BFF");
+            colorTo = Color.white;
+        }},
+        new ParticleEffect(){{
+            lifetime = 480;
+            particles = 30;
+            interp = Interp.pow5Out;
+            sizeInterp = Interp.pow3In;
+            sizeFrom = 40;
+            sizeTo = 0;
+            length = 250;
+            baseLength = 0;
+            colorFrom = Color.valueOf("A97BFF80");
+            colorTo = Color.valueOf("A97BFF00");
+        }},
+        new ParticleEffect(){{
+            lifetime = 50;
+            particles = 20;
+            line = true;
+            interp = Interp.pow3Out;
+            sizeInterp = Interp.pow2In;
+            strokeFrom = 2f;
+            strokeTo = 0f;
+            lenFrom = 120f;
+            lenTo = 0f;
+            length = 180f;
+            baseLength = 40f;
+            colorFrom = Color.valueOf("C9A0FF");
+            colorTo = Color.valueOf("C9A0FF");
+        }}
+    ),
     deflagExplosion = new MultiEffect(
         new WaveEffect(){{
             lifetime = 30f;
@@ -150,24 +144,24 @@ public class LIfx {
             colorTo = Color.white;
         }},
         new ParticleEffect(){{
+            lifetime = 600;
             particles = 25;
             interp = Interp.pow10Out;
             sizeFrom = 40;
             sizeTo = 0;
             length = 512;
             baseLength = 40;
-            lifetime = 600;
             colorFrom = Color.red;
             colorTo = Color.valueOf("FFFFFF80");
         }},
         new ParticleEffect(){{
+            lifetime = 600;
             particles = 75;
             interp = Interp.pow5Out;
             sizeFrom = 40;
             sizeTo = 0;
             length = 512;
             baseLength = 15;
-            lifetime = 600;
             colorFrom = Color.red;
             colorTo = Color.valueOf("FFFFFF80");
         }}

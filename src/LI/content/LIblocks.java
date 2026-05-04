@@ -368,9 +368,21 @@ public class LIblocks {
             glowColor = Color.valueOf("FFFFFF60");
             fogRadius = 70;
             discoveryTime = 180f;
-
             consumePower(1f);
         }};
-        CSTQ = new OverdriveProjector("超速天穹");
+        CSTQ = new OverdriveProjector("超速天穹"){{
+            requirements(Category.effect, with(Items.lead, 350, Items.graphite, 50, Items.titanium, 180, Items.silicon, 180, Items.plastanium, 130, Items.surgeAlloy, 150, Items.phaseFabric, 40));
+            health = 865;
+            size = 4;
+            range = 240f;
+            speedBoost = 2.5f;
+            speedBoostPhase = 0.5f;
+            phaseRangeBoost = 80f;
+            useTime = 300f;
+            ambientSoundVolume = 0.15f;
+            consumePower(14f);
+            consumeLiquid(Liquids.cryofluid, 12f / 60f);
+            consumeItem(Items.phaseFabric).boost();
+        }};
     }
 }
