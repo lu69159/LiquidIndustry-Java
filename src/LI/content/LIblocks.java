@@ -201,7 +201,7 @@ public class LIblocks {
             emptyLightColor = Color.valueOf("00A9A9");
             fullLightColor =  Color.valueOf("00FFFF");
         }};
-        DXCDDC = new Battery("超导电池"){{
+        DXCDDC = new Battery("大型超导电池"){{
             requirements(Category.power, with(Items.titanium, 30, Items.lead, 50, Items.silicon, 30, LIitems.CDZ, 5));
             health = 1080;
             size = 3;
