@@ -4,7 +4,7 @@ import arc.graphics.Color;
 import mindustry.type.Item;
 
 public class LIitems {
-    public static Item QSZ,ZYZ,CDZ,TF,NRJT,SMWZ,SMSP,GTS,GTZS,GTLDY,GTSY,GTCJLDY,HWGZJT,HWSBJT;
+    public static Item QSZ,ZYZ,CDZ,TF,NRJT,SMWZ,SMSP,GTS,GTZS,GTLDY,GTSY,GTCJLDY,HWKZJT,HWSBJT;
 
     public static void load(){
         QSZ = new Item("亲水质", Color.valueOf("4DA6FF")){{
@@ -63,6 +63,15 @@ public class LIitems {
         }};
         GTCJLDY = new Item("固态超级冷冻液", Color.valueOf("C0ECFF")){{
             cost = 1.5f;
+        }};
+        HWKZJT = new Item("恒温矿渣晶体", Color.valueOf("FFA166")){{
+            cost = 1.8f;
+            flammability = 6f;
+        }};
+        HWSBJT = new Item("恒温衰变晶体", Color.valueOf("FF0000")){{
+            cost = 2f;
+            flammability = 12f;
+            explosiveness = 12f;
         }};
     }
 }

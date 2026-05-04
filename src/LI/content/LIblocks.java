@@ -38,6 +38,9 @@ import mindustry.world.consumers.*;
 import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
+import LI.type.blocks.power.*;
+import LI.type.blocks.defense.*;
+
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
@@ -220,5 +223,154 @@ public class LIblocks {
             consumeItem(Items.graphite);
             drawer = new DrawMulti(new DrawDefault(), new DrawWarmupRegion());
         }};
+        HWKZRFDJ = new ConsumeGenerator("恒温矿渣热发电机"){{
+            requirements(Category.power, with(Items.copper, 90, Items.lead, 100, Items.metaglass, 60, Items.graphite, 45, Items.silicon, 45, LIitems.HWKZJT, 4));
+            health = 300;
+            size = 3;
+            itemCapacity = 0;
+            powerProduction = 6.12f;
+            ambientSound = Sounds.loopHum;
+            ambientSoundVolume = 0.06f;
+            generateEffect = Fx.redgeneratespark;
+            effectChance = 0.011f;
+            explosionPuddles = 12;
+            explosionPuddleLiquid = Liquids.slag;
+            explosionPuddleAmount = 150;
+        }};
+        HWSBRFDJ = new ConsumeGenerator("恒温衰变热发电机"){{
+            requirements(Category.power, with(Items.copper, 90, Items.lead, 100, Items.metaglass, 60, Items.graphite, 45, Items.silicon, 45, LIitems.HWSBJT, 4));
+            health = 300;
+            size = 3;
+            itemCapacity = 0;
+            powerProduction = 21.6f;
+            ambientSound = Sounds.loopHum;
+            ambientSoundVolume = 0.06f;
+            generateEffect = Fx.redgeneratespark;
+            effectChance = 0.011f;
+            explosionDamage = 2000;
+            explosionPuddles = 12;
+            explosionPuddleLiquid = LIliquids.SBRY;
+            explosionPuddleAmount = 150;
+        }};
+        ZSHFYD = new ModerateNuclearReactor("重水核反应堆"){{
+            requirements(Category.power, with(Items.lead, 400, Items.metaglass, 80, Items.graphite, 200, Items.thorium, 150, Items.silicon, 300, LIitems.GTZS, 1));
+            health = 1000;
+            size = 4;
+            itemDuration = 480f;
+            powerProduction = 52.5f;
+            heating = 0.05f;
+            heatOutput = 20f;
+
+            ambientSound = Sounds.loopThoriumReactor;
+            ambientSoundVolume = 0.11f;
+
+            moderator = LIliquids.ZS;
+            coolant = Liquids.cryofluid;
+
+            consumeItem(Items.thorium);
+            consumeLiquid(moderator, 1.8f/60);
+        }};
+        SBFYD = new ModerateNuclearReactor("衰变反应堆"){{
+            requirements(Category.power, with(Items.lead, 1500, Items.metaglass, 1080, Items.graphite, 720, Items.silicon, 350, Items.surgeAlloy, 300, Items.plastanium, 210, LIitems.NRJT, 15));
+            health = 1600;
+            size = 5;
+            itemDuration = 90f;
+            powerProduction = 360f;
+            heating = 0.125f;
+            heatOutput = 30f;
+            fuelItem = Items.phaseFabric;
+
+            outputLiquid = new LiquidStack(LIliquids.SBRY, 6f / 60);
+            explodeOnFull = true;
+
+            ambientSound = Sounds.loopPulse;
+            ambientSoundVolume = 0.11f;
+
+            consumeItem(Items.phaseFabric);
+            consumeLiquid(moderator, 3f/60);
+
+            drawer = new DrawMulti(new DrawRegion("-bottom"),
+                    new DrawLiquidRegion(LIliquids.SBRY),
+                    new DrawArcSmelt(){{
+                        flameColor = Color.valueOf("00FFFF");
+                        midColor = Color.valueOf("ADFCB6");
+                        flameRad = 3f;
+                        circleSpace = 3f;
+                        particles = 20;
+                        particleRad = 12f;
+                        particleLen = 5f;
+                        particleStroke = 0.5f;
+                        particleLife = 30f;
+                        alpha = 0.5f;
+                    }},
+                    new DrawPlasma(){{
+                        plasma1 = Color.valueOf("00A9A9");
+                        plasma2 = Color.valueOf("008282");
+                        flameRadiusScl = 0.5f;
+                    }},
+                    new DrawDefault()
+            );
+        }};
+        BRFYL = new OutputsItemNuclearReactor("爆燃反应炉"){{
+            requirements(Category.power, with(Items.lead, 1800, Items.metaglass, 880, Items.graphite, 360, Items.titanium, 420, Items.silicon, 550, Items.plastanium, 320, LIitems.CDZ, 30, LIitems.GTCJLDY, 4));
+            health = 2800;
+            size = 5;
+            itemDuration = 30f;
+            powerProduction = 833.3f;
+            heating = 0.06f;
+            coolantPower = 1.5f;
+            lightColor = Color.valueOf("FFEEEE");
+            fuelItem = LIitems.GTSY;
+
+            explosionPuddles = 256;
+            explosionPuddleLiquid = Liquids.oil;
+            explosionPuddleAmount = 650;
+            explosionPuddleRange = 80;
+            explosionMinWarmup = 0.25f;
+            explosionShake = 12f;
+            explosionShakeDuration = 240f;
+            explosionRadius = 64;
+            explosionDamage = 28500;
+            explodeSound = Sounds.explosionReactorNeoplasm;
+            explodeEffect = LIfx.deflagExplosion;
+        }};
+
+        //region 辅助
+        ZXZMQ = new LightBlock("中型照明器"){{
+            requirements(Category.effect, with(Items.graphite, 24, Items.silicon, 15, Items.lead, 12));
+            health = 120;
+            size = 2;
+            brightness = 0.8f;
+            radius = 320f;
+            canOverdrive = false;
+            consumePower(0.25f);
+        }};
+        DXZMQ = new LightBlock("大型照明器"){{
+            requirements(Category.effect, with(Items.graphite, 24, Items.silicon, 15, Items.titanium, 12));
+            health = 400;
+            size = 3;
+            brightness = 0.83f;
+            radius = 560f;
+            canOverdrive = false;
+            consumePower(0.6f);
+        }};
+        RZTY = new LightBlock("人造太阳"){{
+            requirements(Category.effect, with(Items.graphite, 68, Items.silicon, 42, Items.plastanium, 12, Items.phaseFabric, 6));
+            health = 840;
+            size = 4;
+            brightness = 0.99f;
+            radius = 8000f;
+            canOverdrive = false;
+            consumePower(1.8f);
+        }};
+        YJLD = new Radar("预警雷达"){{
+            requirements(Category.effect, BuildVisibility.fogOnly, with(Items.graphite, 24, Items.silicon, 15, Items.metaglass, 12));
+            glowColor = Color.valueOf("FFFFFF60");
+            fogRadius = 70;
+            discoveryTime = 180f;
+
+            consumePower(1f);
+        }};
+        CSTQ = new OverdriveProjector("超速天穹");
     }
 }
