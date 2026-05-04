@@ -120,7 +120,7 @@ public class LIblocks {
             );
             constructTime = 5400f;
         }};
-        WLJDWZGGC = new Reconstructor("多幂级单位直构工厂"){{
+        WLJDWZGGC = new Reconstructor("无量级单位直构工厂"){{
             requirements(Category.units, with(Items.lead, 4000, Items.thorium, 500, Items.silicon, 3000, Items.plastanium, 600, Items.phaseFabric, 325, Items.surgeAlloy, 800, LIitems.ZYZ, 400));
             health = 5830;
             size = 9;
