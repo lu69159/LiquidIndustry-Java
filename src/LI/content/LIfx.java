@@ -2,7 +2,10 @@ package LI.content;
 
 import arc.Core;
 import arc.graphics.Color;
+import arc.graphics.g2d.Draw;
 import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.Lines;
+import arc.math.Angles;
 import arc.math.Interp;
 import arc.math.Mathf;
 import mindustry.entities.Effect;
@@ -166,4 +169,5 @@ public class LIfx {
             colorTo = Color.valueOf("FFFFFF80");
         }}
     );
+
 }

@@ -1,5 +1,6 @@
 package LI.content;
 
+import arc.Core;
 import arc.graphics.*;
 import arc.math.*;
 import arc.struct.*;
@@ -40,12 +41,17 @@ import mindustry.world.meta.*;
 
 import LI.type.blocks.power.*;
 import LI.type.blocks.defense.*;
+import LI.type.blocks.effect.*;
+import LI.type.blocks.storage.*;
 
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
 public class LIblocks {
     public static Block
+    //地板
+    JHXQ,
+
     //单位
     BCJDWZGGC,DMJDWZGGC,WLJDWZGGC,FZGC,GZQ,DXZHCSD,
 
@@ -81,6 +87,10 @@ public class LIblocks {
     ;
 
     public static void load(){
+        //region 地板
+        JHXQ = new Floor("禁核心区"){{
+            variants = 0;
+        }};
         //region 单位
         BCJDWZGGC = new Reconstructor("倍乘级单位直构工厂"){{
             requirements(Category.units, with(Items.lead, 600, Items.titanium, 300, Items.thorium, 200, Items.silicon, 400, LIitems.ZYZ, 75));
@@ -384,5 +394,164 @@ public class LIblocks {
             consumeLiquid(Liquids.cryofluid, 12f / 60f);
             consumeItem(Items.phaseFabric).boost();
         }};
+        LTFPLC = new LiquidProjector("流体分配力场"){{
+            requirements(Category.liquid, with(Items.metaglass, 125, Items.plastanium, 40, LIitems.QSZ, 3));
+            health = 300;
+            size = 2;
+            consumePower(2f);
+            consumeItem(LIitems.QSZ).boost();
+        }};
+        LTTSLC = new LiquidProjector("流体投射力场"){{
+            requirements(Category.liquid, with(Items.metaglass, 175, Items.plastanium, 50, LIitems.QSZ, 3, LIitems.GTS, 1));
+            health = 500;
+            size = 3;
+            liquidCapacity = 1200f;
+            boostRange = 120f;
+            useTime = 720f;
+            reload = 5f;
+            consumePower(5.5f);
+            consumeItem(LIitems.QSZ).boost();
+        }};
+        CPTY = new StatusProjector("超频投影", StatusEffects.overclock){{
+            requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, Items.thorium, 15));
+            health = 260;
+            size = 2;
+            consumePower(2f);
+        }};
+        BHTY = new StatusProjector("保护投影", StatusEffects.shielded){{
+            requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, Items.phaseFabric, 5));
+            health = 260;
+            size = 2;
+            consumePower(2f);
+        }};
+        JDTY = new StatusProjector("解冻投影", LIstatus.JD){{
+            requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, LIitems.GTLDY, 1));
+            health = 260;
+            size = 2;
+            range = 80f;
+            consumePower(1.5f);
+            consumeLiquid(Liquids.cryofluid, 3f / 60f);
+        }};
+        ZTQD = new StatusProjector("状态穹顶", Seq.with(StatusEffects.overclock, StatusEffects.shielded, StatusEffects.fast)){{
+            requirements(Category.effect, with(Items.lead, 220, Items.graphite, 165, Items.silicon, 100, Items.phaseFabric, 25, LIitems.NRJT, 1));
+            health = 680;
+            size = 3;
+            range = 200f;
+            useTime = 1200f;
+            reload = 180f;
+            consumePower(8f);
+            consumeLiquid(Liquids.cryofluid, 21f / 60f);
+        }};
+        SYTQ = new StatusProjector("神佑天穹", LIstatus.SY){{
+            requirements(Category.effect, with(Items.lead, 350, Items.titanium, 180, Items.silicon, 180, Items.plastanium, 130, Items.surgeAlloy, 150, LIitems.NRJT, 10, LIitems.SMSP, 5));
+            health = 1260;
+            size = 4;
+            range = 240f;
+            reload = 300f;
+            consumePower(8.5f);
+            consumeLiquid(LIliquids.FY5, 3f / 60f);
+        }};
+        RHTY = new StatusProjector("弱化投影", StatusEffects.sapped){{
+            requirements(Category.effect, with(Items.lead, 100, Items.coal, 85, Items.silicon, 40, Items.thorium, 10));
+            health = 280;
+            size = 2;
+            range = 160f;
+            useTime = 600f;
+            reload = 600f;
+            applyOnEnemies = true;
+            consumePower(3f);
+        }};
+        MBTY = new StatusProjector("麻痹投影", StatusEffects.electrified){{
+            requirements(Category.effect, with(Items.lead, 100, Items.plastanium, 25, Items.silicon, 40, Items.thorium, 10));
+            health = 280;
+            size = 2;
+            range = 160f;
+            useTime = 600f;
+            reload = 600f;
+            applyOnEnemies = true;
+            consumePower(3f);
+        }};
+        HSTY = new StatusProjector("缓速投影", StatusEffects.slow){{
+            requirements(Category.effect, with(Items.lead, 100, Items.scrap, 165, Items.silicon, 40, Items.thorium, 10));
+            health = 280;
+            size = 2;
+            range = 160f;
+            useTime = 600f;
+            reload = 600f;
+            applyOnEnemies = true;
+            consumePower(3f);
+        }};
+        RHQD = new StatusProjector("弱化穹顶", StatusEffects.sapped){{
+            requirements(Category.effect, with(Items.lead, 220, Items.coal, 250, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
+            health = 780;
+            size = 3;
+            range = 360f;
+            useTime = 720f;
+            reload = 300f;
+            applyOnEnemies = true;
+            consumePower(12f);
+            consumeLiquid(Liquids.oil, 12f / 60f);
+        }};
+        MBQD = new StatusProjector("麻痹穹顶", StatusEffects.electrified){{
+            requirements(Category.effect, with(Items.lead, 220, Items.plastanium, 125, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
+            health = 780;
+            size = 3;
+            range = 360f;
+            useTime = 720f;
+            reload = 300f;
+            applyOnEnemies = true;
+            consumePower(12f);
+            consumeLiquid(LIliquids.ZS, 15f / 60f);
+        }};
+        HSQD = new StatusProjector("缓速穹顶", StatusEffects.slow){{
+            requirements(Category.effect, with(Items.lead, 220, Items.scrap, 425, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
+            health = 780;
+            size = 3;
+            range = 360f;
+            useTime = 720f;
+            reload = 300f;
+            applyOnEnemies = true;
+            consumePower(12f);
+            consumeLiquid(LIliquids.FY0, 30f / 60f);
+        }};
+
+        //region 核心
+        WXHXJZ = new CoreBlock("微型核心基座"){{
+            requirements(Category.effect, with(Items.copper, 125, Items.lead, 100));
+            health = 140;
+            itemCapacity = 0;
+            unitCapModifier = 0;
+        }
+            @Override
+            public boolean canBreak(Tile tile) {
+                return state.teams.cores(tile.team()).size > 1;
+            }
+
+            @Override
+            public boolean canReplace(Block other) {
+                return other.alwaysReplace;
+            }
+
+            @Override
+            public boolean canPlaceOn(Tile tile, Team team, int rotation){
+                if(tile == null || tile.floor() == JHXQ) return false;
+                return state.teams.cores(team).size < 12;
+            }
+
+            @Override
+            public void drawPlace(int x, int y, int rotation, boolean valid) {
+                if(world.tile(x, y) == null) return;
+
+                if ((player.team().core() != null && !player.team().core().items.has(this.requirements, state.rules.buildCostMultiplier)) && !state.rules.infiniteResources) {
+                    drawPlaceText(Core.bundle.get("bar.noresources"), x, y, false);
+                    return;
+                }
+                if(!(state.teams.cores(player.team()).size < 12)){
+                    drawPlaceText(Core.bundle.get("maxcores"), x, y, valid);
+                }
+            }
+        };
+        SDHX = new PowerCore("闪电核心"){{}};
+        LTHX = new PowerCore("雷霆核心"){{}};
     }
 }

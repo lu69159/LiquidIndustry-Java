@@ -14,7 +14,7 @@ public class LIliquids {
     public static void load(){
         ZS = new Liquid("重水", Color.valueOf("3D6E70")){{
             lightColor = Color.valueOf("3CA37030");
-            effect = StatusEffects.corroded;
+            effect = StatusEffects.electrified;
             temperature = 0.3f;
             heatCapacity = 0.6f;
             viscosity = 0.3f;
