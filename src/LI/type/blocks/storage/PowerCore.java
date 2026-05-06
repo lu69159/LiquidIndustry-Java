@@ -59,7 +59,7 @@ public class PowerCore extends CoreBlock {
     @Override
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         super.drawPlace(x, y, rotation, valid);
-        Drawf.dashCircle(x * tilesize + offset, y * tilesize + offset, range, Pal.accent);
+        Drawf.dashCircle(x * tilesize + offset, y * tilesize + offset, range * tilesize, Pal.accent);
     }
 
     public class PowerCoreBuild extends CoreBuild{
@@ -67,7 +67,7 @@ public class PowerCore extends CoreBlock {
 
         private PowerCoreBuild build = this;
         private final Cons<Unit> unitConsumer = unit -> {
-            float dst = unit.hitSize/2 * range - unit.dst(build);
+            float dst = unit.hitSize/2 * range * tilesize - unit.dst(build);
             if(dst > 0){
                 build.attackTimer = reload;
                 for(int i = 0; i < 2; i++) Fx.chainLightning.at(build.x, build.y, 0, Color.valueOf("8EFFEAC0"), unit);
@@ -88,7 +88,7 @@ public class PowerCore extends CoreBlock {
             if(attackTimer > 0) attackTimer -= Time.delta;
             attackTimer = Math.max(0, attackTimer);
             if(attackTimer == 0){
-                Units.nearbyEnemies(team, x, y, range, unitConsumer);
+                Units.nearbyEnemies(team, x, y, range * tilesize, unitConsumer);
             }
             super.updateTile();
         }
@@ -105,7 +105,7 @@ public class PowerCore extends CoreBlock {
         @Override
         public void drawSelect() {
             super.drawSelect();
-            Drawf.dashCircle(x, y, range, Pal.accent);
+            Drawf.dashCircle(x, y, range * tilesize, Pal.accent);
         }
     }
 }

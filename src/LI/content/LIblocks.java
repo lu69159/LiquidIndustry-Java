@@ -40,7 +40,8 @@ import mindustry.world.draw.*;
 import mindustry.world.meta.*;
 
 import LI.type.blocks.power.*;
-import LI.type.blocks.defense.*;
+import LI.type.blocks.defense.walls.*;
+import LI.type.blocks.defense.turrets.*;
 import LI.type.blocks.effect.*;
 import LI.type.blocks.storage.*;
 
@@ -66,7 +67,7 @@ public class LIblocks {
     WXHXJZ,SDHX,LTHX,
 
     //炮塔
-    DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
+    //DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
 
     //墙
     JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ,LCQ,
@@ -76,7 +77,7 @@ public class LIblocks {
     CDLJQ,GL,DXFSJ,MFSJ,LDYJBJ,CLHHQ,ZSSCQ,GL2,SGFJQ,XZBFJQ,JLHJFJQ,GYZHQ,JTRZQ,
 
     //物流
-    TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
+    SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
 
     //液流
     JXCYG,TDGQ,ZKB,YTZQ,WXYTZQ,
@@ -521,6 +522,8 @@ public class LIblocks {
             health = 140;
             itemCapacity = 0;
             unitCapModifier = 0;
+
+            unitType = LIunits.JS;
         }
             @Override
             public boolean canBreak(Tile tile) {
@@ -551,7 +554,165 @@ public class LIblocks {
                 }
             }
         };
-        SDHX = new PowerCore("闪电核心"){{}};
-        LTHX = new PowerCore("雷霆核心"){{}};
+        SDHX = new PowerCore("闪电核心"){{
+            requirements(Category.effect, with(Items.copper, 12000, Items.lead, 12000, Items.titanium, 8000, Items.thorium, 4000, Items.silicon, 7000, Items.plastanium, 500, Items.surgeAlloy, 1500));
+            health = 8000;
+            armor = 10;
+            size = 5;
+            itemCapacity = 18000;
+            unitCapModifier = 36;
+            researchCostMultiplier = 0.4f;
+            thrusterLength = 40/4f;
+
+            unitType = LIunits.GMS;
+        }};
+        LTHX = new PowerCore("雷霆核心"){{
+            requirements(Category.effect, with(Items.copper, 18000, Items.lead, 18000, Items.titanium, 10000, Items.thorium, 6000, Items.silicon, 8000, Items.plastanium, 100, Items.surgeAlloy, 2000, LIitems.CDZ, 100));
+            health = 15600;
+            size = 7;
+            itemCapacity = 24000;
+            unitCapModifier = 48;
+            researchCostMultiplier = 0.4f;
+            thrusterLength = 50/4f;
+
+            damage = 20f;
+            range = 36f;
+            reload = 20f;
+            powerout = 800f;
+
+            unitType = LIunits.DET;
+        }};
+
+        //region 炮塔
+        /* 弹药部分需要搬过来的内容很多，后面再说... */
+
+
+        //region 墙
+        JDQT = new Wall("基地墙体"){{
+            requirements(Category.defense, BuildVisibility.sandboxOnly, with());
+            health = 5000;
+            size = 2;
+        }};
+        ZJCYG = new WallLiquidRouter("装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 8, Items.titanium, 6, LIitems.QSZ, 1));
+            health = 520;
+            liquidCapacity = 400f;
+        }};
+        DXZJCYG = new WallLiquidRouter("大型装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 32, Items.titanium, 24, LIitems.QSZ, 4));
+            health = 520 * 4;
+            size = 2;
+            liquidCapacity = 400f * 4;
+        }};
+        SGZJCYG = new WallLiquidRouter("塑钢装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 8, Items.titanium, 6, Items.plastanium, 5, LIitems.QSZ, 1));
+            health = 640;
+            armor = 5;
+            liquidCapacity = 500f;
+
+            absorbLasers = true;
+            insulated = true;
+        }};
+        DXSGZJCYG = new WallLiquidRouter("大型塑钢装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 32, Items.titanium, 24, Items.plastanium, 20, LIitems.QSZ, 4));
+            health = 640 * 4;
+            armor = 5;
+            size = 2;
+            liquidCapacity = 500f * 4;
+
+            absorbLasers = true;
+            insulated = true;
+        }};
+        HJZJCYG = new WallLiquidRouter("合金装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 8, Items.titanium, 6, Items.surgeAlloy, 6, LIitems.QSZ, 1));
+            health = 1100;
+            armor = 10;
+            liquidCapacity = 500f;
+
+            lightningChance = 0.05f;
+            lightningLength = 25;
+            lightningDamage = 30f;
+        }};
+        DXHJZJCYG = new WallLiquidRouter("大型合金装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 32, Items.titanium, 24, Items.surgeAlloy, 24, LIitems.QSZ, 4));
+            health = 1100 * 4;
+            armor = 10;
+            size = 2;
+            liquidCapacity = 500f * 4;
+
+            lightningChance = 0.05f;
+            lightningLength = 25;
+            lightningDamage = 30f;
+        }};
+        XZZJCYG = new WallLiquidRouter("相织装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 8, Items.phaseFabric, 6, LIitems.QSZ, 1));
+            health = 840;
+            armor = 5;
+            liquidCapacity = 500f;
+
+            chanceDeflect = 20f;
+        }};
+        DXXZZJCYG = new WallLiquidRouter("大型相织装甲储液罐"){{
+            requirements(Category.defense, with(Items.metaglass, 32, Items.phaseFabric, 24, LIitems.QSZ, 4));
+            health = 840 * 4;
+            armor = 5;
+            liquidCapacity = 500 * 4f;
+
+            chanceDeflect = 20f;
+        }};
+        CNQ = new WallLiquidRouter("超能墙"){{
+            requirements(Category.defense, with(Items.metaglass, 12, Items.titanium, 18, Items.surgeAlloy, 6, Items.phaseFabric, 6, Items.phaseFabric, 5, LIitems.QSZ, 3));
+            health = 2800;
+            armor = 30;
+            liquidCapacity = 1200f;
+
+            absorbLasers = true;
+            insulated = true;
+            placeableLiquid = true;
+            lightningChance = 0.2f;
+            lightningLength = 30;
+            lightningDamage = 50f;
+            chanceDeflect = 40f;
+        }};
+        DXCNQ = new WallLiquidRouter("大型超能墙"){{
+            requirements(Category.defense, with(Items.metaglass, 48, Items.titanium, 72, Items.surgeAlloy, 24, Items.phaseFabric, 24, Items.phaseFabric, 20, LIitems.QSZ, 12));
+            health = 2800 * 4;
+            armor = 30;
+            size = 2;
+            liquidCapacity = 1200f * 4;
+
+            absorbLasers = true;
+            insulated = true;
+            placeableLiquid = true;
+            lightningChance = 0.2f;
+            lightningLength = 30;
+            lightningDamage = 50f;
+            chanceDeflect = 40f;
+        }};
+        JXCNQ = new WallLiquidRouter("巨型超能墙"){{
+            requirements(Category.defense, with(Items.metaglass, 108, Items.titanium, 162, Items.surgeAlloy, 54, Items.phaseFabric, 54, Items.phaseFabric, 45, LIitems.QSZ, 27));
+            health = 2800 * 9;
+            armor = 30;
+            size = 3;
+            liquidCapacity = 1200 * 9f;
+
+            absorbLasers = true;
+            insulated = true;
+            placeableLiquid = true;
+            lightningChance = 0.2f;
+            lightningLength = 30;
+            lightningDamage = 50f;
+            chanceDeflect = 40f;
+        }};
+
+        //region 生产
+        /* 太多了... */
+
+        //region 物流
+
+        //region 液流
+
+        //region 钻头
+
     }
 }
