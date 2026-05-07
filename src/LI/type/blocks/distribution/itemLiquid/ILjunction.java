@@ -14,6 +14,7 @@ import mindustry.world.meta.*;
 public class ILjunction extends Sorter {
     public ILjunction(String name) {
         super(name);
+        health = 90;
         invert = true;
         configurable = false;
         floating = true;

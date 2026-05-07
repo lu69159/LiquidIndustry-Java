@@ -9,6 +9,7 @@ import mindustry.world.meta.BlockGroup;
 public class ILbridge extends ItemBridge {
     public ILbridge(String name) {
         super(name);
+        health = 90;
         range = 36;
         arrowPeriod = 1.35f;
         arrowTimeScl = 1.83f;

@@ -20,6 +20,7 @@ public class ILduct extends Duct {
 
     public ILduct(String name) {
         super(name);
+        health = 155;
         floating = true;
         hasLiquids = true;
         liquidCapacity = 20;

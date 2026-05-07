@@ -44,6 +44,7 @@ import LI.type.blocks.defense.walls.*;
 import LI.type.blocks.defense.turrets.*;
 import LI.type.blocks.effect.*;
 import LI.type.blocks.storage.*;
+import LI.type.blocks.distribution.itemLiquid.*;
 
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
@@ -709,6 +710,18 @@ public class LIblocks {
         /* 太多了... */
 
         //region 物流
+        SCD = new ILduct("双传带"){{
+            requirements(Category.distribution, with(Items.metaglass, 1, Items.plastanium, 1, Items.surgeAlloy, 1, Items.phaseFabric, 1, LIitems.QSZ, 0));
+        }};
+        SCQ = new ILbridge("双传桥"){{
+            requirements(Category.distribution, with(Items.metaglass, 5, Items.plastanium, 5, Items.surgeAlloy, 8, Items.phaseFabric, 12, LIitems.QSZ, 1));
+        }};
+        SCLYQ = new ILrouter("双传路由器"){{
+            requirements(Category.distribution, with(Items.metaglass, 3, Items.plastanium, 1, Items.surgeAlloy, 1, LIitems.QSZ, 0));
+        }};
+        SCJCQ = new ILjunction("双传交叉器"){{
+            requirements(Category.distribution, with(Items.metaglass, 8, Items.plastanium, 2, Items.surgeAlloy, 2, LIitems.QSZ, 0));
+        }};
 
         //region 液流
 
