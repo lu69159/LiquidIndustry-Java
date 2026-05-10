@@ -1,5 +1,6 @@
 package LI;
 
+import LI.type.ai.LIcommands;
 import arc.util.*;
 import mindustry.mod.*;
 
@@ -13,10 +14,13 @@ public class LIMod extends Mod{
 
     @Override
     public void loadContent(){
+        LIcommands.load();
+        LIplanets.load(); //WIP
+        LImaps.load(); //WIP
         LIitems.load();
         LIliquids.load();
         LIstatus.load();
-        LIblocks.load();
-        LIunits.load();
+        LIblocks.load(); //WIP
+        LIunits.load(); //WIP
     }
 }

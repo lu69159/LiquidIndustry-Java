@@ -50,6 +50,7 @@ import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
 public class LIblocks {
+    /** 部分方块还未搬入JAVA：力场墙。液体质驱类。所有炮塔，生产类。 */
     public static Block
     //地板
     JHXQ,
@@ -71,17 +72,20 @@ public class LIblocks {
     //DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
 
     //墙
-    JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ,LCQ,
+    JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ, //LCQ,
 
     //生产
+    /*
     BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY,JHNSC,FYLXJ,FYHHQ,ZJLGL,JHTQGC,SNPSJ,JNZJLL,QSZHCQ,ZYZYSJ,
     CDLJQ,GL,DXFSJ,MFSJ,LDYJBJ,CLHHQ,ZSSCQ,GL2,SGFJQ,XZBFJQ,JLHJFJQ,GYZHQ,JTRZQ,
+
+    */
 
     //物流
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
 
     //液流
-    JXCYG,TDGQ,ZKB,YTZQ,WXYTZQ,
+    JXCYG,TDGQ,ZKB, //YTZQ,WXYTZQ,
 
     //钻头
     WXCSJ,QXCSJ,DXCSJ,LDYCQJ,FYCQJ,BLZJ,YZSYZJ
@@ -722,10 +726,226 @@ public class LIblocks {
         SCJCQ = new ILjunction("双传交叉器"){{
             requirements(Category.distribution, with(Items.metaglass, 8, Items.plastanium, 2, Items.surgeAlloy, 2, LIitems.QSZ, 0));
         }};
+        TCSD = new Conveyor("钍传送带"){{
+            requirements(Category.distribution, with(Items.copper, 1, Items.lead, 1, Items.thorium, 1));
+            health = 95;
+            speed = 0.3f;
+            displayedSpeed = 30f;
+        }};
+        ZJCSGD = new ArmoredConveyor("重甲传送轨道"){{
+            requirements(Category.distribution, with(Items.copper, 6, Items.lead, 6, Items.thorium, 1, Items.surgeAlloy, 2, Items.plastanium, 1));
+            health = 750;
+            armor = 30;
+            speed = 0.3f;
+            displayedSpeed = 30f;
+
+            destroyBulletSameTeam = true;
+            destroyBullet = new LightningBulletType(){{
+                damage = 50f;
+                lightning = 1;
+                lightningLength = 8;
+                lightningColor = Color.valueOf("CFCFCF");
+                absorbable = false;
+                despawnSound = Sounds.shootArc;
+                despawnEffect = Fx.none;
+                hitSound = Sounds.shootArc;
+                hitEffect = new WaveEffect(){{
+                    lifetime = 5f;
+                    sizeFrom = 0f;
+                    sizeTo = 4f;
+                    strokeFrom = 1f;
+                    strokeTo = 0f;
+                    colorFrom = Color.valueOf("CFCFCFFF");
+                    colorTo = Color.valueOf("CFCFCF40");
+                }};
+
+            }};
+        }
+            @Override
+            public void setStats() {
+                super.setStats();
+                if(destroyBullet != null) stats.add(new Stat("damageondestroy", StatCat.function), StatValues.ammo(ObjectMap.of(this, destroyBullet), true, false));
+            }
+        };
+        XZBXZQ = new Unloader("相织布卸载器"){{
+            requirements(Category.distribution, with(Items.titanium, 30, Items.silicon, 40, Items.phaseFabric, 10));
+            health = 105;
+            speed = 60f / 45f;
+            group = BlockGroup.transportation;
+        }};
+        GYFSQ = new MassDriver("高压发射器"){{
+            requirements(Category.distribution, with(Items.copper, 40, Items.metaglass, 20, Items.silicon, 5));
+            health = 240;
+            size = 3;
+            hasPower = false;
+            itemCapacity = 70;
+            reload = 300f;
+            range = 400f;
+
+            consumeLiquid(Liquids.water, 9f/60f);
+        }};
+        WXZQ = new MassDriver("微型质驱"){{
+            requirements(Category.distribution, with(Items.copper, 30, Items.lead, 30, Items.silicon, 15, Items.thorium, 10));
+            health = 50;
+            itemCapacity = 50;
+            minDistribute = 5;
+            reload = 150f;
+            range = 176f;
+            consumePower(0.3f);
+        }};
 
         //region 液流
+        JXCYG = new LiquidRouter("巨型储液罐"){{
+            requirements(Category.liquid, with(Items.titanium, 80, Items.metaglass, 120, LIitems.QSZ, 2));
+            health = 960;
+            size = 4;
+            liquidCapacity = 9000f;
+        }};
+        TDGQ = new LiquidBridge("钛导管桥"){{
+            requirements(Category.liquid, with(Items.titanium, 6, Items.metaglass, 12, LIitems.QSZ, 0));
+            health = 60;
+            floating = true;
+            fadeIn = moveArrows = false;
+            liquidCapacity = 50f;
+            range = 12;
+            explosivenessScale = flammabilityScale = 20f/100f;
+        }};
+        ZKB = new Pump("真空泵"){{
+            requirements(Category.liquid, with(Items.copper, 200, Items.metaglass, 220, Items.titanium, 100, Items.thorium, 50, Items.silicon, 40, LIitems.QSZ, 5));
+            health = 860;
+            size = 4;
+            liquidCapacity = 120f;
+            pumpAmount = 0.7f;
+            hasPower = true;
+            consumePower(5.2f);
+        }};
 
         //region 钻头
+        WXCSJ = new SolidPump("微型抽水机"){{
+            requirements(Category.production, with(Items.metaglass, 12, Items.graphite, 8, Items.lead, 8, Items.titanium, 8, LIitems.QSZ, 0));
+            result = Liquids.water;
+            pumpAmount = 0.08f;
+            liquidCapacity = 10f;
+            rotateSpeed = 2f;
+            attribute = Attribute.water;
+            consumePower(0.5f);
+        }};
+        QXCSJ = new SolidPump("强效抽水机"){{
+            requirements(Category.production, with(Items.metaglass, 30, Items.graphite, 30, Items.titanium, 50, LIitems.QSZ, 1));
+            health = 200;
+            size = 2;
+            result = Liquids.water;
+            pumpAmount = 0.26f;
+            liquidCapacity = 30f;
+            rotateSpeed = 3f;
+            attribute = Attribute.water;
+            consumePower(2f);
+        }};
+        DXCSJ = new SolidPump("大型抽水机"){{
+            requirements(Category.production, with(Items.metaglass, 45, Items.graphite, 75, Items.titanium, 100, LIitems.QSZ, 7));
+            health = 450;
+            size = 3;
+            result = Liquids.water;
+            pumpAmount = 1.5f;
+            liquidCapacity = 30f;
+            rotateSpeed = 1.5f;
+            attribute = Attribute.water;
+            consumePower(7f);
+        }};
+        LDYCQJ = new SolidPump("冷冻液抽取机"){{
+            requirements(Category.production, with(Items.metaglass, 30, Items.graphite, 30, Items.titanium, 40, Items.thorium, 30, LIitems.QSZ, 5));
+            health = 220;
+            size = 2;
+            result = Liquids.cryofluid;
+            pumpAmount = 0.25f;
+            baseEfficiency = 0f;
+            liquidCapacity = 30f;
+            rotateSpeed = 3f;
+            attribute = LIattr.cryofluid;
+            consumePower(3.25f);
+        }};
+        FYCQJ = new SolidPump("废液抽取机"){{
+            requirements(Category.production, with(Items.metaglass, 45, Items.graphite, 75, Items.titanium, 100, LIitems.QSZ, 7));
+            health = 480;
+            size = 3;
+            result = LIliquids.FY0;
+            pumpAmount = 2f;
+            baseEfficiency = 0.25f;
+            liquidCapacity = 30f;
+            rotateSpeed = 1.5f;
+            attribute = LIattr.scrapfluid;
+            consumePower(3f);
 
+            updateEffect = new ParticleEffect(){{
+                lifetime = 50f;
+                particles = 5;
+                baseLength = 0f;
+                length = 6f;
+                interp = Interp.pow3Out;
+                sizeInterp = Interp.pow5In;
+                sizeFrom = 2f;
+                sizeTo = 0f;
+                region = "液体工艺-square";
+                lightColor = colorFrom = colorTo = Color.valueOf("9B928B");
+            }};
+            updateEffectChance = 0.03f;
+        }
+            @Override
+            public boolean canPlaceOn(Tile tile, Team team, int rotation) {
+                var rules = Vars.state.rules;
+                return rules.planet == LIplanets.NT || rules.editor;
+            }
+
+            @Override
+            public void drawPlace(int x, int y, int rotation, boolean valid) {
+                var rules = Vars.state.rules;
+                if(rules.planet != LIplanets.NT && !rules.editor){
+                    this.drawPlaceText(Core.bundle.get("canonlyplaceon") + LIplanets.NT.localizedName, x, y, false);
+                    return;
+                }
+                super.drawPlace(x, y, rotation, valid);
+            }
+        };
+        BLZJ = new Fracker("冰冷钻井"){{
+            requirements(Category.production, with(Items.titanium, 180, Items.thorium, 125, Items.metaglass, 55, Items.silicon, 75, LIitems.GTLDY, 5));
+            health = 540;
+            size = 3;
+            result = Liquids.cryofluid;
+            pumpAmount = 2.5f;
+            liquidCapacity = 90f;
+            attribute = LIattr.cryofluid;
+            consumePower(7.1f);
+            consumeLiquid(Liquids.water, 3.5f);
+
+            updateEffect = new ParticleEffect(){{
+                lifetime = 50f;
+                particles = 5;
+                baseLength = 0f;
+                length = 6f;
+                interp = Interp.pow3Out;
+                sizeInterp = Interp.pow5In;
+                sizeFrom = 2f;
+                sizeTo = 0f;
+                region = "液体工艺-square";
+                lightColor = colorFrom = colorTo = Color.valueOf("87CEEB");
+            }};
+            updateEffectChance = 0.04f;
+        }};
+        YZSYZJ = new Fracker("硬质石油钻井"){{
+            requirements(Category.production, with(Items.copper, 400, Items.titanium, 220, Items.thorium, 175, Items.graphite, 300, Items.plastanium, 25, Items.silicon, 75));
+            health = 760;
+            size = 4;
+            result = Liquids.oil;
+            pumpAmount = 0.75f;
+            liquidCapacity = 60f;
+            attribute = Attribute.oil;
+            itemUseTime = 30f;
+            consumeItem(Items.sand);
+            consumePower(13.5f);
+            consumeLiquid(Liquids.water, 0.5f);
+
+            updateEffect = Fx.pulverize;
+            updateEffectChance = 0.08f;
+        }};
     }
 }
