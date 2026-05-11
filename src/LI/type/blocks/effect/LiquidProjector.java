@@ -28,29 +28,12 @@ public class LiquidProjector extends Block {
 
     public float reload = 10f;
     public float range = 80f;
-    public float transferAmount = 40f;
+    public float transferAmount;
     public float useTime = 900f;
     public float boostRange = 48f;
     public boolean hasBoost = true;
     public Color baseColor = Color.valueOf("6F80E8");
     public Color boostColor = Color.valueOf("88A4FF");
-
-    public LiquidProjector(String name){
-        super(name);
-        solid = true;
-        update = true;
-        group = BlockGroup.projectors;
-        hasPower = true;
-        hasItems = true;
-        hasLiquids = true;
-        emitLight = true;
-        lightRadius = 40f;
-        envEnabled |= Env.space;
-        ambientSound = Sounds.loopCircuit;
-        ambientSoundVolume = 0.08f;
-
-        liquidCapacity = 800f;
-    }
 
     public LiquidProjector(String name, float transferAmount){
         super(name);
@@ -70,6 +53,10 @@ public class LiquidProjector extends Block {
         liquidCapacity = 800f;
 
         this.transferAmount = transferAmount;
+    }
+
+    public LiquidProjector(String name){
+        this(name, 40f);
     }
 
     @Override

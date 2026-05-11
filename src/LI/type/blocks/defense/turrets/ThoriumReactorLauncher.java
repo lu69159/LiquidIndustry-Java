@@ -9,16 +9,8 @@ import mindustry.type.Item;
 import mindustry.ui.Bar;
 
 public class ThoriumReactorLauncher extends PayloadTurret {
-    Item fuel = Items.thorium;
+    Item fuel;
 
-    public ThoriumReactorLauncher(String name) {
-        super(name);
-        unloadable = false;
-        hasItems = true;
-        acceptsItems = true;
-        itemCapacity = 5;
-        consumeItem(Items.thorium, itemCapacity).update(false);
-    }
     public ThoriumReactorLauncher(String name, Item fuel) {
         super(name);
         unloadable = false;
@@ -27,6 +19,10 @@ public class ThoriumReactorLauncher extends PayloadTurret {
         itemCapacity = 5;
         this.fuel = fuel;
         consumeItem(fuel, itemCapacity).update(false);
+    }
+
+    public ThoriumReactorLauncher(String name){
+        this(name, Items.thorium);
     }
 
     @Override

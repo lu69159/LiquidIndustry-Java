@@ -11,14 +11,13 @@ public class ImmuneStatusEffect extends StatusEffect {
         super(name);
     }
 
-    public ImmuneStatusEffect(String name, StatusEffect immuneEffect) {
-        super(name);
-        this.immuneEffects = Seq.with(immuneEffect);
-    }
-
     public ImmuneStatusEffect(String name, Seq<StatusEffect> immuneEffects) {
         super(name);
         this.immuneEffects = immuneEffects;
+    }
+
+    public ImmuneStatusEffect(String name, StatusEffect immuneEffect) {
+        this(name, Seq.with(immuneEffect));
     }
 
     @Override
