@@ -91,6 +91,30 @@ public class LIfx {
             });
         });
     }),
+    whiteRailShoot = new Effect(24f, e -> {
+        e.scaled(10f, b -> {
+            color(Color.white, Color.lightGray, b.fin());
+                stroke(b.fout() * 3f + 0.2f);
+                Lines.circle(b.x, b.y, b.fin() * 50f);
+            });
+        color(Color.white);
+        for(int i : Mathf.signs){
+            Drawf.tri(e.x, e.y, 13f * e.fout(), 85f, e.rotation + 90f * i);
+        }
+    }),
+    whiteRailTrail = new Effect(16f, e -> {
+        color(Color.white);
+        for(int i : Mathf.signs){
+            Drawf.tri(e.x, e.y, 10f * e.fout(), 24f, e.rotation + 90 + 90f * i);
+        }
+        Drawf.light(e.x, e.y, 60f * e.fout(), Color.white, 0.5f);
+    }),
+    whiteRailHit = new Effect(18f, 200f, e -> {
+        color(Color.white);
+        for(int i : Mathf.signs){
+            Drawf.tri(e.x, e.y, 10f * e.fout(), 60f, e.rotation + 140f * i);
+        }
+    }),
     blessApply = new Effect(120f, e -> {
         Unit unit = (Unit) e.data;
         var region = unit.type.fullIcon;

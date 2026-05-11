@@ -2,6 +2,7 @@ package LI.content;
 
 import arc.func.Cons;
 import arc.graphics.Color;
+import arc.math.Interp;
 import mindustry.ai.*;
 import mindustry.ai.types.*;
 import mindustry.content.*;
@@ -484,7 +485,241 @@ public class LIunits {
                     }};
             }});
         }};
-        JX = new HoverTank("巨蟹");
+        JX = new HoverTank("巨蟹"){{
+            health = 30000f;
+            armor = 35f;
+            hitSize = 42f;
+            rotateSpeed = 1.8f;
+            speed = 0.5f;
+            accel = 0.06f;
+            itemCapacity = 100;
+            immunities.add(StatusEffects.burning);
+
+            abilities.add(new ShieldArcAbility(){{
+                region = "液体工艺-巨蟹-shield";
+                radius = 60f;
+                angle = 180f;
+                regen = 2f;
+                cooldown = 600f;
+                max = 5500f;
+                y = -22f;
+                width = 12f;
+                whenShooting = false;
+                pushUnits = true;
+                chanceDeflect = 0.5f;
+            }});
+            abilities.add(new SuppressionFieldAbility(){{
+                range = 240f;
+                reload = 180f;
+                color = particleColor = effectColor = Color.valueOf("8AA3F4");
+            }});
+
+            weapons.add(
+                new Weapon("巨蟹1"){{
+                    mirror = rotate = false;
+                    alwaysContinuous = true;
+                    x = y = recoil = 0f;
+                    shootY = 36f;
+                    cooldownTime = 120f;
+                    shootSound = Sounds.beamMeltdown;
+                    bullet = new ContinuousLaserBulletType(80f){{
+                        lifetime = 60f;
+                        largeHit = false;
+                        pierceArmor = true;
+                        colors = new Color[]{Color.white, Color.valueOf("FFFFFF70")};
+                        incendAmount = 0;
+                        width = 5f;
+                        length = maxRange = 240f;
+                        shake = 2f;
+                        shootEffect = Fx.shootHeal;
+                        hitEffect = Fx.hitMeltdown;
+                        status = StatusEffects.shocked;
+
+                        bulletInterval = 12f;
+                        intervalBullets = 1;
+                        intervalRandomSpread = 10f;
+                        intervalSpread = 15f;
+                        intervalAngle = 0f;
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            damage = 15f;
+                            lightningLength = 25;
+                            lightningLengthRand = 10;
+                            lightningColor = Color.white;
+                            shootSound = Sounds.shootArc;
+                        }};
+                    }};
+                }},
+                new Weapon("巨蟹2"){{
+                    rotate = true;
+                    reload = 60f;
+                    x = 20.5f;
+                    y = -2f;
+                    shootX = shootY = 0f;
+                    rotateSpeed = 2.5f;
+                    ejectEffect = Fx.sparkShoot;
+                    bullet = new LaserBulletType(160f){{
+                        length = 320f;
+                        width = 16f;
+                        pierceCap = 6;
+                        hitSize = 4f;
+                        colors = new Color[]{Color.valueOf("EFEFEF"), Color.valueOf("DFDFDF"), Color.white};
+                        hitColor = Color.white;
+                        hitEffect = Fx.hitLaserColor;
+                    }};
+                }}
+            );
+            dpsEstimate = 2955f;
+        }};
+        YA = new HoverTank("渊螯"){{
+            health = 99000f;
+            armor = 50f;
+            hitSize = 46f;
+            rotateSpeed = 1.5f;
+            speed = 0.45f;
+            accel = 0.06f;
+            itemCapacity = 175;
+            immunities.addAll(StatusEffects.burning, LIstatus.BF);
+
+            abilities.add(new RegenAbility(){{ amount = 3f; }});
+            abilities.add(new StatusFieldAbility(StatusEffects.shielded, 720f, 720f, 192f){{
+                activeEffect = new WaveEffect(){{
+                    lifetime = 20f;
+                    interp = Interp.circleOut;
+                    sides = 6;
+                    strokeFrom = 5f;
+                    strokeTo = 192f;
+                    colorFrom = colorTo = Color.valueOf("FFD37F");
+                }};
+            }});
+
+            weapons.add(
+                new Weapon("渊螯1"){{
+                    mirror = rotate = false;
+                    alwaysContinuous = true;
+                    x = y = recoil = 0f;
+                    shootY = 37.5f;
+                    cooldownTime = 135f;
+                    shootSound = Sounds.beamMeltdown;
+                    bullet = new ContinuousLaserBulletType(135f){{
+                        lifetime = 60f;
+                        largeHit = false;
+                        pierceArmor = true;
+                        colors = new Color[]{Color.white, Color.valueOf("FFFFFF70")};
+                        incendAmount = 0;
+                        width = 5f;
+                        length = maxRange = 360f;
+                        shake = 3f;
+                        shootEffect = Fx.shootHeal;
+                        hitEffect = Fx.hitMeltdown;
+                        status = StatusEffects.shocked;
+
+                        bulletInterval = 6f;
+                        intervalBullets = 2;
+                        intervalRandomSpread = 10f;
+                        intervalSpread = 15f;
+                        intervalAngle = 0f;
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            damage = 30f;
+                            lightningLength = 35;
+                            lightningLengthRand = 10;
+                            lightningColor = Color.white;
+                            shootSound = Sounds.shootArc;
+                        }};
+                    }};
+                }},
+                new Weapon("渊螯2"){{
+                    mirror = false;
+                    rotate = true;
+                    rotateSpeed = 4f;
+                    x = 0f;
+                    y = 4f;
+                    shootY = 4.5f;
+                    recoil = 4f;
+                    shake = 1f;
+                    inaccuracy = 7f;
+                    shootSound = Sounds.shootMissilePlasma;
+                    shoot = new ShootAlternate(4f){{
+                        barrels = 3;
+                        shots = 12;
+                        shotDelay = 2.5f;
+                    }};
+                    bullet = new MissileBulletType(6f, 30f, "missile-large"){{
+                        lifetime = 80f;
+                        frontColor = Color.white;
+                        backColor = trailColor = Color.valueOf("FFFFFF80");
+                        trailLength = 8;
+                        trailWidth = 3f;
+                        shrinkY = 0f;
+                        splashDamage = 30f;
+                        splashDamageRadius = 24f;
+                        shieldDamageMultiplier = 1.5f;
+                        homingPower = 0.06f;
+                        homingRange = 80f;
+                        homingDelay = 15f;
+                        status = StatusEffects.electrified;
+                        statusDuration = 120f;
+                        hitSound = despawnSound = Sounds.shootArc;
+                        shootEffect = new ParticleEffect(){{
+                            lifetime = 30f;
+                            particles = 6;
+                            length = 20f;
+                            baseLength = 0f;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            cone = 60f;
+                            colorFrom = Color.white;
+                            colorTo = Color.valueOf("FFFFFF80");
+                        }};
+                        hitEffect = despawnEffect = new WaveEffect(){{
+                            lifetime = 15f;
+                            sizeFrom = 1f;
+                            sizeTo = 24f;
+                            strokeFrom = 2f;
+                            strokeTo = 0f;
+                            colorFrom = Color.white;
+                            colorTo = Color.valueOf("FFFFFF39");
+                        }};
+                        fragBullets = 5;
+                        fragBullet = new LightningBulletType(){{
+                            damage = 20f;
+                            shieldDamageMultiplier = 1.5f;
+                            lightningLength = 10;
+                            lightColor = Color.white;
+                        }};
+                    }};
+                }},
+                new Weapon("渊螯3"){{
+                    mirror = rotate = true;
+                    rotateSpeed = 2f;
+                    x = 18f;
+                    y = -21.5f;
+                    shootY = 8f;
+                    recoil = 3f;
+                    cooldownTime = 60f;
+                    reload = 75f;
+                    shake = 2f;
+                    shootSound = Sounds.shootOmura;
+                    bullet = new RailBulletType(){{
+                        damage = 720f;
+                        length = 648f;
+                        range = 640f;
+                        pierceDamageFactor = 0f;
+                        buildingDamageMultiplier = 0.2f;
+                        shootEffect = LIfx.whiteRailShoot;
+                        pierceEffect = LIfx.whiteRailHit;
+                        pointEffect = LIfx.whiteRailTrail;
+                        pointEffectSpace = 24f;
+                        hitEffect = Fx.massiveExplosion;
+                        smokeEffect = Fx.shootBigColor;
+                        hitColor = Color.white;
+                        status = StatusEffects.shocked;
+                    }};
+                }}
+            );
+            dpsEstimate = 3955f;
+        }};
 
     }
 
