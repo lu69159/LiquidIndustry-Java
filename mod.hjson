@@ -1,9 +1,0 @@
-
-displayName: "Liquid Industry"
-name: "液体工艺"
-author: "Space"
-main: "LI.LIMod"
-description: "Liquid Industry Java Version"
-version: 0.1
-minGameVersion: 157.4
-java: true
