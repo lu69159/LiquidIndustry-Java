@@ -3,7 +3,7 @@ package LI.content;
 import arc.Core;
 import arc.audio.*;
 
-public class LIsoundsAndMusic {
+public class LIaudio {
     public static Sound wind = new Sound();
     public static Music NTlaunch = new Music();
 

@@ -70,7 +70,7 @@ public class LIplanets {
             atmosphereColor = Color.valueOf("598DA4");
             landCloudColor = Color.valueOf("D8F3FF80");
             iconColor = Color.valueOf("D8F3FF");
-            launchMusic = LIsoundsAndMusic.NTlaunch;
+            launchMusic = LIaudio.NTlaunch;
         }};
     }
 }

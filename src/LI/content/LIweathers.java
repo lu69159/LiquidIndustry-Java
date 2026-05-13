@@ -40,7 +40,7 @@ public class LIweathers {
             baseSpeed = 0.05f;
             xspeed = 12f;
             yspeed = -30f;
-            sound = LIsoundsAndMusic.wind;
+            sound = LIaudio.wind;
             soundVol = 0.75f;
             attrs.set(Attribute.light, -1f);
             attrs.set(Attribute.water, 1f);

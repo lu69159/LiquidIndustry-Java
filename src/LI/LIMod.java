@@ -3,8 +3,9 @@ package LI;
 import arc.Events;
 import arc.util.*;
 import mindustry.mod.*;
-import LI.content.*;
 import LI.type.ai.LIcommands;
+import LI.content.*;
+import LI.tech.ATD;
 
 import static mindustry.game.EventType.*;
 
@@ -14,16 +15,17 @@ public class LIMod extends Mod{
         Log.info("Loading: Liquid Industry Java Version");
         Events.on(ContentInitEvent.class, e -> {
             LIoverride.loadOverride(); //WIP
+            ATD.load();
         });
     }
 
     @Override
     public void loadContent(){
-        LIsoundsAndMusic.load();
+        LIaudio.load();
         LIcommands.load();
         LIweathers.load();
         LIplanets.load(); //未添加卫星
-        LImaps.load(); //WIP
+        LImaps.load();
         LIitems.load();
         LIliquids.load();
         LIstatus.load();

@@ -1,27 +1,25 @@
 package LI.content;
 
-import arc.Core;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
-import arc.graphics.g2d.Lines;
-import arc.math.Angles;
-import arc.math.Interp;
-import arc.math.Mathf;
-import mindustry.entities.Effect;
-import mindustry.entities.effect.MultiEffect;
-import mindustry.entities.effect.ParticleEffect;
-import mindustry.entities.effect.WaveEffect;
+import arc.graphics.g2d.*;
+import arc.math.*;
 import mindustry.gen.Unit;
-import mindustry.graphics.Drawf;
+import mindustry.entities.Effect;
+import mindustry.entities.effect.*;
+import mindustry.graphics.*;
 
 import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
 import static arc.math.Angles.*;
 
+import static LI.content.LIfx.color.*;
+
 public class LIfx {
-    static Color sparkColor = Color.valueOf("00FFFF");
-    static Color sparkColorBack = Color.valueOf("8EFFEA");
+    public static class color{
+        public static final Color
+            sparkColor = Color.valueOf("00FFFF"),
+            sparkColorBack = Color.valueOf("8EFFEA");
+    }
 
     public static final Effect
     sparkBomb = new Effect(15, 100, e -> {
@@ -114,6 +112,14 @@ public class LIfx {
         for(int i : Mathf.signs){
             Drawf.tri(e.x, e.y, 10f * e.fout(), 60f, e.rotation + 140f * i);
         }
+    }),
+    surgeAlloyShoot = new Effect(12, e -> {
+        Draw.color(Color.white, Pal.surge, e.fin());
+        Lines.stroke(e.fout() * 1.2f + 0.5f);
+
+        Angles.randLenVectors(e.id, 7, 25 * e.finpow(), e.rotation, 50f, (x, y) -> {
+                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 5f + 2f);
+        });
     }),
     blessApply = new Effect(120f, e -> {
         Unit unit = (Unit) e.data;
