@@ -15,7 +15,7 @@ public class LIplanets {
     ;
 
     public static void load(){
-        NT = new Planet("Nepture", Planets.sun, 1.2f, 3){{
+        NT = new Planet("Nepture", Planets.sun, 1.2f, 2){{
             generator = new TantrosPlanetGenerator(){
                 final Color c1 = Color.valueOf("D8F3FF"), c2 = Color.valueOf("5ECCF7");
 

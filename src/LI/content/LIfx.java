@@ -12,15 +12,9 @@ import static arc.graphics.g2d.Draw.*;
 import static arc.graphics.g2d.Lines.*;
 import static arc.math.Angles.*;
 
-import static LI.content.LIfx.color.*;
+import static LI.content.LIcolor.*;
 
 public class LIfx {
-    public static class color{
-        public static final Color
-            sparkColor = Color.valueOf("00FFFF"),
-            sparkColorBack = Color.valueOf("8EFFEA");
-    }
-
     public static final Effect
     sparkBomb = new Effect(15, 100, e -> {
         color(sparkColorBack);
@@ -120,6 +114,14 @@ public class LIfx {
         Angles.randLenVectors(e.id, 7, 25 * e.finpow(), e.rotation, 50f, (x, y) -> {
                 Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 5f + 2f);
         });
+    }),
+    CDZShoot = new Effect(12, e -> {
+       Draw.color(Color.white, sparkColor, e.fin());
+       Lines.stroke(e.fout() * 1.2f + 0.5f);
+
+       Angles.randLenVectors(e.id, 7, 25 * e.finpow(), e.rotation, 50f, (x, y) -> {
+                Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 5f + 2f);
+       });
     }),
     blessApply = new Effect(120f, e -> {
         Unit unit = (Unit) e.data;

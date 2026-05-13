@@ -96,9 +96,9 @@ public class LIoverride {
                     length = 190;
                     damage = 425;
                     ammoMultiplier = 6;
-                    toColor = LIfx.color.sparkColor;
-                    shootEffect = LIfx.surgeAlloyShoot;
-                    smokeEffect = LIfx.surgeAlloyShoot;
+                    toColor = LIcolor.sparkColor;
+                    shootEffect = LIfx.CDZShoot;
+                    smokeEffect = LIfx.CDZShoot;
                     width = 22;
                     reloadMultiplier = 0.9f;
                     status = StatusEffects.electrified;
@@ -107,7 +107,7 @@ public class LIoverride {
                     intervalBullet = new LightningBulletType(){{
                         damage = 30f;
                         pierceArmor = true;
-                        lightningColor = LIfx.color.sparkColor;
+                        lightningColor = LIcolor.sparkColor;
                         lightningLength = 20;
                         lightningLengthRand = 10;
                     }};

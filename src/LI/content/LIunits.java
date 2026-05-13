@@ -231,7 +231,7 @@ public class LIunits {
                 }};
             }});
         }};
-        DET = new UnitType("伽马-S"){{
+        DET = new UnitType("德尔塔"){{
             constructor = mega.constructor;
             controller = u -> u.team.isAI() ? new BuilderAI(true, 400f) : new CommandAI();
             flying = true;

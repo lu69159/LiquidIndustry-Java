@@ -1,5 +1,6 @@
 package LI.type.blocks.effect;
 
+import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.struct.Seq;
@@ -9,6 +10,7 @@ import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.entities.*;
 import mindustry.entities.effect.WaveEffect;
+import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 import mindustry.world.blocks.defense.OverdriveProjector;
@@ -18,7 +20,7 @@ import mindustry.world.meta.*;
 public class StatusProjector extends OverdriveProjector {
     public Seq<StatusEffect> status;
     public Effect applyEffect;
-    public Color applyColor;
+    public Color applyColor = Color.white;
 
     public boolean applyOnEnemies = false;
 
@@ -32,7 +34,8 @@ public class StatusProjector extends OverdriveProjector {
         canOverdrive = true;
         lightRadius = range * 1.1f;
         status = Seq.with(effect);
-        applyColor = effect.color;
+        //applyColor = effect.color;
+        applyColor = applyOnEnemies ? Color.gray : Color.white;
         applyEffect = new WaveEffect(){{
             sizeTo = range;
             colorFrom = colorTo = applyColor;
