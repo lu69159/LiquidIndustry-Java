@@ -10,6 +10,7 @@ import mindustry.entities.effect.*;
 import mindustry.graphics.*;
 
 import static arc.graphics.g2d.Draw.*;
+import static arc.graphics.g2d.Draw.rect;
 import static arc.graphics.g2d.Lines.*;
 import static arc.math.Angles.*;
 
@@ -215,8 +216,8 @@ public class LIfx {
                     interp = Interp.pow5Out;
                     length = 150f;
                     lifetime = 60f;
-                    colorFrom = hitcolor;
-                    colorTo = hitcolor.a(40f/255);
+                    colorFrom = hitcolor.cpy();
+                    colorTo = hitcolor.cpy().a(40f/255);
                     cone = 8f;
                 }},
                 new ParticleEffect(){{
@@ -229,8 +230,8 @@ public class LIfx {
                     interp = Interp.pow3Out;
                     length = 80f;
                     lifetime = 35f;
-                    colorFrom = hitcolor;
-                    colorTo = hitcolor.a(40f/255);
+                    colorFrom = hitcolor.cpy();
+                    colorTo = hitcolor.cpy().a(40f/255);
                     cone = 45f;
                 }},
                 new ParticleEffect(){{
@@ -240,8 +241,8 @@ public class LIfx {
                     interp = Interp.circleOut;
                     length = 30f;
                     lifetime = 20f;
-                    colorFrom = hitcolor;
-                    colorTo = hitcolor.a(40f/255);
+                    colorFrom = hitcolor.cpy();
+                    colorTo = hitcolor.cpy().a(40f/255);
                     cone = 180f;
                 }}
         );
@@ -256,8 +257,8 @@ public class LIfx {
                     sizeTo = 168f;
                     strokeFrom = 1f;
                     strokeTo = 0f;
-                    colorFrom = hitcolor;
-                    colorTo = hitcolor.a(40f/255);
+                    colorFrom = hitcolor.cpy();
+                    colorTo = hitcolor.cpy().a(40f/255);
                 }},
                 new WaveEffect(){{
                     lifetime = 20f;
@@ -265,8 +266,8 @@ public class LIfx {
                     sizeTo = 160f;
                     strokeFrom = 6f;
                     strokeTo = 0f;
-                    colorFrom = hitcolor;
-                    colorTo = hitcolor.a(40f/255);
+                    colorFrom = hitcolor.cpy();
+                    colorTo = hitcolor.cpy().a(40f/255);
                 }},
                 new ParticleEffect(){{
                     if(regionName != null) region = regionName;
@@ -278,7 +279,7 @@ public class LIfx {
                     sizeTo = 0f;
                     length = 176f;
                     baseLength = 0f;
-                    colorFrom = colorTo = hitcolor;
+                    colorFrom = colorTo = hitcolor.cpy();
                 }}
         );
     }

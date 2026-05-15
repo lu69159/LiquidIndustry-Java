@@ -615,7 +615,7 @@ public class LIblocks {
                 damage = 1000f;
                 lightning = 3;
                 lightningLength = 60;
-                lightningColor = Color.white;
+                lightningColor = Color.white.cpy();
                 despawnSound = hitSound = Sounds.shootArc;
                 collides = absorbable = false;
                 pierceArmor = true;
@@ -625,8 +625,8 @@ public class LIblocks {
                     sizeTo = 8f;
                     strokeFrom = 1f;
                     strokeTo = 0f;
-                    colorFrom = Color.white;
-                    colorTo = Color.white.a(40f/255);
+                    colorFrom = Color.white.cpy();
+                    colorTo = Color.white.cpy().a(40f/255);
                 }};
             }};
             destroyBulletSameTeam = true;
@@ -763,7 +763,7 @@ public class LIblocks {
                             sizeTo = 0f;
                             length = 24f;
                             baseLength = 0f;
-                            colorFrom = colorTo = hitColor;
+                            colorFrom = colorTo = LIcolor.oilColor;
                         }};
                         trailInterval = 5f;
                         trailChance = 1f;
@@ -851,7 +851,7 @@ public class LIblocks {
                             sizeTo = 0f;
                             length = 24f;
                             baseLength = 0f;
-                            colorFrom = colorTo = hitColor;
+                            colorFrom = colorTo = LIcolor.cruofluidColor;
                         }};
                         trailInterval = 5f;
                         trailChance = 1f;
@@ -909,7 +909,7 @@ public class LIblocks {
                             sizeTo = 0f;
                             length = 24f;
                             baseLength = 0f;
-                            colorFrom = colorTo = hitColor;
+                            colorFrom = colorTo = LIcolor.CJLDYcolor;
                         }};
                         trailInterval = 5f;
                         trailChance = 1f;
@@ -969,7 +969,7 @@ public class LIblocks {
                             sizeTo = 0f;
                             length = 24f;
                             baseLength = 0f;
-                            colorFrom = colorTo = hitColor;
+                            colorFrom = colorTo = LIcolor.slagColor;
                         }};
                         trailInterval = 5f;
                         trailChance = 1f;
@@ -1032,7 +1032,7 @@ public class LIblocks {
                                     sizeTo = 0f;
                                     length = 24f;
                                     baseLength = 0f;
-                                    colorFrom = colorTo = hitColor;
+                                    colorFrom = colorTo = Color.red;
                                 }}
                         );
                         trailInterval = 5f;
@@ -1085,8 +1085,7 @@ public class LIblocks {
                         splashDamage = 540;
                         splashDamageRadius = 40f;
                         buildingDamageMultiplier = 0.05f;
-                        status = StatusEffects.electrified;
-                        statusDuration = 300f * 3;
+                        status = StatusEffects.shocked;
                         hitSize = 24f;
                         hitSound = despawnSound = Sounds.shootArc;
 
