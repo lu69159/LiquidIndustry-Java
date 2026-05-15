@@ -772,7 +772,7 @@ public class LIblocks {
                         lifetime = 60f;
                         ammoMultiplier = 1f;
                         backColor = frontColor = Color.valueOf("00000000");
-                        hitColor = LIcolor.cruofluidColor;
+                        hitColor = LIcolor.cryofluidColor;
                         splashDamage = 108;
                         splashDamageRadius = 160f;
                         splashDamagePierce = true;
@@ -787,7 +787,7 @@ public class LIblocks {
 
                         intervalBullet = new LightningBulletType(){{
                             pierceArmor = true;
-                            lightningColor = LIcolor.cruofluidColor;
+                            lightningColor = LIcolor.cryofluidColor;
                             damage = 1f;
                             buildingDamageMultiplier = 0.05f;
                             lightningLength = 4;
@@ -817,8 +817,8 @@ public class LIblocks {
                                             sizeTo = 160f;
                                             strokeFrom = 3f;
                                             strokeTo = 3f;
-                                            colorFrom = LIcolor.cruofluidColor;
-                                            colorTo = LIcolor.cruofluidColor.a(0f);
+                                            colorFrom = LIcolor.cryofluidColor;
+                                            colorTo = LIcolor.cryofluidColor.a(0f);
                                         }},
                                         new ParticleEffect(){{
                                             lifetime = 120f;
@@ -829,8 +829,8 @@ public class LIblocks {
                                             sizeTo = 2f;
                                             length = 44f;
                                             baseLength = 132f;
-                                            colorFrom = LIcolor.cruofluidColor;
-                                            colorTo = LIcolor.cruofluidColor.a(0f);
+                                            colorFrom = LIcolor.cryofluidColor;
+                                            colorTo = LIcolor.cryofluidColor.cpy().a(0f);
                                         }}
                                 );
                             }};
@@ -851,7 +851,7 @@ public class LIblocks {
                             sizeTo = 0f;
                             length = 24f;
                             baseLength = 0f;
-                            colorFrom = colorTo = LIcolor.cruofluidColor;
+                            colorFrom = colorTo = LIcolor.cryofluidColor;
                         }};
                         trailInterval = 5f;
                         trailChance = 1f;
@@ -982,7 +982,7 @@ public class LIblocks {
                         splashDamage = 3080;
                         splashDamageRadius = 160f;
                         splashDamagePierce = true;
-                        incendAmount = 3;
+                        incendAmount = 5;
                         incendChance = 1f;
                         puddles = 1;
                         puddleAmount = 450f;

@@ -8,7 +8,7 @@ public class LIcolor {
         sparkColorBack = Color.valueOf("8EFFEA"),
         ZScolor = Color.valueOf("3CA370"),
         oilColor = Color.valueOf("313131"),
-        cruofluidColor = Color.valueOf("87CEEB"),
+        cryofluidColor = Color.valueOf("87CEEB"),
         CJLDYcolor = Color.valueOf("C0ECFF"),
         slagColor = Color.valueOf("FFE99A");
     ;

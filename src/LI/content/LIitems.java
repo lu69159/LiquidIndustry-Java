@@ -53,7 +53,7 @@ public class LIitems {
             cost = 1.5f;
             radioactivity = 1.5f;
         }};
-        GTLDY = new Item("固态冷冻液", LIcolor.cruofluidColor){{
+        GTLDY = new Item("固态冷冻液", LIcolor.cryofluidColor){{
             cost = 1.5f;
         }};
         GTSY = new Item("固态石油", LIcolor.oilColor){{
