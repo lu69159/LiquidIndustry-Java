@@ -818,7 +818,7 @@ public class LIblocks {
                                             strokeFrom = 3f;
                                             strokeTo = 3f;
                                             colorFrom = LIcolor.cryofluidColor;
-                                            colorTo = LIcolor.cryofluidColor.a(0f);
+                                            colorTo = LIcolor.cryofluidColor.cpy().a(0f);
                                         }},
                                         new ParticleEffect(){{
                                             lifetime = 120f;
@@ -1080,6 +1080,7 @@ public class LIblocks {
                         lifetime = 50.625f;
                         rangeChange = -120f;
                         ammoMultiplier = 1f;
+                        reloadMultiplier = 0.8f;
                         backColor = frontColor = Color.valueOf("00000000");
                         hitColor = Pal.surge;
                         splashDamage = 540;
