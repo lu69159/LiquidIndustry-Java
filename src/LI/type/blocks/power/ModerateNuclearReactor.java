@@ -9,12 +9,11 @@ import arc.util.*;
 import mindustry.content.*;
 import mindustry.type.*;
 import mindustry.world.draw.*;
+import mindustry.world.meta.*;
 import mindustry.game.EventType;
 import mindustry.world.blocks.power.NuclearReactor;
-
 import LI.content.LIfx;
 import LI.content.LIliquids;
-
 
 import static mindustry.Vars.tilesize;
 
@@ -52,6 +51,14 @@ public class ModerateNuclearReactor extends NuclearReactor {
             explosionPuddleLiquid = outputLiquid.liquid;
         }
         super.init();
+    }
+
+    @Override
+    public void setStats() {
+        super.setStats();
+        if(outputLiquid != null){
+            stats.add(Stat.output, StatValues.liquids(1f, outputLiquid));
+        }
     }
 
     @Override

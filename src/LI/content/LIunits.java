@@ -588,7 +588,7 @@ public class LIunits {
                     interp = Interp.circleOut;
                     sides = 6;
                     strokeFrom = 5f;
-                    strokeTo = 192f;
+                    sizeTo = 192f;
                     colorFrom = colorTo = Color.valueOf("FFD37F");
                 }};
             }});

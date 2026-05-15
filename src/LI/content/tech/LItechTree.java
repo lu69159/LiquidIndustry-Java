@@ -49,9 +49,9 @@ public class LItechTree {
                 });
             });
 
-            //生产建筑科技树后续插入在这里
+            //NT生产建筑科技树后续插入在这里
 
-            //炮塔科技树后续插入在这里
+            //NT炮塔科技树后续插入在这里
 
             node(CDJD, Seq.with(new SectorComplete(map2)), () -> {
                 node(DXCDJD, () -> {
@@ -179,7 +179,8 @@ public class LItechTree {
             node(DXZJCYG);
         }), titaniumWall);
 
-        //各种炮塔
+        addTechNode(node(DCFB, Seq.with(new SectorComplete(desolateRift)), () -> {}), foreshadow);
+        //钍反炮
 
         addTechNode(node(SM, () -> {
             node(FZ, () -> {

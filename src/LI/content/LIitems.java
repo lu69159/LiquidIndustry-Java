@@ -26,7 +26,7 @@ public class LIitems {
             cost = 1.6f;
             flammability = 0.05f;
         }};
-        SMWZ = new Item("神秘物质", Color.valueOf("FFFFFF")){{
+        SMWZ = new Item("神秘物质", Color.white){{
             cost = 5f;
             charge = 10f;
             radioactivity = 50f;
@@ -38,7 +38,7 @@ public class LIitems {
             @Override
             public void setStats(){}
         };
-        SMSP = new Item("神秘碎片", Color.valueOf("FFFFFF")){{
+        SMSP = new Item("神秘碎片", Color.white){{
             cost = 2.1f;
             charge = 1f;
             radioactivity = 5f;
@@ -49,26 +49,26 @@ public class LIitems {
         GTS = new Item("固态水", Color.valueOf("4DA6FF")){{
             cost = 1.5f;
         }};
-        GTZS = new Item("固态重水", Color.valueOf("3D6E70")){{
+        GTZS = new Item("固态重水", LIcolor.ZScolor){{
             cost = 1.5f;
             radioactivity = 1.5f;
         }};
-        GTLDY = new Item("固态冷冻液", Color.valueOf("3DEEEB")){{
+        GTLDY = new Item("固态冷冻液", LIcolor.cruofluidColor){{
             cost = 1.5f;
         }};
-        GTSY = new Item("固态石油", Color.valueOf("43434F")){{
+        GTSY = new Item("固态石油", LIcolor.oilColor){{
             cost = 1.5f;
             flammability = 1.5f;
             explosiveness = 2.5f;
         }};
-        GTCJLDY = new Item("固态超级冷冻液", Color.valueOf("C0ECFF")){{
+        GTCJLDY = new Item("固态超级冷冻液", LIcolor.CJLDYcolor){{
             cost = 1.5f;
         }};
-        HWKZJT = new Item("恒温矿渣晶体", Color.valueOf("FFA166")){{
+        HWKZJT = new Item("恒温矿渣晶体", LIcolor.slagColor){{
             cost = 1.8f;
             flammability = 6f;
         }};
-        HWSBJT = new Item("恒温衰变晶体", Color.valueOf("FF0000")){{
+        HWSBJT = new Item("恒温衰变晶体", Color.red){{
             cost = 2f;
             flammability = 12f;
             explosiveness = 12f;

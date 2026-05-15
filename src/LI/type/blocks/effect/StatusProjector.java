@@ -120,7 +120,7 @@ public class StatusProjector extends OverdriveProjector {
 
         @Override
         public void drawSelect() {
-            Drawf.dashCircle(x, y, range, status.size == 1 ? status.first().color : Color.white);
+            Drawf.dashCircle(x, y, range, applyColor);
         }
 
         @Override

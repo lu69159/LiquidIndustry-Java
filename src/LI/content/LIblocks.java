@@ -8,11 +8,14 @@ import mindustry.*;
 import mindustry.content.*;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
+import mindustry.entities.pattern.*;
 import mindustry.game.*;
 import mindustry.gen.*;
+import mindustry.graphics.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.defense.*;
+import mindustry.world.blocks.defense.turrets.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.environment.*;
 import mindustry.world.blocks.liquid.*;
@@ -53,7 +56,7 @@ public class LIblocks {
     WXHXJZ,SDHX,LTHX,
 
     //炮塔
-    //DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
+    DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
 
     //墙
     JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ, //LCQ,
@@ -584,8 +587,541 @@ public class LIblocks {
         }};
 
         //region 炮塔
-        /* 弹药部分需要搬过来的内容很多，后面再说... */
+        DCFB = new ItemTurret("电磁风暴"){{
+            requirements(Category.turret, with(Items.lead, 1500, Items.metaglass, 1000, Items.silicon, 750, Items.graphite,750, Items.surgeAlloy, 500, LIitems.QSZ, 125, LIitems.GTS, 10));
+            health = 3200;
+            size = 4;
+            range = 768f;
+            reload = 300f;
+            maxAmmo = 15;
+            ammoPerShot = 3;
+            recoilTime = 60f;
+            recoil = 4f;
+            buildCostMultiplier = 0.6f;
+            shootSound = Sounds.shootFuse;
+            shootCone = 0.5f;
+            shake = 6f;
+            rotateSpeed = 4f;
+            shootY = 8f;
+            shoot = new ShootPattern() {{
+                shots = 1;
+                firstShotDelay = 30f;
+                shotDelay = 0f;
+            }};
+            consumePower(24f);
+            coolant = consumeCoolant(1.5f);
+            coolantMultiplier = 0.35f;
+            destroyBullet = new LightningBulletType(){{
+                damage = 1000f;
+                lightning = 3;
+                lightningLength = 60;
+                lightningColor = Color.white;
+                despawnSound = hitSound = Sounds.shootArc;
+                collides = absorbable = false;
+                pierceArmor = true;
+                hitEffect = new WaveEffect(){{
+                    lifetime = 5f;
+                    sizeFrom = 0f;
+                    sizeTo = 8f;
+                    strokeFrom = 1f;
+                    strokeTo = 0f;
+                    colorFrom = Color.white;
+                    colorTo = Color.white.a(40f/255);
+                }};
+            }};
+            destroyBulletSameTeam = true;
+            ammo(
+                    LIitems.GTS, new BasicBulletType(12.8f, 2000f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = Color.white;
+                        splashDamage = 540;
+                        splashDamageRadius = 40f;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = Liquids.water;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.wet;
+                        statusDuration = 300f;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.shootArc;
 
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.white;
+                            damage = 10f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 5;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.white;
+                            damage = 150f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 25;
+                        }};
+                        fragBullets = 16;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                    }},
+                    LIitems.GTZS, new BasicBulletType(12.8f, 2000f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = LIcolor.ZScolor;
+                        splashDamage = 540;
+                        splashDamageRadius = 40f;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = LIliquids.ZS;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.electrified;
+                        statusDuration = 300f;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.shootArc;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.ZScolor;
+                            damage = 10f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 5;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.ZScolor;
+                            damage = 150f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 25;
+                        }};
+                        fragBullets = 16;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                    }},
+                    LIitems.GTSY, new BasicBulletType(12.8f, 200f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = LIcolor.oilColor;
+                        splashDamage = 540;
+                        splashDamageRadius = 160f;
+                        splashDamagePierce = true;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = Liquids.oil;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.tarred;
+                        statusDuration = 300f;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.explosionMissile;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.oilColor;
+                            damage = 1f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 4;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.oilColor;
+                            damage = 20f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 15;
+                            hitSound = despawnSound = Sounds.shootArc;
+                        }};
+                        fragBullets = 6;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = LIfx.DCFBsplash(hitColor);
+
+                        trailEffect = new ParticleEffect(){{
+                            lifetime = 30f;
+                            particles = 2;
+                            interp = Interp.circleOut;
+                            sizeInterp = Interp.circleIn;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = colorTo = hitColor;
+                        }};
+                        trailInterval = 5f;
+                        trailChance = 1f;
+                    }},
+                    LIitems.GTLDY, new BasicBulletType(12.8f, 200f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = LIcolor.cruofluidColor;
+                        splashDamage = 108;
+                        splashDamageRadius = 160f;
+                        splashDamagePierce = true;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = Liquids.cryofluid;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.freezing;
+                        statusDuration = 300f;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.explosionMissile;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.cruofluidColor;
+                            damage = 1f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 4;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new EmptyBulletType(){{
+                            lifetime = 600f;
+                            damage = speed = 0f;
+                            absorbable = reflectable = hittable = collides = false;
+                            hitEffect = despawnEffect = Fx.none;
+                            intervalBullet = new BasicBulletType(){{
+                                instantDisappear = splashDamagePierce = true;
+                                absorbable = reflectable = false;
+                                damage = 0f;
+                                splashDamage = 108f;
+                                splashDamageRadius = 160f;
+                                status = StatusEffects.freezing;
+                                hitEffect = despawnEffect = new MultiEffect(
+                                        new WaveEffect(){{
+                                            lifetime = 120f;
+                                            sizeFrom = 161f;
+                                            sizeTo = 160f;
+                                            strokeFrom = 3f;
+                                            strokeTo = 3f;
+                                            colorFrom = LIcolor.cruofluidColor;
+                                            colorTo = LIcolor.cruofluidColor.a(0f);
+                                        }},
+                                        new ParticleEffect(){{
+                                            lifetime = 120f;
+                                            particles = 30;
+                                            interp = Interp.circleOut;
+                                            sizeInterp = Interp.circleIn;
+                                            sizeFrom = 2f;
+                                            sizeTo = 2f;
+                                            length = 44f;
+                                            baseLength = 132f;
+                                            colorFrom = LIcolor.cruofluidColor;
+                                            colorTo = LIcolor.cruofluidColor.a(0f);
+                                        }}
+                                );
+                            }};
+                            bulletInterval = 60f;
+                            intervalBullets = 1;
+                        }};
+                        fragBullets = 1;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = LIfx.DCFBsplash(hitColor);
+
+                        trailEffect = new ParticleEffect(){{
+                            lifetime = 30f;
+                            particles = 2;
+                            interp = Interp.circleOut;
+                            sizeInterp = Interp.circleIn;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = colorTo = hitColor;
+                        }};
+                        trailInterval = 5f;
+                        trailChance = 1f;
+                    }},
+                    LIitems.GTCJLDY, new BasicBulletType(12.8f, 200f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = LIcolor.CJLDYcolor;
+                        splashDamage = 108;
+                        splashDamageRadius = 160f;
+                        splashDamagePierce = true;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = LIliquids.CJLDY;
+                        buildingDamageMultiplier = 0.05f;
+                        status = LIstatus.BF;
+                        statusDuration = 300f * 2;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.explosionMissile;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.CJLDYcolor;
+                            damage = 1f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 4;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.CJLDYcolor;
+                            damage = 20f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 15;
+                            hitSound = despawnSound = Sounds.shootArc;
+                        }};
+                        fragBullets = 6;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = LIfx.DCFBsplash(hitColor, "液体工艺-snow");
+
+                        trailEffect = new ParticleEffect(){{
+                            lifetime = 30f;
+                            region = "液体工艺-snow";
+                            particles = 2;
+                            interp = Interp.circleOut;
+                            sizeInterp = Interp.circleIn;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = colorTo = hitColor;
+                        }};
+                        trailInterval = 5f;
+                        trailChance = 1f;
+                    }},
+                    LIitems.HWKZJT, new BasicBulletType(12.8f, 200f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = LIcolor.slagColor;
+                        splashDamage = 1080;
+                        splashDamageRadius = 160f;
+                        splashDamagePierce = true;
+                        incendAmount = 3;
+                        incendChance = 1f;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = Liquids.slag;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.melting;
+                        statusDuration = 300f;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.explosionMissile;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.slagColor;
+                            damage = 1f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 4;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = LIcolor.slagColor;
+                            damage = 20f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 15;
+                            hitSound = despawnSound = Sounds.shootArc;
+                        }};
+                        fragBullets = 6;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = LIfx.DCFBsplash(hitColor, "液体工艺-sTar");
+
+                        trailEffect = new ParticleEffect(){{
+                            lifetime = 30f;
+                            region = "液体工艺-sTar";
+                            particles = 2;
+                            interp = Interp.circleOut;
+                            sizeInterp = Interp.circleIn;
+                            sizeFrom = 3f;
+                            sizeTo = 0f;
+                            length = 24f;
+                            baseLength = 0f;
+                            colorFrom = colorTo = hitColor;
+                        }};
+                        trailInterval = 5f;
+                        trailChance = 1f;
+                    }},
+                    LIitems.HWSBJT, new BasicBulletType(12.8f, 200f){{
+                        lifetime = 60f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = Color.red;
+                        splashDamage = 3080;
+                        splashDamageRadius = 160f;
+                        splashDamagePierce = true;
+                        incendAmount = 3;
+                        incendChance = 1f;
+                        puddles = 1;
+                        puddleAmount = 450f;
+                        puddleLiquid = LIliquids.SBRY;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.burning;
+                        statusDuration = 300f * 2;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.explosionMissile;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.red;
+                            damage = 1f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 4;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.red;
+                            damage = 20f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 15;
+                            hitSound = despawnSound = Sounds.shootArc;
+                        }};
+                        fragBullets = 6;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = LIfx.DCFBsplash(hitColor, "液体工艺-sTar");
+
+                        trailEffect = new MultiEffect(
+                                Fx.fireHit,
+                                Fx.fire,
+                                new ParticleEffect(){{
+                                    lifetime = 30f;
+                                    region = "液体工艺-sTar";
+                                    particles = 2;
+                                    interp = Interp.circleOut;
+                                    sizeInterp = Interp.circleIn;
+                                    sizeFrom = 3f;
+                                    sizeTo = 0f;
+                                    length = 24f;
+                                    baseLength = 0f;
+                                    colorFrom = colorTo = hitColor;
+                                }}
+                        );
+                        trailInterval = 5f;
+                        trailChance = 1f;
+                    }},
+                    LIitems.CDZ, new BasicBulletType(12.8f, 4200f){{
+                        lifetime = 69.375f;
+                        rangeChange = 120f;
+                        reloadMultiplier = 0.5f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = Color.cyan;
+                        splashDamage = 540;
+                        splashDamageRadius = 40f;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.electrified;
+                        statusDuration = 300f * 3;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.shootArc;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.cyan;
+                            damage = 20f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 5;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Color.cyan;
+                            damage = 300f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 40;
+                        }};
+                        fragBullets = 20;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                    }},
+                    Items.surgeAlloy, new BasicBulletType(12.8f, 800f){{
+                        lifetime = 50.625f;
+                        rangeChange = -120f;
+                        ammoMultiplier = 1f;
+                        backColor = frontColor = Color.valueOf("00000000");
+                        hitColor = Pal.surge;
+                        splashDamage = 540;
+                        splashDamageRadius = 40f;
+                        buildingDamageMultiplier = 0.05f;
+                        status = StatusEffects.electrified;
+                        statusDuration = 300f * 3;
+                        hitSize = 24f;
+                        hitSound = despawnSound = Sounds.shootArc;
+
+                        intervalBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Pal.surge;
+                            damage = 10f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 5;
+                        }};
+                        bulletInterval = 3f;
+                        intervalBullets = 3;
+                        intervalRandomSpread = 30f;
+                        intervalSpread = 60f;
+                        intervalAngle = 0f;
+
+                        fragBullet = new LightningBulletType(){{
+                            pierceArmor = true;
+                            lightningColor = Pal.surge;
+                            damage = 50f;
+                            buildingDamageMultiplier = 0.05f;
+                            lightningLength = 25;
+                        }};
+                        fragBullets = 16;
+
+                        shootEffect = LIfx.DCFBshoot(hitColor);
+                    }}
+            );
+        }
+            @Override
+            public void setStats() {
+                super.setStats();
+                if(destroyBullet != null) stats.add(new Stat("damageondestroy", StatCat.function), StatValues.ammo(ObjectMap.of(this, destroyBullet), true, false));
+            }
+        };
 
         //region 墙
         JDQT = new Wall("基地墙体"){{

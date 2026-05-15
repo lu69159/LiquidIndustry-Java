@@ -3,6 +3,7 @@ package LI.content;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.math.*;
+import arc.util.Nullable;
 import mindustry.gen.Unit;
 import mindustry.entities.Effect;
 import mindustry.entities.effect.*;
@@ -115,7 +116,7 @@ public class LIfx {
                 Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 5f + 2f);
         });
     }),
-    CDZShoot = new Effect(12, e -> {
+    CDZshoot = new Effect(12, e -> {
        Draw.color(Color.white, sparkColor, e.fin());
        Lines.stroke(e.fout() * 1.2f + 0.5f);
 
@@ -202,4 +203,83 @@ public class LIfx {
         }}
     );
 
+    public static Effect DCFBshoot(Color hitcolor){
+        return new MultiEffect(
+                new ParticleEffect(){{
+                    particles = 1;
+                    line = true;
+                    lenFrom = 120f;
+                    lenTo = 0f;
+                    strokeFrom = 6f;
+                    strokeTo = 0f;
+                    interp = Interp.pow5Out;
+                    length = 150f;
+                    lifetime = 60f;
+                    colorFrom = hitcolor;
+                    colorTo = hitcolor.a(40f/255);
+                    cone = 8f;
+                }},
+                new ParticleEffect(){{
+                    particles = 4;
+                    line = true;
+                    lenFrom = 40f;
+                    lenTo = 0f;
+                    strokeFrom = 3f;
+                    strokeTo = 0f;
+                    interp = Interp.pow3Out;
+                    length = 80f;
+                    lifetime = 35f;
+                    colorFrom = hitcolor;
+                    colorTo = hitcolor.a(40f/255);
+                    cone = 45f;
+                }},
+                new ParticleEffect(){{
+                    particles = 8;
+                    sizeFrom = 2f;
+                    sizeTo = 0f;
+                    interp = Interp.circleOut;
+                    length = 30f;
+                    lifetime = 20f;
+                    colorFrom = hitcolor;
+                    colorTo = hitcolor.a(40f/255);
+                    cone = 180f;
+                }}
+        );
+    }
+
+    public static Effect DCFBsplash(Color hitcolor){return DCFBsplash(hitcolor, null);}
+    public static Effect DCFBsplash(Color hitcolor, String regionName){
+        return new MultiEffect(
+                new WaveEffect(){{
+                    lifetime = 10f;
+                    sizeFrom = 0f;
+                    sizeTo = 168f;
+                    strokeFrom = 1f;
+                    strokeTo = 0f;
+                    colorFrom = hitcolor;
+                    colorTo = hitcolor.a(40f/255);
+                }},
+                new WaveEffect(){{
+                    lifetime = 20f;
+                    sizeFrom = 0f;
+                    sizeTo = 160f;
+                    strokeFrom = 6f;
+                    strokeTo = 0f;
+                    colorFrom = hitcolor;
+                    colorTo = hitcolor.a(40f/255);
+                }},
+                new ParticleEffect(){{
+                    if(regionName != null) region = regionName;
+                    lifetime = 45f;
+                    particles = 45;
+                    interp = Interp.circleOut;
+                    sizeInterp = Interp.circleIn;
+                    sizeFrom = 5f;
+                    sizeTo = 0f;
+                    length = 176f;
+                    baseLength = 0f;
+                    colorFrom = colorTo = hitcolor;
+                }}
+        );
+    }
 }

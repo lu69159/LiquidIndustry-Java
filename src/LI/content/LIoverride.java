@@ -97,8 +97,8 @@ public class LIoverride {
                     damage = 425;
                     ammoMultiplier = 6;
                     toColor = LIcolor.sparkColor;
-                    shootEffect = LIfx.CDZShoot;
-                    smokeEffect = LIfx.CDZShoot;
+                    shootEffect = LIfx.CDZshoot;
+                    smokeEffect = LIfx.CDZshoot;
                     width = 22;
                     reloadMultiplier = 0.8f;
                     status = StatusEffects.electrified;
