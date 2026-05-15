@@ -1,11 +1,12 @@
 package LI;
 
+import LI.content.tech.LItechTree;
 import arc.Events;
 import arc.util.*;
 import mindustry.mod.*;
 import LI.type.ai.LIcommands;
 import LI.content.*;
-import LI.tech.ATD;
+import LI.content.tech.ATD;
 
 import static mindustry.game.EventType.*;
 
@@ -31,5 +32,6 @@ public class LIMod extends Mod{
         LIstatus.load();
         LIunits.load(); //导弹未添加
         LIblocks.load(); //部分方块未添加
+        LItechTree.load(); //未添加的内容无法加入
     }
 }

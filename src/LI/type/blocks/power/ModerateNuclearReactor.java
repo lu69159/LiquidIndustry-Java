@@ -97,9 +97,11 @@ public class ModerateNuclearReactor extends NuclearReactor {
             }
 
             if(heat > 0 && liquids.get(moderator) >= 0.1f){
-                float maxUsed = Math.min(liquids.currentAmount(), heat / coolantPower);
-                heat -= maxUsed * coolantPower;
-                liquids.remove(liquids.current(), maxUsed / moderatorFullness);
+                float maxUsed = Math.min(liquids.get(coolant), heat / coolantPower);
+                if(maxUsed > 0f){
+                    heat -= maxUsed * coolantPower;
+                    liquids.remove(coolant, maxUsed / moderatorFullness);
+                }
             }
 
             if(heat > smokeThreshold){

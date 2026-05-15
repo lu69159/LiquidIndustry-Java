@@ -60,7 +60,7 @@ public class LIoverride {
             damage = 1350;
             buildingDamageMultiplier = 0.2f;
             pierceDamageFactor = 0;
-            length = range + rangeChange;
+            length = 500 + rangeChange;
             hitShake = 6;
             ammoMultiplier = 5;
             status = StatusEffects.electrified;
@@ -100,7 +100,7 @@ public class LIoverride {
                     shootEffect = LIfx.CDZShoot;
                     smokeEffect = LIfx.CDZShoot;
                     width = 22;
-                    reloadMultiplier = 0.9f;
+                    reloadMultiplier = 0.8f;
                     status = StatusEffects.electrified;
                     statusDuration = 60f;
 

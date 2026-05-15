@@ -1,6 +1,5 @@
 package LI.type.blocks.effect;
 
-import arc.Events;
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
 import arc.struct.Seq;
@@ -10,7 +9,6 @@ import arc.util.io.Writes;
 import mindustry.Vars;
 import mindustry.entities.*;
 import mindustry.entities.effect.WaveEffect;
-import mindustry.game.EventType;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
 import mindustry.world.blocks.defense.OverdriveProjector;
@@ -18,46 +16,32 @@ import mindustry.graphics.*;
 import mindustry.world.meta.*;
 
 public class StatusProjector extends OverdriveProjector {
-    public Seq<StatusEffect> status;
+    public Seq<StatusEffect> status = new Seq<>();
     public Effect applyEffect;
-    public Color applyColor = Color.white;
+    public Color applyColor;
 
     public boolean applyOnEnemies = false;
 
-    public StatusProjector(String name, StatusEffect effect) {
+    public StatusProjector(String name){
         super(name);
         range = 120f;
         useTime = 600f;
         reload = 240f;
         hasBoost = false;
         hasItems = false;
-        canOverdrive = true;
+        canOverdrive = false;
         lightRadius = range * 1.1f;
-        status = Seq.with(effect);
-        //applyColor = effect.color;
-        applyColor = applyOnEnemies ? Color.gray : Color.white;
+        applyColor = status.size == 1 ? status.first().color : applyOnEnemies ? Color.gray : Color.white;
         applyEffect = new WaveEffect(){{
             sizeTo = range;
             colorFrom = colorTo = applyColor;
         }};
+
     }
 
-    public StatusProjector(String name, Seq<StatusEffect> effects) {
-        super(name);
-        range = 120f;
-        useTime = 600f;
-        reload = 240f;
-        hasBoost = false;
-        hasItems = false;
-        canOverdrive = true;
-        lightRadius = range * 1.1f;
-        status = effects;
-        applyColor = applyOnEnemies ? Color.gray : Color.white;
-        applyEffect = new WaveEffect(){{
-            sizeTo = range;
-            colorFrom = colorTo = applyColor;
-        }};
-    }
+    public void setStatus(StatusEffect... effects){
+        status.addAll(effects);
+    };
 
     @Override
     public void setStats() {

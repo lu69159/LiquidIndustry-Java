@@ -50,6 +50,10 @@ public class LIliquids {
                     this.fireTimer = 0;
                 }
             }
+            @Override
+            public boolean willBoil() {
+                return false;
+            }
         };
         FY0 = new Liquid("冰冷废液", Color.valueOf("9B928B")){{
             lightColor = Color.valueOf("E0B28D10");
@@ -100,5 +104,6 @@ public class LIliquids {
             boilPoint = 2.5f;
             coolant = false;
         }};
+        FY6 = new Liquid("神能精华液", Color.white);
     }
 }

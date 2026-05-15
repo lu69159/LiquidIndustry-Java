@@ -1,4 +1,4 @@
-package LI.tech;
+package LI.content.tech;
 
 import arc.func.Boolf;
 import mindustry.Vars;
@@ -22,7 +22,7 @@ public class ATD {
         for(var seq : Vars.content.getContentMap()){
             for(var thing : seq){
                 if(thing instanceof UnlockableContent u && pred.get(u)){
-                    //if(!u.databaseTabs.contains(planet)) u.databaseTabs.add(planet);
+                    if(!u.databaseTabs.contains(planet)) u.databaseTabs.add(planet);
                     if(!u.shownPlanets.contains(planet)) u.shownPlanets.add(planet);
                 }
             }

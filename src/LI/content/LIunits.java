@@ -210,7 +210,7 @@ public class LIunits {
                 status = StatusEffects.shocked;
             }});
 
-            weapons.add(new Weapon("伽马-S1"){{
+            weapons.add(new Weapon("液体工艺-伽马-S1"){{
                 top = false;
                 reload = 15f;
                 x = 1f;
@@ -267,7 +267,7 @@ public class LIunits {
             }});
 
             weapons.add(
-                new Weapon("德尔塔1"){{
+                new Weapon("液体工艺-德尔塔1"){{
                     shootSound = Sounds.shootLaser;
                     reload = 12f;
                     x = 8f;
@@ -284,7 +284,7 @@ public class LIunits {
                         status = StatusEffects.shocked;
                     }};
                 }},
-                new Weapon("德尔塔1"){{
+                new Weapon("液体工艺-德尔塔1"){{
                     shootSound = Sounds.shootLaser;
                     reload = 7.5f;
                     x = 4f;
@@ -315,7 +315,7 @@ public class LIunits {
             accel = 0.2f;
             itemCapacity = 0;
 
-            weapons.add(new Weapon("水黾1"){{
+            weapons.add(new Weapon("液体工艺-水黾1"){{
                 rotate = true;
                 mirror = false;
                 reload = 20f;
@@ -341,7 +341,7 @@ public class LIunits {
             accel = 0.15f;
             itemCapacity = 10;
 
-            weapons.add(new Weapon("筏蛛1"){{
+            weapons.add(new Weapon("液体工艺-筏蛛1"){{
                 rotate = true;
                 mirror = false;
                 reload = 135f;
@@ -369,7 +369,7 @@ public class LIunits {
             accel = 0.08f;
             itemCapacity = 30;
 
-            weapons.add(new Weapon("河狸1"){{
+            weapons.add(new Weapon("液体工艺-河狸1"){{
                 rotate = true;
                 mirror = false;
                 cooldownTime = 120f;
@@ -418,7 +418,7 @@ public class LIunits {
             }});
 
             weapons.add(
-                new Weapon("电鳐1"){{
+                new Weapon("液体工艺-电鳐1"){{
                     rotate = continuous = true;
                     mirror = false;
                     cooldownTime = 150f;
@@ -443,7 +443,7 @@ public class LIunits {
                         status = StatusEffects.shocked;
                     }};
                 }},
-                new Weapon("电鳐2"){{
+                new Weapon("液体工艺-电鳐2"){{
                     rotate = true;
                     reload = 30f;
                     x = 13.25f;
@@ -515,7 +515,7 @@ public class LIunits {
             }});
 
             weapons.add(
-                new Weapon("巨蟹1"){{
+                new Weapon("液体工艺-巨蟹1"){{
                     mirror = rotate = false;
                     alwaysContinuous = true;
                     x = y = recoil = 0f;
@@ -550,7 +550,7 @@ public class LIunits {
                         }};
                     }};
                 }},
-                new Weapon("巨蟹2"){{
+                new Weapon("液体工艺-巨蟹2"){{
                     rotate = true;
                     reload = 60f;
                     x = 20.5f;
@@ -594,7 +594,7 @@ public class LIunits {
             }});
 
             weapons.add(
-                new Weapon("渊螯1"){{
+                new Weapon("液体工艺-渊螯1"){{
                     mirror = rotate = false;
                     alwaysContinuous = true;
                     x = y = recoil = 0f;
@@ -629,10 +629,11 @@ public class LIunits {
                         }};
                     }};
                 }},
-                new Weapon("渊螯2"){{
+                new Weapon("液体工艺-渊螯2"){{
                     mirror = false;
                     rotate = true;
                     rotateSpeed = 4f;
+                    reload = 120f;
                     x = 0f;
                     y = 4f;
                     shootY = 4.5f;
@@ -690,7 +691,7 @@ public class LIunits {
                         }};
                     }};
                 }},
-                new Weapon("渊螯3"){{
+                new Weapon("液体工艺-渊螯3"){{
                     mirror = rotate = true;
                     rotateSpeed = 2f;
                     x = 18f;

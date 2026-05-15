@@ -69,7 +69,7 @@ public class LIblocks {
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
 
     //液流
-    JXCYG,TDGQ,ZKB, //YTZQ,WXYTZQ,
+    JXLTCG,TDGQ,ZKB, //YTZQ,WXYTZQ,
 
     //钻头
     WXCSJ,QXCSJ,DXCSJ,LDYCQJ,FYCQJ,BLZJ,YZSYZJ
@@ -402,46 +402,51 @@ public class LIblocks {
             consumePower(5.5f);
             consumeItem(LIitems.QSZ).boost();
         }};
-        CPTY = new StatusProjector("超频投影", StatusEffects.overclock){{
+        CPTY = new StatusProjector("超频投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, Items.thorium, 15));
             health = 260;
             size = 2;
+            setStatus(StatusEffects.overclock);
             consumePower(2f);
         }};
-        BHTY = new StatusProjector("保护投影", StatusEffects.shielded){{
+        BHTY = new StatusProjector("保护投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, Items.phaseFabric, 5));
             health = 260;
             size = 2;
+            setStatus(StatusEffects.shielded);
             consumePower(2f);
         }};
-        JDTY = new StatusProjector("解冻投影", LIstatus.JD){{
+        JDTY = new StatusProjector("解冻投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.graphite, 75, Items.silicon, 40, LIitems.GTLDY, 1));
             health = 260;
             size = 2;
             range = 80f;
+            setStatus(LIstatus.JD);
             consumePower(1.5f);
             consumeLiquid(Liquids.cryofluid, 3f / 60f);
         }};
-        ZTQD = new StatusProjector("状态穹顶", Seq.with(StatusEffects.overclock, StatusEffects.shielded, StatusEffects.fast)){{
+        ZTQD = new StatusProjector("状态穹顶"){{
             requirements(Category.effect, with(Items.lead, 220, Items.graphite, 165, Items.silicon, 100, Items.phaseFabric, 25, LIitems.NRJT, 1));
             health = 680;
             size = 3;
             range = 200f;
             useTime = 1200f;
             reload = 180f;
+            setStatus(StatusEffects.overclock, StatusEffects.shielded, StatusEffects.fast);
             consumePower(8f);
             consumeLiquid(Liquids.cryofluid, 21f / 60f);
         }};
-        SYTQ = new StatusProjector("神佑天穹", LIstatus.SY){{
+        SYTQ = new StatusProjector("神佑天穹"){{
             requirements(Category.effect, with(Items.lead, 350, Items.titanium, 180, Items.silicon, 180, Items.plastanium, 130, Items.surgeAlloy, 150, LIitems.NRJT, 10, LIitems.SMSP, 5));
             health = 1260;
             size = 4;
             range = 240f;
             reload = 300f;
+            setStatus(LIstatus.SY);
             consumePower(8.5f);
             consumeLiquid(LIliquids.FY5, 3f / 60f);
         }};
-        RHTY = new StatusProjector("弱化投影", StatusEffects.sapped){{
+        RHTY = new StatusProjector("弱化投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.coal, 85, Items.silicon, 40, Items.thorium, 10));
             health = 280;
             size = 2;
@@ -449,9 +454,10 @@ public class LIblocks {
             useTime = 600f;
             reload = 600f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.sapped);
             consumePower(3f);
         }};
-        MBTY = new StatusProjector("麻痹投影", StatusEffects.electrified){{
+        MBTY = new StatusProjector("麻痹投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.plastanium, 25, Items.silicon, 40, Items.thorium, 10));
             health = 280;
             size = 2;
@@ -459,9 +465,10 @@ public class LIblocks {
             useTime = 600f;
             reload = 600f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.electrified);
             consumePower(3f);
         }};
-        HSTY = new StatusProjector("缓速投影", StatusEffects.slow){{
+        HSTY = new StatusProjector("缓速投影"){{
             requirements(Category.effect, with(Items.lead, 100, Items.scrap, 165, Items.silicon, 40, Items.thorium, 10));
             health = 280;
             size = 2;
@@ -469,9 +476,10 @@ public class LIblocks {
             useTime = 600f;
             reload = 600f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.slow);
             consumePower(3f);
         }};
-        RHQD = new StatusProjector("弱化穹顶", StatusEffects.sapped){{
+        RHQD = new StatusProjector("弱化穹顶"){{
             requirements(Category.effect, with(Items.lead, 220, Items.coal, 250, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
             health = 780;
             size = 3;
@@ -479,10 +487,11 @@ public class LIblocks {
             useTime = 720f;
             reload = 300f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.sapped);
             consumePower(12f);
             consumeLiquid(Liquids.oil, 12f / 60f);
         }};
-        MBQD = new StatusProjector("麻痹穹顶", StatusEffects.electrified){{
+        MBQD = new StatusProjector("麻痹穹顶"){{
             requirements(Category.effect, with(Items.lead, 220, Items.plastanium, 125, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
             health = 780;
             size = 3;
@@ -490,10 +499,11 @@ public class LIblocks {
             useTime = 720f;
             reload = 300f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.electrified);
             consumePower(12f);
             consumeLiquid(LIliquids.ZS, 15f / 60f);
         }};
-        HSQD = new StatusProjector("缓速穹顶", StatusEffects.slow){{
+        HSQD = new StatusProjector("缓速穹顶"){{
             requirements(Category.effect, with(Items.lead, 220, Items.scrap, 425, Items.silicon, 120,Items.phaseFabric, 55, Items.surgeAlloy, 105));
             health = 780;
             size = 3;
@@ -501,6 +511,7 @@ public class LIblocks {
             useTime = 720f;
             reload = 300f;
             applyOnEnemies = true;
+            setStatus(StatusEffects.slow);
             consumePower(12f);
             consumeLiquid(LIliquids.FY0, 30f / 60f);
         }};
@@ -779,7 +790,7 @@ public class LIblocks {
         }};
 
         //region 液流
-        JXCYG = new LiquidRouter("巨型储液罐"){{
+        JXLTCG = new LiquidRouter("巨型储液罐"){{
             requirements(Category.liquid, with(Items.titanium, 80, Items.metaglass, 120, LIitems.QSZ, 2));
             health = 960;
             size = 4;
