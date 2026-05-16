@@ -75,36 +75,30 @@ public class LIstatus {
             color = Color.valueOf("6ECDEC");
             permanent = true;
         }};
+        SY = new ImmuneStatusEffect("神佑"){
+        {
+            applyEffect = LIfx.blessApply;
+        }
+            @Override
+            public void setStats(){}
+            @Override
+            public void draw(Unit unit){
+                Draw.z(Layer.effect);
+                Draw.color(Color.valueOf("FFFFFF80"));
+                Draw.rect(Core.atlas.find("液体工艺-神佑光环"),
+                        unit.x + Angles.trnsx(unit.rotation - 90, 0, 0),
+                        unit.y + Angles.trnsy(unit.rotation - 90, 0, 0),
+                        128 * unit.hitSize / 26,
+                        128 * unit.hitSize / 26,
+                        Time.time * 1);
+            }
+        };
 
         //确保添加所有MOD的负面效果
         Events.on(ContentInitEvent.class, e ->{
             addBadEffects();
-            SY = new ImmuneStatusEffect("神佑", badEffects){{
-                applyEffect = LIfx.blessApply;
-                color = Color.valueOf("EFEFEF");
-                healthMultiplier = 12f;
-                damageMultiplier = 6f;
-                reloadMultiplier = 4f;
-                speedMultiplier = 3f;
-                buildSpeedMultiplier = 2f;
-                damage = -5f;
-                effectChance = 1.0f;
-            }
-                @Override
-                public void setStats(){}
-
-                @Override
-                public void draw(Unit unit){
-                    Draw.z(Layer.effect);
-                    Draw.color(Color.valueOf("FFFFFF80"));
-                    Draw.rect(Core.atlas.find("液体工艺-神佑光环"),
-                    unit.x + Angles.trnsx(unit.rotation - 90, 0, 0),
-                    unit.y + Angles.trnsy(unit.rotation - 90, 0, 0),
-                    128 * unit.hitSize / 26,
-                    128 * unit.hitSize / 26,
-                    Time.time * 1);
-                }
-            };
+            ((ImmuneStatusEffect)SY).immuneEffects = badEffects;
+            SY.init();
         });
     }
 

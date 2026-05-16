@@ -25,7 +25,7 @@ import static mindustry.Vars.*;
 public class LIunits {
     public static UnitType
     //导弹
-    //TF1,TF2,
+    //TF1,TF2,MF1,MF2,MF3,
 
     //纯辅助
     JZQ,XFQ,ZLQ,ZTQ,

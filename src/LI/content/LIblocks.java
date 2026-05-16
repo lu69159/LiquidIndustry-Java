@@ -6,8 +6,10 @@ import arc.math.*;
 import arc.struct.*;
 import mindustry.*;
 import mindustry.content.*;
+import mindustry.entities.*;
 import mindustry.entities.bullet.*;
 import mindustry.entities.effect.*;
+import mindustry.entities.part.*;
 import mindustry.entities.pattern.*;
 import mindustry.game.*;
 import mindustry.gen.*;
@@ -1122,6 +1124,557 @@ public class LIblocks {
                 if(destroyBullet != null) stats.add(new Stat("damageondestroy", StatCat.function), StatValues.ammo(ObjectMap.of(this, destroyBullet), true, false));
             }
         };
+        //TFP钍反炮(得先加导弹才行)
+        DLY = new PowerTurret("德鲁伊"){{
+            requirements(Category.turret, with(Items.copper, 200, Items.lead, 150, Items.graphite, 50, LIitems.ZYZ, 5));
+            canOverdrive = targetGround = targetAir = false;
+            targetHealing = true;
+            health = 1000;
+            size = 3;
+            range = 280f;
+            reload = recoilTime = 5.4f;
+            recoil = 1f;
+            shootSound = LIaudio.laser;
+            shootCone = 1f;
+            rotateSpeed = 6f;
+            shootY = 12f;
+            shoot = new ShootPattern();
+            consumePower(3.6f);
+            shootType = new BasicBulletType(15f, 10f){{
+                collidesAir = false;
+                pierceArmor = true;
+                healPercent = 3f;
+                trailLength = 3;
+                trailWidth = 1.6f;
+                frontColor = Color.valueOf("84F491");
+                backColor = trailColor = Color.valueOf("6BC583");
+                width = 8f;
+                height = 26f;
+                lifetime = 18.67f;
+                hitEffect = despawnEffect = new WaveEffect(){{
+                    lifetime = 16f;
+                    sizeFrom = 1f;
+                    sizeTo = 16f;
+                    strokeFrom = 2f;
+                    strokeTo = 0f;
+                    colorFrom = Color.valueOf("84F491");
+                    colorTo = Color.valueOf("84F49139");
+                }};
+            }};
+        }};
+        DL = new PowerTurret("电裂"){{
+            requirements(Category.turret, with(Items.copper, 125, Items.lead, 105, Items.graphite, 75, LIitems.CDZ, 1));
+            targetGround = false;
+            health = 800;
+            size = 2;
+            range = 260f;
+            reload = recoilTime = 30f;
+            recoil = 1f;
+            shootSound = LIaudio.laser;
+            inaccuracy = 15f;
+            shootCone = 30f;
+            rotateSpeed = 15f;
+            shoot = new ShootPattern(){{
+                shots = 5;
+                shotDelay = 2f;
+            }};
+            shootType = new FlakBulletType(6f, 5f){{
+                collidesAir = false;
+                lifetime = 46.67f;
+                splashDamage = 50f;
+                splashDamageRadius = 36f;
+                status = StatusEffects.electrified;
+                statusDuration = 180f;
+                width = 9f;
+                height = 12f;
+                frontColor = Color.white;
+                hitColor = Color.valueOf("FFFFFFBF");
+                backColor = Color.valueOf("00FFFFA0");
+                shootEffect = Fx.sparkShoot;
+                hitEffect = despawnEffect = LIfx.DLsparkExplosion;
+            }};
+            drawer = new DrawTurret(){{
+                parts.add(
+                        new RegionPart("-mid"){{
+                            progress = PartProgress.recoil;
+                            moveY = -1.25f;
+                        }}
+                );
+            }};
+        }};
+        JK = new PowerTurret("禁空") {{
+            requirements(Category.turret, with(Items.lead, 6000, Items.graphite, 3500, Items.surgeAlloy, 1800, Items.plastanium, 1200, LIitems.CDZ, 125, LIitems.SMWZ, 1));
+            canOverdrive = targetGround = false;
+            unitSort = UnitSorts.strongest;
+            researchCostMultiplier = 0.6f;
+            health = 10800;
+            armor = 10;
+            size = 5;
+            range = 1240f;
+            reload = 45f;
+            recoilTime = 30f;
+            recoil = 5f;
+            shootCone = 5f;
+            shake = 9f;
+            rotateSpeed = 1.5f;
+            shootWarmupSpeed = 0.02f;
+            warmupMaintainTime = 180f;
+            minWarmup = 0.9f;
+            shootSound = Sounds.explosionTitan;
+
+            consumePower(546f);
+            coolant = consumeCoolant(5f);
+            coolantMultiplier = 0.1f;
+
+            shoot = new ShootSpread(5, 6f);
+            shootEffect = new MultiEffect(
+                    new ParticleEffect(){{
+                        particles = 6;
+                        line = true;
+                        lenFrom = 120f;
+                        lenTo = 0f;
+                        strokeFrom = 3f;
+                        strokeTo = 0f;
+                        interp = Interp.pow5Out;
+                        length = 160f;
+                        lifetime = 60f;
+                        colorFrom = Color.cyan;
+                        colorTo = Color.cyan.cpy().a(40f/255);
+                        cone = 60f;
+                    }},
+                    new ParticleEffect(){{
+                        particles = 9;
+                        line = true;
+                        lenFrom = 40f;
+                        lenTo = 0f;
+                        strokeFrom = 2f;
+                        strokeTo = 0f;
+                        interp = Interp.pow3Out;
+                        length = 90f;
+                        lifetime = 35f;
+                        colorFrom = Color.cyan;
+                        colorTo = Color.cyan.cpy().a(40f/255);
+                        cone = 120f;
+                    }},
+                    new ParticleEffect(){{
+                        particles = 12;
+                        sizeFrom = 2f;
+                        sizeTo = 0f;
+                        interp = Interp.circleOut;
+                        length = 40f;
+                        lifetime = 20f;
+                        colorFrom = Color.cyan;
+                        colorTo = Color.cyan.cpy().a(40f/255);
+                        cone = 180f;
+                    }}
+            );
+            shootType = new FlakBulletType(10f, 700f) {{
+                reflectable = collidesGround = false;
+                pierceCap = 3;
+                splashDamage = 700f;
+                splashDamageRadius = 40f;
+                splashDamagePierce = true;
+                lifetime = 128f;
+                width = 12f;
+                height = 40f;
+                trailLength = 12;
+                trailWidth = 5f;
+                lightRadius = 80f;
+                hitColor = backColor = trailColor = lightColor = lightningColor = Color.cyan;
+                hitEffect = new WaveEffect(){{
+                    lifetime = 20f;
+                    sizeFrom = 0f;
+                    sizeTo = 40f;
+                    strokeFrom = 3f;
+                    strokeTo = 0f;
+                    colorFrom = Color.cyan;
+                    colorTo = Color.cyan.cpy().a(66f/255);
+                }};
+                despawnEffect = Fx.none;
+                hitSound = Sounds.shootArc;
+                despawnSound = Sounds.none;
+                status = StatusEffects.electrified;
+                statusDuration = 360f;
+                lightning = 6;
+                lightningCone = 360f;
+                lightningLength = 15;
+                lightningLengthRand = 15;
+                lightningDamage = 15f;
+                fragBullet = new BasicBulletType(4f, 350f) {{
+                    absorbable = reflectable = collidesGround = false;
+                    damage = 350f;
+                    splashDamage = 350f;
+                    splashDamageRadius = 96f;
+                    splashDamagePierce = true;
+                    lifetime = 90f;
+                    homingPower = 0.06f;
+                    homingRange = 120f;
+                    width = 12f;
+                    height = 40f;
+                    trailLength = 12;
+                    trailWidth = 5f;
+                    trailRotation = true;
+                    lightRadius = 80f;
+                    hitColor = backColor = trailColor = lightColor = Color.cyan;
+                    hitEffect = new WaveEffect(){{
+                        lifetime = 20f;
+                        sizeFrom = 0f;
+                        sizeTo = 112f;
+                        strokeFrom = 3f;
+                        strokeTo = 0f;
+                        colorFrom = Color.cyan;
+                        colorTo = Color.cyan.cpy().a(66f/255);
+                    }};
+                    despawnEffect = new WaveEffect(){{
+                        lifetime = 20f;
+                        sizeFrom = 0f;
+                        sizeTo = 112f;
+                        strokeFrom = 3f;
+                        strokeTo = 0f;
+                        colorFrom = Color.cyan;
+                        colorTo = Color.cyan.cpy().a(66f/255);
+                    }};
+                    hitSound = Sounds.explosionTitan;
+                    despawnSound = Sounds.explosionTitan;
+                    status = StatusEffects.electrified;
+                    statusDuration = 180f;
+                    lightning = 6;
+                    lightningCone = 360f;
+                    lightningLength = 15;
+                    lightningLengthRand = 15;
+                    lightningDamage = 50f;
+                    lightningColor = Color.cyan;
+                }};
+                delayFrags = fragOnHit = true;
+                fragBullets = 5;
+                fragSpread = 5f;
+                fragOnAbsorb = true;
+            }};
+            drawer = new DrawTurret(){{
+                parts.addAll(
+                        new RegionPart("-head"){{
+                            heatColor = Color.cyan.cpy().a(80f/255);
+                            heatProgress = PartProgress.warmup;
+                            moveY = 0f;
+                        }},
+                        new RegionPart("-main"){{
+                            heatColor = Color.cyan.cpy().a(80f/255);
+                            heatProgress = PartProgress.warmup;
+                            moveY = -2f;
+                        }},
+                        new RegionPart("-end"){{
+                            heatColor = Color.cyan.cpy().a(80f/255);
+                            heatProgress = PartProgress.warmup;
+                            moveY = 0f;
+                        }},
+                        new RegionPart("-wing"){{
+                            mirror = true;
+                            heatColor = Color.cyan.cpy().a(80f/255);
+                            heatProgress = PartProgress.warmup;
+                            moveRot = 25f;
+                            moveX = 3f;
+                            moveY = -12f;
+                        }},
+                        new RegionPart("-front"){{
+                            mirror = true;
+                            heatColor = Color.cyan.cpy().a(80f/255);
+                            heatProgress = PartProgress.warmup;
+                            moveX = -1f;
+                            moveY = -6f;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            y = -15f;
+                            color = Color.cyan;
+                            radius = 0f;
+                            radiusTo = 10f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            circle = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            y = -15f;
+                            color = Color.cyan;
+                            rotateSpeed = 3f;
+                            radius = 0f;
+                            radiusTo = 9f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            sides = 3;
+                            circle = false;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new ShapePart(){{
+                            progress = PartProgress.warmup;
+                            y = -15f;
+                            color = Color.cyan;
+                            rotateSpeed = -3f;
+                            radius = 0f;
+                            radiusTo = 9f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            sides = 3;
+                            circle = false;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            y = -15f;
+                            color = Color.cyan;
+                            haloRotateSpeed = 2f;
+                            haloRadius = 0f;
+                            haloRadiusTo = 15f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            sides = 3;
+                            shapes = 3;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            y = -15f;
+                            color = Color.cyan;
+                            haloRotateSpeed = -2f;
+                            haloRadius = 0f;
+                            haloRadiusTo = 15f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            sides = 3;
+                            shapes = 3;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = -20f;
+                            y = -20f;
+                            color = Color.cyan;
+                            haloRotation = 135f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = 24f;
+                            y = -24f;
+                            color = Color.cyan;
+                            haloRotation = 225f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = -26.6f;
+                            y = -13.3f;
+                            color = Color.cyan;
+                            haloRotation = 117f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = 26.6f;
+                            y = -13.3f;
+                            color = Color.cyan;
+                            haloRotation = 243f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = -13.3f;
+                            y = -26.6f;
+                            color = Color.cyan;
+                            haloRotation = 153f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new HaloPart(){{
+                            progress = PartProgress.warmup;
+                            x = 13.3f;
+                            y = -26.6f;
+                            color = Color.cyan;
+                            haloRotation = 207f;
+                            stroke = 0f;
+                            strokeTo = 2f;
+                            triLength = 0f;
+                            triLengthTo = 44f;
+                            sides = 3;
+                            shapes = 1;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            tri = true;
+                            hollow = true;
+                            layer = 110;
+                        }}
+                );
+            }};
+        }};
+        PF = new PowerTurret("破防"){{
+            requirements(Category.turret, with(Items.titanium, 12, Items.silicon, 36, Items.blastCompound, 5));
+            health = 140;
+            size = 3;
+            shake = 0.05f;
+            inaccuracy = 2f;
+            recoil = 2f;
+            recoilTime = 10f;
+            cooldownTime = 80f;
+            consumePower(4);
+            coolant = consumeCoolant(0.8f);
+            coolantMultiplier = 0.5f;
+            reload = 30;
+            rotateSpeed = 6;
+            range = 240f;
+            buildCostMultiplier = 2;
+            shootSound = Sounds.shootArtillerySmall;
+            shootEffect = Fx.shootBig;
+            shootType = new PointBulletType() {{
+                buildingDamageMultiplier = 0.2f;
+                trailEffect = new ParticleEffect() {{
+                    sizeInterp = Interp.pow5Out;
+                    particles = 1;
+                    length = 0;
+                    baseLength = 0.2f;
+                    lifetime = 30;
+                    line = true;
+                    randLength = false;
+                    lenFrom = 13;
+                    lenTo = 13;
+                    strokeFrom = 6;
+                    strokeTo = 0;
+                    colorFrom = Color.valueOf("FF795EFF");
+                    colorTo = Color.valueOf("FF795E80");
+                    cone = 0;
+                }};
+                hitEffect = despawnEffect = Fx.none;
+                damage = 0f;
+                splashDamageRadius = 24;
+                splashDamage = 45;
+                knockback = 2.5f;
+                speed = 20;
+                lifetime = 37;
+                ammoMultiplier = 1;
+                fragBullets = 4;
+                fragBullet = new PointBulletType() {{
+                    buildingDamageMultiplier = 0.2f;
+                    pierceArmor = true;
+                    trailEffect = new ParticleEffect() {{
+                        sizeInterp = Interp.pow5Out;
+                        particles = 1;
+                        length = 0;
+                        baseLength = 0.2f;
+                        lifetime = 30;
+                        line = true;
+                        randLength = false;
+                        lenFrom = 13;
+                        lenTo = 13;
+                        strokeFrom = 4;
+                        strokeTo = 0;
+                        colorFrom = Color.valueOf("FF795EFF");
+                        colorTo = Color.valueOf("FF795E80");
+                        cone = 0;
+                    }};
+                    hitEffect = despawnEffect = Fx.flakExplosion;
+                    damage = 0f;
+                    splashDamageRadius = 16;
+                    splashDamage = 34;
+                    status = StatusEffects.blasted;
+                    statusDuration = 30;
+                    speed = 27;
+                    lifetime = 1;
+                    fragBullets = 3;
+                    fragBullet = new BasicBulletType(0, 0) {{
+                        buildingDamageMultiplier = 0.2f;
+                        pierceArmor = true;
+                        trailEffect = Fx.none;
+                        hitEffect = despawnEffect = Fx.flakExplosion;
+                        splashDamageRadius = 16;
+                        splashDamage = 22;
+                        status = StatusEffects.blasted;
+                        statusDuration = 30;
+                        speed = 29;
+                        lifetime = 1;
+                        fragBullets = 3;
+                        fragBullet = new LightningBulletType() {{
+                            damage = 21;
+                            buildingDamageMultiplier = 0.007f;
+                            lightningLength = 3;
+                        }};
+                    }};
+                }};
+            }};
+
+            destroyBullet = new ExplosionBulletType(10f, 160f) {{
+                makeFire = true;
+                incendAmount = 6;
+                splashDamagePierce = true;
+                buildingDamageMultiplier = 50;
+                lightning = 6;
+                lightningDamage = 25;
+                lightningLength = 40;
+                lightningColor = Color.valueOf("E46B58");
+                lightningAngle = 60;
+            }};
+            destroyEffect = new WaveEffect() {{
+                lifetime = 20;
+                sizeFrom = 0;
+                sizeTo = 160;
+                strokeFrom = 2;
+                strokeTo = 0;
+                colorFrom = colorTo = Color.valueOf("E46B58");
+            }};
+        }};
 
         //region 墙
         JDQT = new Wall("基地墙体"){{

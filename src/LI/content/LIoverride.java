@@ -2,7 +2,9 @@ package LI.content;
 
 import arc.struct.*;
 import mindustry.content.*;
+import mindustry.entities.Puddles;
 import mindustry.entities.bullet.*;
+import mindustry.gen.Bullet;
 import mindustry.graphics.Pal;
 import mindustry.type.*;
 import mindustry.world.Block;
@@ -13,6 +15,7 @@ import mindustry.world.blocks.liquid.*;
 import mindustry.world.blocks.units.*;
 import mindustry.ctype.UnlockableContent;
 
+import static mindustry.Vars.world;
 import static mindustry.content.Blocks.*;
 
 public class LIoverride {
@@ -136,14 +139,20 @@ public class LIoverride {
                     knockback = 1.3f;
                     puddleSize = 8f;
                     orbSize = 4f;
-                    damage = 4.75f;
-                    drag = 23.75f;
+                    damage = 23.75f;
+                    drag = 0.001f;
                     ammoMultiplier = 0.4f;
                     status = StatusEffects.burning;
                     statusDuration = 60f * 4f;
 
                     incendAmount = 2;
-                }}
+                }
+                    @Override
+                    public void despawned(Bullet b) {
+                        super.despawned(b);
+                        Puddles.deposit(world.tileWorld(b.x, b.y), liquid, puddleSize);
+                    }
+                }
         );
         addAmmoType(wave,
                 LIliquids.CJLDY, new LiquidBulletType(LIliquids.CJLDY){{
@@ -156,7 +165,13 @@ public class LIoverride {
                     status = StatusEffects.burning;
 
                     incendAmount = 1;
-                }}
+                }
+                    @Override
+                    public void despawned(Bullet b) {
+                        super.despawned(b);
+                        Puddles.deposit(world.tileWorld(b.x, b.y), liquid, puddleSize);
+                    }
+                }
         );
     }
 

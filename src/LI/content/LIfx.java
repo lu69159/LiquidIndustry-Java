@@ -125,6 +125,19 @@ public class LIfx {
                 Lines.lineAngle(e.x + x, e.y + y, Mathf.angle(x, y), e.fin() * 5f + 2f);
        });
     }),
+    DLsparkExplosion = new Effect(30f, 160f, e -> {
+        color(e.color);
+        stroke(e.fout() * 3f);
+        float circleRad = 6f + e.finpow() * 30f;
+        Lines.circle(e.x, e.y, circleRad);
+
+        new Rand().setSeed(e.id);
+        for(int i = 0; i < 16; i++){
+            float angle = new Rand().random(360f);
+            float lenRand = new Rand().random(0.5f, 1f);
+            Lines.lineAngle(e.x, e.y, angle, e.foutpow() * 30 * 0.8f * new Rand().random(1f, 0.6f) + 2f, e.finpow() * 30 * 1.2f * lenRand + 6f);
+        }
+    }),
     blessApply = new Effect(120f, e -> {
         Unit unit = (Unit) e.data;
         var region = unit.type.fullIcon;
@@ -272,7 +285,7 @@ public class LIfx {
                 new ParticleEffect(){{
                     if(regionName != null) region = regionName;
                     lifetime = 45f;
-                    particles = 45;
+                    particles = 30;
                     interp = Interp.circleOut;
                     sizeInterp = Interp.circleIn;
                     sizeFrom = 5f;

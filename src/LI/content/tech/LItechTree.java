@@ -52,6 +52,20 @@ public class LItechTree {
             //NT生产建筑科技树后续插入在这里
 
             //NT炮塔科技树后续插入在这里
+            node(PF, Seq.with(new Research(WXHXJZ)), () -> {
+                node(YJLD, Seq.with(new OnSector(ZXmap3)), () -> {});
+                //埋伏
+                node(DL, () -> {
+                    //极光
+                    node(JK, Seq.with(new SectorComplete(ZXmap3), new OnSector(map6)), () -> {});
+                });
+                node(CNQ, Seq.with(new OnSector(map6)/* 要求:研究力场墙 */), () -> {
+                    node(DXCNQ, () -> {
+                        node(JXCNQ);
+                    });
+                });
+                //力场墙
+            });
 
             node(CDJD, Seq.with(new SectorComplete(map2)), () -> {
                 node(DXCDJD, () -> {
@@ -160,7 +174,7 @@ public class LItechTree {
         addTechNode(node(LTFPLC, () -> {
             node(LTTSLC);
         }), overdriveProjector);
-        //德鲁伊
+        addTechNode(DLY, mendProjector);
         addTechNode(node(ZSHFYD, () -> {
             node(SBFYD, Seq.with(new OnSector(planetaryTerminal)), () -> {});
         }), thoriumReactor);

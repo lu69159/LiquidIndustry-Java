@@ -1,7 +1,7 @@
 这是一个暂未完成的MOD，更新日志暂时只有中文版
 如果你想完善模组的语言支持，或者有更好的想法，欢迎联系作者。
 This is a WIP mod. The updatelog is currently only available in Chinese.
-If you’d like to help improve the mod’s language support, or have better ideas, feel free to contact the author.(on github?)
+If you’d like to help improve the mod’s language support, or have better ideas, feel free to contact the author.(on GitHub?)
 
 自0.21.2版本开始记录更新内容 QWQ
 尼普顿星球战役目前还未完成

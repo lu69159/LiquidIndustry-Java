@@ -12,7 +12,7 @@ public class ImmuneStatusEffect extends StatusEffect {
     }
 
     public ImmuneStatusEffect(String name, Seq<StatusEffect> immuneEffects) {
-        super(name);
+        this(name);
         this.immuneEffects = immuneEffects;
     }
 

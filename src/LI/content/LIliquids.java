@@ -49,9 +49,11 @@ public class LIliquids {
                     Fires.create(puddle.tile);
                     this.fireTimer = 0;
                 }
+                super.update(puddle);
             }
+
             @Override
-            public boolean willBoil() {
+            public boolean willBoil(){
                 return false;
             }
         };
@@ -104,6 +106,9 @@ public class LIliquids {
             boilPoint = 2.5f;
             coolant = false;
         }};
-        FY6 = new Liquid("神能精华液", Color.white);
+        FY6 = new Liquid("神能精华液", Color.white){{
+            hideDatabase = true;
+            coolant = false;
+        }};
     }
 }
