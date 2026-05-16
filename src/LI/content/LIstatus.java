@@ -77,7 +77,14 @@ public class LIstatus {
         }};
         SY = new ImmuneStatusEffect("神佑"){
         {
+            color = Color.valueOf("EFEFEF");
             applyEffect = LIfx.blessApply;
+            healthMultiplier = 12f;
+            damageMultiplier = 6f;
+            reloadMultiplier = 4f;
+            speedMultiplier = 3f;
+            buildSpeedMultiplier = 2f;
+            damage = -5f;
         }
             @Override
             public void setStats(){}

@@ -409,6 +409,7 @@ public class LIblocks {
             health = 500;
             size = 3;
             liquidCapacity = 1200f;
+            range = 120f;
             boostRange = 120f;
             useTime = 720f;
             reload = 5f;
