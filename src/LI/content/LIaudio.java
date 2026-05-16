@@ -1,25 +1,29 @@
 package LI.content;
 
-import arc.Core;
 import arc.audio.*;
+import arc.util.Log;
+import mindustry.Vars;
+
+import java.lang.reflect.Field;
 
 public class LIaudio {
     public static Sound
-        wind = new Sound(),
-        laser = new Sound();
-
-    public static Music NTlaunch = new Music();
+        wind,laser,FFF,villager1,villager2,villager3;
+    public static Music
+        NTlaunch;
 
     public static void load() {
-        loadSound();
-        loadMusic();
-    }
-
-    private static void loadSound() {
-        Core.assets.load("sounds/wind.mp3", Sound.class).loaded = s -> wind = s;
-        Core.assets.load("sounds/laser.ogg", Sound.class).loaded = s -> laser = s;
-    }
-    private static void loadMusic() {
-        Core.assets.load("music/NTlaunch.ogg", Music.class).loaded = m -> NTlaunch = m;
+        try {
+            for(Field field : LIaudio.class.getFields()) {
+                if (field.getType().equals(Sound.class)) {
+                    field.set((Object)null, Vars.tree.loadSound(field.getName()));
+                }
+                else if (field.getType().equals(Music.class)) {
+                    field.set((Object)null, Vars.tree.loadMusic(field.getName()));
+                }
+            }
+        } catch (IllegalAccessException e) {
+            Log.err(e);
+        }
     }
 }

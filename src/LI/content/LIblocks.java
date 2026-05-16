@@ -2,6 +2,7 @@ package LI.content;
 
 import arc.Core;
 import arc.graphics.*;
+import arc.graphics.g2d.*;
 import arc.math.*;
 import arc.struct.*;
 import mindustry.*;
@@ -33,13 +34,14 @@ import LI.type.blocks.power.*;
 import LI.type.blocks.defense.walls.*;
 import LI.type.blocks.effect.*;
 import LI.type.blocks.storage.*;
+import LI.type.blocks.defense.turrets.*;
 import LI.type.blocks.distribution.itemLiquid.*;
 
 import static mindustry.Vars.*;
 import static mindustry.type.ItemStack.*;
 
 public class LIblocks {
-    /** 部分方块还未搬入JAVA：力场墙。液体质驱类。所有炮塔，生产类。 */
+    /** 部分方块还未搬入JAVA：力场墙，极光。液体质驱和卸载类。所有生产类。 */
     public static Block
     //地板
     JHXQ,
@@ -58,7 +60,7 @@ public class LIblocks {
     WXHXJZ,SDHX,LTHX,
 
     //炮塔
-    DCFB,TFP,DLY,DL,JK,PF,MF,BP,ZBPT,
+    DCFB,TFP,DLY,DL,JK,PF,MF,BP,JG,ZBPT,
 
     //墙
     JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ, //LCQ,
@@ -313,7 +315,13 @@ public class LIblocks {
                         plasma2 = Color.valueOf("008282");
                         flameRadiusScl = 0.5f;
                     }},
-                    new DrawDefault()
+                    new DrawDefault(){
+                        @Override
+                        public void draw(Building build) {
+                            Draw.z(Layer.blockAfterCracks);
+                            Draw.rect(build.block.region, build.x, build.y, build.drawrot());
+                        }
+                    }
             );
         }};
         BRFYL = new OutputsItemNuclearReactor("爆燃反应炉"){{
@@ -1124,7 +1132,85 @@ public class LIblocks {
                 if(destroyBullet != null) stats.add(new Stat("damageondestroy", StatCat.function), StatValues.ammo(ObjectMap.of(this, destroyBullet), true, false));
             }
         };
-        //TFP钍反炮(得先加导弹才行)
+        TFP = new ThoriumReactorLauncher("钍反炮"){{ //显示尚有问题
+            requirements(Category.turret, with(Items.thorium, 175, Items.graphite, 75, Items.silicon, 75, Items.plastanium, 25, Items.surgeAlloy, 25, LIitems.GTLDY, 1));
+            predictTarget = false;
+            health = 4800;
+            size = 5;
+            range = 760f;
+            reload = 120f;
+            recoilTime = 75f;
+            recoil = 4f;
+            inaccuracy = 10f;
+            shootCone = 10f;
+            shake = 6f;
+            rotateSpeed = 0.8f;
+            maxAmmo = 1;
+            shootSound = Sounds.shootTank;
+            shootEffect = Fx.none;
+            shootY = 2f;
+            shootWarmupSpeed = 0.015f;
+            warmupMaintainTime = 300f;
+            minWarmup = 0.9f;
+            consumePower(15f);
+
+            ammo(
+                    Blocks.thoriumReactor, new BulletType(0f, 0f){{
+                        shootEffect = Fx.shootBig;
+                        smokeEffect = Fx.shootSmokeMissileColor;
+                        hitColor = Color.valueOf("BF92F9");
+                        ammoMultiplier = 1;
+                        spawnUnit = LIunits.TF1;
+                    }},
+                    LIblocks.ZSHFYD, new BulletType(0f, 0f){{
+                        shootEffect = Fx.shootBig;
+                        smokeEffect = Fx.shootSmokeMissileColor;
+                        hitColor = Color.valueOf("BF92F9");
+                        ammoMultiplier = 1;
+                        reloadMultiplier = 0.8f;
+                        spawnUnit = LIunits.TF2;
+                    }}
+            );
+            drawer = new DrawTurret(){{
+                parts.addAll(
+                        new RegionPart("-main"){{
+                            mirror = false;
+                            heatColor = Color.valueOf("BF92F9");
+                            heatProgress = DrawPart.PartProgress.warmup;
+                            moveY = 0f;
+                        }},
+                        new RegionPart("-side"){{
+                            mirror = under = true;
+                            heatColor = Color.valueOf("BF92F9");
+                            heatProgress = progress = PartProgress.warmup;
+                            moveX = 3f;
+                            moveY = -2f;
+                        }}
+                );
+            }};
+            ammoparts(
+                    Blocks.thoriumReactor,
+                    Seq.with(new RegionPart("-钍反1") {{
+                        progress = PartProgress.reload.curve(Interp.pow2In);
+                        color = Color.white;
+                        colorTo = new Color(1, 1, 1, 0);
+                        outline = false;
+                        under = true;
+                        layerOffset = -0.01f;
+                        moves = Seq.with(new DrawPart.PartMove(PartProgress.warmup.inv(), 0, -6, 0));
+                    }}),
+                    ZSHFYD,
+                    Seq.with(new RegionPart("-钍反2") {{
+                        progress = PartProgress.reload.curve(Interp.pow2In);
+                        color = Color.white;
+                        colorTo = new Color(1, 1, 1, 0);
+                        outline = false;
+                        under = true;
+                        layerOffset = -0.01f;
+                        moves = Seq.with(new DrawPart.PartMove(PartProgress.warmup, 0, 2, 0));
+                    }})
+            );
+        }};
         DLY = new PowerTurret("德鲁伊"){{
             requirements(Category.turret, with(Items.copper, 200, Items.lead, 150, Items.graphite, 50, LIitems.ZYZ, 5));
             canOverdrive = targetGround = targetAir = false;
@@ -1170,7 +1256,6 @@ public class LIblocks {
             range = 260f;
             reload = recoilTime = 30f;
             recoil = 1f;
-            shootSound = LIaudio.laser;
             inaccuracy = 15f;
             shootCone = 30f;
             rotateSpeed = 15f;
@@ -1178,6 +1263,8 @@ public class LIblocks {
                 shots = 5;
                 shotDelay = 2f;
             }};
+            consumePower(2.8f);
+            coolant = consumeCoolant(0.2f);
             shootType = new FlakBulletType(6f, 5f){{
                 collidesAir = false;
                 lifetime = 46.67f;
@@ -1188,8 +1275,7 @@ public class LIblocks {
                 width = 9f;
                 height = 12f;
                 frontColor = Color.white;
-                hitColor = Color.valueOf("FFFFFFBF");
-                backColor = Color.valueOf("00FFFFA0");
+                hitColor = backColor = Color.valueOf("00FFFFA0");
                 shootEffect = Fx.sparkShoot;
                 hitEffect = despawnEffect = LIfx.DLsparkExplosion;
             }};
@@ -1673,6 +1759,343 @@ public class LIblocks {
                 strokeFrom = 2;
                 strokeTo = 0;
                 colorFrom = colorTo = Color.valueOf("E46B58");
+            }};
+        }};
+        MF = new ItemTurret("埋伏"){{
+            requirements(Category.turret, with(Items.thorium, 75, Items.silicon, 90, Items.blastCompound, 25));
+            targetAir = false;
+            health = 1050;
+            size = 3;
+            rotateSpeed = 2f;
+            range = 400f;
+            recoil = 2f;
+            maxAmmo = 8;
+            shootCone = 15f;
+            inaccuracy = 5f;
+            shootY = 12f;
+            shoot = new ShootPattern(){{
+                shots = 1;
+            }};
+            reload = 180f;
+            coolant = consumeCoolant(0.3f);
+            ammo(
+                    Items.blastCompound, new ArtilleryBulletType(8f, 1){{
+                        backColor = hitColor = trailColor = Color.valueOf("FF795E");
+                        ammoMultiplier = 4;
+                        width = 16f;
+                        height = 16f;
+                        lifetime = 50f;
+                        damage = 1f;
+                        pierceBuilding = true;
+                        collidesAir = false;
+                        collideTerrain = true;
+                        fragBullets = 1;
+                        fragOnHit = fragOnAbsorb = true;
+                        fragBullet = new EmptyBulletType(){{
+                            instantDisappear = true;
+                            damage = speed = 0f;
+                            despawnUnit = LIunits.MF1;
+                        }};
+                    }},
+                    LIitems.GTSY, new ArtilleryBulletType(8f, 1){{
+                        backColor = hitColor = trailColor = Color.valueOf("43434F");
+                        ammoMultiplier = 4;
+                        width = 16f;
+                        height = 16f;
+                        lifetime = 50f;
+                        damage = 1f;
+                        pierceBuilding = true;
+                        collidesAir = false;
+                        collideTerrain = true;
+                        fragBullets = 1;
+                        fragOnHit = fragOnAbsorb = true;
+                        fragBullet = new EmptyBulletType(){{
+                            instantDisappear = true;
+                            damage = speed = 0f;
+                            despawnUnit = LIunits.MF2;
+                        }};
+                    }},
+                    LIitems.SMSP, new ArtilleryBulletType(10f, 1){{
+                        backColor = hitColor = trailColor = Color.white;
+                        rangeChange = 400f;
+                        reloadMultiplier = 0.5f;
+                        ammoMultiplier = 1;
+                        width = 32f;
+                        height = 32f;
+                        lifetime = 80f;
+                        damage = 1f;
+                        pierceBuilding = true;
+                        collidesAir = false;
+                        collideTerrain = true;
+                        fragBullets = 1;
+                        fragOnHit = fragOnAbsorb = true;
+                        fragBullet = new EmptyBulletType(){{
+                            instantDisappear = true;
+                            damage = speed = 0f;
+                            despawnUnit = LIunits.MF3;
+                        }};
+                    }}
+            );
+        }
+            @Override
+            public void setStats() {
+                super.setStats();
+                stats.remove(Stat.ammo);
+
+                var turret = this;
+                stats.add(Stat.ammo, table -> {
+                    table.row();
+                    var map = turret.ammoTypes;
+                    var orderedKeys = map.keys().toSeq();
+
+                    orderedKeys.sort();
+                    orderedKeys.each(t ->{
+                        var type = map.get(t);
+                        try{
+                            StatValues.ammo(ObjectMap.of(t, type.fragBullet.despawnUnit.weapons.first().bullet), false, false).display(table);
+                        } catch (Exception ignored) {}
+                    });
+                });
+            }
+        };
+        BP = new ItemTurret("爆破"){{
+            requirements(Category.turret, with( Items.thorium, 125, Items.silicon, 400, Items.blastCompound, 70, LIitems.GTSY, 5));
+            targetAir = false;
+            health = 4200;
+            size = 4;
+            range = 560f;
+            reload = 20f;
+            recoilTime = 45f;
+            recoil = 5f;
+            inaccuracy = 10f;
+            shootCone = 10f;
+            shake = 7f;
+            rotateSpeed = 1f;
+            shootWarmupSpeed = 0.015f;
+            warmupMaintainTime = 90f;
+            minWarmup = 0.9f;
+            maxAmmo = 8;
+            shootSound = Sounds.shootTank;
+            consumePower(10f);
+            coolant = consumeCoolant(1.5f);
+            coolantMultiplier = 0.6f;
+            shoot = new ShootBarrel(){{
+                barrels = new float[]{0f,1f,0f, -9f,-8f,0f, 9f,-8f,0f};
+            }};
+
+            ammo(
+                    Items.blastCompound, new BasicBulletType(8f, 0f) {{
+                        ammoMultiplier = 4;
+                        absorbable = reflectable = hittable = collides = false;
+                        pierce = true;
+                        height = 1f;
+                        width = 1f;
+                        lifetime = 75f;
+                        speed = 8f;
+                        damage = 0f;
+                        backColor = hitColor = trailColor = Pal.missileYellowBack;
+                        frontColor = Pal.missileYellow;
+                        intervalBullets = 1;
+                        bulletInterval = 2f;
+                        intervalBullet = new BasicBulletType(0f, 0f) {{
+                            buildingDamageMultiplier = 0.03f;
+                            collidesAir = false;
+                            instantDisappear = true;
+                            damage = 0f;
+                            splashDamage = 80f;
+                            splashDamageRadius = 32f;
+                            status = StatusEffects.blasted;
+                            hitEffect = Fx.explosion;
+                            hitSound = Sounds.explosion;
+                            hitSoundVolume = 0.6f;
+                        }};
+                    }},
+                    LIitems.GTSY, new BasicBulletType(8f, 0f) {{
+                        ammoMultiplier = 4;
+                        absorbable = reflectable = hittable = collides = false;
+                        pierce = true;
+                        height = 1f;
+                        width = 1f;
+                        lifetime = 75f;
+                        speed = 8f;
+                        damage = 0f;
+                        backColor = hitColor = trailColor = Color.valueOf("FF0000");
+                        frontColor = Color.valueOf("FF0000");
+                        intervalBullets = 1;
+                        bulletInterval = 2f;
+                        intervalBullet = new BasicBulletType(0f, 0f) {{
+                            buildingDamageMultiplier = 0.03f;
+                            collidesAir = false;
+                            instantDisappear = true;
+                            damage = 0f;
+                            splashDamage = 160f;
+                            splashDamageRadius = 40f;
+                            status = StatusEffects.melting;
+                            statusDuration = 60f;
+                            hitEffect = Fx.explosion;
+                            hitSound = Sounds.explosion;
+                            hitSoundVolume = 0.6f;
+                        }};
+                    }}
+            );
+
+            drawer = new DrawTurret(){{
+                parts.addAll(
+                        new RegionPart("-mid") {{
+                            mirror = false;
+                            heatColor = Color.valueOf("FDDDC7FF");
+                            heatProgress = PartProgress.warmup;
+                            moveY = 0;
+                        }},
+                        new RegionPart("-side") {{
+                            mirror = true;
+                            heatColor = Color.valueOf("FDDDC780");
+                            heatProgress = PartProgress.warmup;
+                            moveX = 2;
+                            moveY = 0;
+                        }},
+                        new HaloPart() {{
+                            shapeRotation = 60f;
+                            y = -12f;
+                            sides = 3;
+                            shapes = 2;
+                            color = Color.valueOf("FEB380");
+                            colorTo = Color.valueOf("FDDDC7");
+                            tri = hollow = true;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            triLength = 0f;
+                            triLengthTo = 25f;
+                            haloRadius = 0f;
+                            haloRotation = 0f;
+                            layer = 110;
+                        }},
+                        new HaloPart() {{
+                            shapeRotation = 30f;
+                            y = -12f;
+                            sides = 3;
+                            shapes = 2;
+                            color = Color.valueOf("FEB380");
+                            colorTo = Color.valueOf("FDDDC7");
+                            tri = hollow = true;
+                            radius = 0f;
+                            radiusTo = 6f;
+                            triLength = 0f;
+                            triLengthTo = 25f;
+                            haloRadius = 0f;
+                            haloRotation = 90f;
+                            layer = 110;
+                        }},
+                        new HaloPart() {{
+                            shapeRotation = 0f;
+                            y = -24f;
+                            sides = 3;
+                            shapes = 2;
+                            color = Color.valueOf("FEB380");
+                            colorTo = Color.valueOf("FDDDC7");
+                            tri = hollow = true;
+                            radius = 0f;
+                            radiusTo = 5f;
+                            triLength = 0f;
+                            triLengthTo = 6f;
+                            haloRadius = 0f;
+                            haloRotation = 0f;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            y = 16f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 4f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            circle = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            y = 16f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 2f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            hollow = true;
+                            rotateSpeed = 3f;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            x = 8f;
+                            y = 4f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 4f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            circle = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            x = 8f;
+                            y = 4f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 2f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            hollow = true;
+                            rotateSpeed = 3f;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            x = -8f;
+                            y = 4f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 4f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            circle = true;
+                            hollow = true;
+                            layer = 110;
+                        }},
+                        new ShapePart() {{
+                            x = -8f;
+                            y = 4f;
+                            color = Color.valueOf("FDDDC7");
+                            radius = 0f;
+                            radiusTo = 2f;
+                            stroke = 0f;
+                            strokeTo = 1f;
+                            hollow = true;
+                            rotateSpeed = 3f;
+                            layer = 110;
+                        }}
+                );
+            }};
+        }};
+        //极光
+        ZBPT = new PowerTurret("作弊炮塔"){{
+            requirements(Category.turret, BuildVisibility.sandboxOnly, with());
+            connectedPower = false;
+            health = 555555;
+            armor = 666666;
+            range = 12000f;
+            reload = recoilTime = 60f;
+            shoot = new ShootPattern();
+            shootSound = LIaudio.FFF;
+            shootType = new BasicBulletType(25f, 114514){{
+                buildingDamageMultiplier = 10;
+                width = 36f;
+                height = 72f;
+                splashDamage = 1919810f;
+                splashDamageRadius = 12000f;
+                splashDamagePierce = true;
+                speed = 25f;
+                lifetime = 400f;
+                hitSound = LIaudio.FFF;
+                hitSoundVolume = 0.8f;
             }};
         }};
 

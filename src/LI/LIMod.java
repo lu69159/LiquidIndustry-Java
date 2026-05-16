@@ -20,7 +20,7 @@ public class LIMod extends Mod{
     public LIMod(){
         Log.info("Loading: Liquid Industry Java Version");
         Events.on(ContentInitEvent.class, e -> {
-            LIoverride.loadOverride(); //WIP
+            LIoverride.loadOverride();
             ATD.load();
         });
     }
@@ -42,8 +42,8 @@ public class LIMod extends Mod{
         LIitems.load();
         LIliquids.load();
         LIstatus.load();
-        LIunits.load(); //导弹未添加
-        LIblocks.load(); //部分方块未添加，炮塔添加中
+        LIunits.load();
+        LIblocks.load(); //工厂未添加。液体质驱，液体卸载器未添加。炮塔:极光未添加，钍反炮显示尚有问题
         LItechTree.load(); //未添加的内容无法加入
     }
 }

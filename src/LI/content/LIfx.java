@@ -126,7 +126,7 @@ public class LIfx {
        });
     }),
     DLsparkExplosion = new Effect(30f, 160f, e -> {
-        color(e.color);
+        color(e.color, Color.white.cpy(), e.fout());
         stroke(e.fout() * 3f);
         float circleRad = 6f + e.finpow() * 30f;
         Lines.circle(e.x, e.y, circleRad);

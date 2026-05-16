@@ -20,8 +20,6 @@ import static LI.content.LIliquids.*;
 import static LI.content.LImaps.*;
 
 public class LItechTree {
-    private static Seq<TechNode> children = new Seq<>();
-
     public static void load(){
         loadNT();
         loadOverride();
@@ -51,10 +49,11 @@ public class LItechTree {
 
             //NT生产建筑科技树后续插入在这里
 
-            //NT炮塔科技树后续插入在这里
             node(PF, Seq.with(new Research(WXHXJZ)), () -> {
                 node(YJLD, Seq.with(new OnSector(ZXmap3)), () -> {});
-                //埋伏
+                node(MF, Seq.with(new SectorComplete(ZXmap1)), () -> {
+                    node(BP, Seq.with(new SectorComplete(map5)), () -> {});
+                });
                 node(DL, () -> {
                     //极光
                     node(JK, Seq.with(new SectorComplete(ZXmap3), new OnSector(map6)), () -> {});
@@ -100,7 +99,7 @@ public class LItechTree {
             node(map1, Seq.with(new SectorComplete(planetaryTerminal)), () -> {
                 node(map2, Seq.with(new SectorComplete(map1), new Research(WXHXJZ)), () -> {
                     node(map3, Seq.with(new SectorComplete(map2)/* 冰冷废液分离机 */), () -> {
-                        node(map4, Seq.with(new SectorComplete(map3), new Research(SDHX)/* 电裂,二液? */), () -> {
+                        node(map4, Seq.with(new SectorComplete(map3), new Research(SDHX), new Research(DL)/* 二液? */), () -> {
                             node(map5, Seq.with(new SectorComplete(map4), new Research(ZTQD)/* 三液转 */), () -> {
                                 node(map6, Seq.with(new SectorComplete(map5)), () -> {});
                             });
@@ -194,7 +193,7 @@ public class LItechTree {
         }), titaniumWall);
 
         addTechNode(node(DCFB, Seq.with(new SectorComplete(desolateRift)), () -> {}), foreshadow);
-        //钍反炮
+        addTechNode(node(TFP, Seq.with(new Research(thoriumReactor), new Research(GZQ)), () -> {}), foreshadow);
 
         addTechNode(node(SM, () -> {
             node(FZ, () -> {
