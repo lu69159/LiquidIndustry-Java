@@ -37,8 +37,6 @@ public class ModerateNuclearReactor extends NuclearReactor {
         explosionDamage = 10000;
 
         explodeEffect = LIfx.moderateReactorExplosion;
-
-        consumeLiquid(coolant, heating / coolantPower).update(false);
     }
 
     @Override

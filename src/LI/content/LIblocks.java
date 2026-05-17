@@ -277,6 +277,7 @@ public class LIblocks {
 
             consumeItem(Items.thorium);
             consumeLiquid(moderator, 1.8f/60);
+            consumeLiquid(coolant, heating / coolantPower).update(false);
         }};
         SBFYD = new ModerateNuclearReactor("衰变反应堆"){{
             requirements(Category.power, with(Items.lead, 1500, Items.metaglass, 1080, Items.graphite, 720, Items.silicon, 350, Items.surgeAlloy, 300, Items.plastanium, 210, LIitems.NRJT, 15));
@@ -296,6 +297,7 @@ public class LIblocks {
 
             consumeItem(Items.phaseFabric);
             consumeLiquid(moderator, 3f/60);
+            consumeLiquid(coolant, heating / coolantPower).update(false);
 
             drawer = new DrawMulti(new DrawRegion("-bottom"),
                     new DrawLiquidRegion(LIliquids.SBRY),
