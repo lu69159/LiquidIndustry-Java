@@ -16,10 +16,6 @@ public class ImmuneStatusEffect extends StatusEffect {
         this.immuneEffects = immuneEffects;
     }
 
-    public ImmuneStatusEffect(String name, StatusEffect immuneEffect) {
-        this(name, Seq.with(immuneEffect));
-    }
-
     @Override
     public void init(){
         super.init();
@@ -31,12 +27,7 @@ public class ImmuneStatusEffect extends StatusEffect {
     @Override
     protected void handleOpposite(StatusEffect other){
         opposites.add(other);
-        trans(other, (unit, result, time) -> {
-            if(result.time <= 0f){
-                result.time = time;
-                result.effect = other;
-            }
-        });
+        trans(other, (unit, result, time) -> {});
     }
 
     @Override

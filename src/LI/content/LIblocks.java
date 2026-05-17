@@ -33,6 +33,7 @@ import mindustry.world.meta.*;
 import LI.type.blocks.power.*;
 import LI.type.blocks.defense.walls.*;
 import LI.type.blocks.effect.*;
+import LI.type.blocks.distribution.liquid.*;
 import LI.type.blocks.storage.*;
 import LI.type.blocks.defense.turrets.*;
 import LI.type.blocks.distribution.itemLiquid.*;
@@ -76,7 +77,7 @@ public class LIblocks {
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
 
     //液流
-    JXLTCG,TDGQ,ZKB, //YTZQ,WXYTZQ,
+    JXLTCG,TDGQ,ZKB,YTZXQ, //YTZQ,WXYTZQ,
 
     //钻头
     WXCSJ,QXCSJ,DXCSJ,LDYCQJ,FYCQJ,BLZJ,YZSYZJ
@@ -1191,7 +1192,8 @@ public class LIblocks {
             }};
             ammoparts(
                     Blocks.thoriumReactor,
-                    Seq.with(new RegionPart("-钍反1") {{
+                    Seq.with(new RegionPart() {{
+                        name ="液体工艺-钍反炮-钍反1";
                         progress = PartProgress.reload.curve(Interp.pow2In);
                         color = Color.white;
                         colorTo = new Color(1, 1, 1, 0);
@@ -1201,7 +1203,8 @@ public class LIblocks {
                         moves = Seq.with(new DrawPart.PartMove(PartProgress.warmup.inv(), 0, -6, 0));
                     }}),
                     ZSHFYD,
-                    Seq.with(new RegionPart("-钍反2") {{
+                    Seq.with(new RegionPart() {{
+                        name ="液体工艺-钍反炮-钍反2";
                         progress = PartProgress.reload.curve(Interp.pow2In);
                         color = Color.white;
                         colorTo = new Color(1, 1, 1, 0);
@@ -2076,7 +2079,22 @@ public class LIblocks {
                 );
             }};
         }};
-        //极光
+        JG = new RainbowContinuousTurret("极光"){{
+            requirements(Category.turret, with(Items.metaglass, 2200, Items.surgeAlloy, 280, LIitems.CDZ, 5));
+            buildCostMultiplier = 0.5f;
+            health = 2800;
+            size = 4;
+            range = 520f;
+            recoil = 0f;
+            rotate = false;
+            rotateSpeed = 0f;
+            shootCone = 360f;
+            shootX = 0f;
+            shootY = 0f;
+            shake = 0f;
+            consumePower(16f);
+            shootSound = Sounds.none;
+        }};
         ZBPT = new PowerTurret("作弊炮塔"){{
             requirements(Category.turret, BuildVisibility.sandboxOnly, with());
             connectedPower = false;
@@ -2326,6 +2344,11 @@ public class LIblocks {
             pumpAmount = 0.7f;
             hasPower = true;
             consumePower(5.2f);
+        }};
+        YTZXQ = new LiquidUnloader("液体装卸器"){{
+            requirements(Category.liquid, with(Items.titanium, 20, Items.silicon, 10, Items.metaglass, 15, LIitems.QSZ, 2));
+            health = 100;
+            liquidCapacity = 10f;
         }};
 
         //region 钻头

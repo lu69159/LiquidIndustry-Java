@@ -1,28 +1,29 @@
 package LI.type.blocks.distribution.itemLiquid;
 
 import arc.func.Boolf;
+import arc.graphics.g2d.*;
 import arc.math.Mathf;
-import arc.math.geom.Geometry;
-import arc.math.geom.Point2;
+import arc.math.geom.*;
 import arc.struct.Seq;
+import arc.util.Tmp;
 import mindustry.entities.units.BuildPlan;
 import mindustry.gen.Building;
+import mindustry.graphics.*;
 import mindustry.input.Placement;
 import mindustry.type.Liquid;
-import mindustry.world.Block;
-import mindustry.world.Tile;
+import mindustry.world.*;
 import mindustry.world.blocks.distribution.*;
 import mindustry.world.blocks.liquid.*;
 import mindustry.world.meta.BlockGroup;
 import LI.content.LIblocks;
 
-public class ILduct extends Duct {
+import static mindustry.Vars.renderer;
 
+public class ILduct extends Duct {
     public ILduct(String name) {
         super(name);
         health = 155;
-        floating = true;
-        hasLiquids = true;
+        floating = hasLiquids = outputsLiquid = true;
         liquidCapacity = 20;
         liquidPressure = 1.03f;
         speed = 2f;
@@ -70,7 +71,6 @@ public class ILduct extends Duct {
 
     public class ILductBuild extends DuctBuild {
         float smoothLiquid = 0f;
-        float padding = 4f;
 
         @Override
         public boolean acceptLiquid(Building source, Liquid liquid) {
@@ -88,8 +88,16 @@ public class ILduct extends Duct {
         @Override
         public void draw() {
             super.draw();
-            if (liquids.current() != null)
-                LiquidBlock.drawTiledFrames(size, x, y, padding, padding, padding, padding, liquids.current(), smoothLiquid);
+            if (liquids != null){
+                drawLiquid();
+            }
+        }
+
+        public void drawLiquid(){
+            TextureRegion liquidRegion = Tmp.tr1;
+            liquidRegion.set(renderer.fluidFrames[liquids.current().gas ? 1 : 0][liquids.current().getAnimationFrame()]);
+            Draw.z(Layer.blockUnder+0.05f);
+            Drawf.liquid(liquidRegion, x, y, liquids.currentAmount() / block.liquidCapacity, liquids.current().color.write(Tmp.c1));
         }
     }
 }

@@ -103,20 +103,20 @@ public class LIstatus {
 
         //确保添加所有MOD的负面效果
         Events.on(ContentInitEvent.class, e ->{
-            addBadEffects();
-            ((ImmuneStatusEffect)SY).immuneEffects = badEffects;
+            ((ImmuneStatusEffect)SY).immuneEffects = addBadEffects();
             SY.init();
         });
     }
 
-    private static Seq<StatusEffect> badEffects = new Seq<>();
-    private static void addBadEffects(){
+    private static Seq<StatusEffect> addBadEffects(){
+        Seq<StatusEffect> badEffects = new Seq<>();
         for(var status : Vars.content.getBy(ContentType.status)){
             StatusEffect s = (StatusEffect)status;
             var x = s.damageMultiplier * s.healthMultiplier * s.reloadMultiplier * s.speedMultiplier * s.buildSpeedMultiplier;
-            if(x < 0 || s.damage > 0 || s.intervalDamage > 0 || s.transitionDamage > 0 || s.disarm){
+            if(x < 1f || s.damage > 0 || s.intervalDamage > 0 || s.transitionDamage > 0 || s.disarm){
                 badEffects.add(s);
             }
         }
+        return badEffects;
     }
 }

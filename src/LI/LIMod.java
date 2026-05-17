@@ -43,7 +43,7 @@ public class LIMod extends Mod{
         LIliquids.load();
         LIstatus.load();
         LIunits.load();
-        LIblocks.load(); //工厂未添加。液体质驱，液体卸载器未添加。炮塔:极光未添加，钍反炮显示尚有问题
+        LIblocks.load(); //工厂未添加。液体质驱类未添加。炮塔:钍反炮显示尚有问题 双传带液体角落显示有问题
         LItechTree.load(); //未添加的内容无法加入
     }
 }

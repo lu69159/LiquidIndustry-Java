@@ -55,7 +55,7 @@ public class LItechTree {
                     node(BP, Seq.with(new SectorComplete(map5)), () -> {});
                 });
                 node(DL, () -> {
-                    //极光
+                    node(JG, Seq.with(new SectorComplete(map5)), () -> {});
                     node(JK, Seq.with(new SectorComplete(ZXmap3), new OnSector(map6)), () -> {});
                 });
                 node(CNQ, Seq.with(new OnSector(map6)/* 要求:研究力场墙 */), () -> {
@@ -154,7 +154,7 @@ public class LItechTree {
             });
         }), plastaniumConveyor);
         addTechNode(JXLTCG, liquidTank);
-        //液体卸载器
+        addTechNode(YTZXQ, liquidTank);
         addTechNode(TDGQ, bridgeConduit);
         //液体质驱，微型液体质驱
         addTechNode(ZKB, impulsePump);

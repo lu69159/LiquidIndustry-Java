@@ -17,8 +17,10 @@ import mindustry.world.meta.*;
 
 public class StatusProjector extends OverdriveProjector {
     public Seq<StatusEffect> status = new Seq<>();
-    public Effect applyEffect;
-    public Color applyColor;
+    public Effect applyEffect = new WaveEffect(){{
+        sizeTo = applyRange();
+        colorFrom = colorTo = applyColor();
+    }};
 
     public boolean applyOnEnemies = false;
 
@@ -31,17 +33,18 @@ public class StatusProjector extends OverdriveProjector {
         hasItems = false;
         canOverdrive = false;
         lightRadius = range * 1.1f;
-        applyColor = status.size == 1 ? status.first().color : applyOnEnemies ? Color.gray : Color.white;
-        applyEffect = new WaveEffect(){{
-            sizeTo = range;
-            colorFrom = colorTo = applyColor;
-        }};
+    }
 
+    public float applyRange(){
+        return range;
+    }
+    public Color applyColor(){
+        return status.size == 1 ? status.first().color : applyOnEnemies ? Color.gray : Color.white;
     }
 
     public void setStatus(StatusEffect... effects){
         status.addAll(effects);
-    };
+    }
 
     @Override
     public void setStats() {
@@ -67,7 +70,7 @@ public class StatusProjector extends OverdriveProjector {
     public void drawPlace(int x, int y, int rotation, boolean valid) {
         drawPotentialLinks(x, y);
         drawOverlay(x * Vars.tilesize + offset, y * Vars.tilesize + offset, rotation);
-        Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range, applyColor);
+        Drawf.dashCircle(x * Vars.tilesize + offset, y * Vars.tilesize + offset, range, applyColor());
     }
 
     public class StatusProjectorBuild extends OverdriveBuild{
@@ -111,7 +114,7 @@ public class StatusProjector extends OverdriveProjector {
             Draw.rect(region, x, y, 0);
             float f = 1f - (Time.time / 100f) % 1f;
             Draw.alpha(1);
-            Draw.color(applyColor);
+            Draw.color(applyColor());
             Lines.stroke((2f * f + 0.2f) * efficiency);
             Lines.square(x, y, Math.min(1 + (1 - f) * size * Vars.tilesize / 2, (float) (size * Vars.tilesize) / 2));
 
@@ -120,7 +123,7 @@ public class StatusProjector extends OverdriveProjector {
 
         @Override
         public void drawSelect() {
-            Drawf.dashCircle(x, y, range, applyColor);
+            Drawf.dashCircle(x, y, range, applyColor());
         }
 
         @Override
