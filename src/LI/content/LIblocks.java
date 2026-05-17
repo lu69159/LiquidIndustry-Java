@@ -77,7 +77,7 @@ public class LIblocks {
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
 
     //液流
-    JXLTCG,TDGQ,ZKB,YTZXQ, //YTZQ,WXYTZQ,
+    JXLTCG,TDGQ,ZKB,YTZXQ,YTZQ,WXYTZQ,
 
     //钻头
     WXCSJ,QXCSJ,DXCSJ,LDYCQJ,FYCQJ,BLZJ,YZSYZJ
@@ -2349,6 +2349,23 @@ public class LIblocks {
             requirements(Category.liquid, with(Items.titanium, 20, Items.silicon, 10, Items.metaglass, 15, LIitems.QSZ, 2));
             health = 100;
             liquidCapacity = 10f;
+        }};
+        YTZQ = new LiquidMassDriver("液体质驱"){{
+            requirements(Category.liquid, with(Items.metaglass, 200, Items.titanium, 180, Items.thorium, 100, Items.silicon, 150, LIitems.QSZ, 10));
+            health = 680;
+            size = 4;
+            consumePower(5f);
+        }};
+        WXYTZQ = new LiquidMassDriver("微型液体质驱"){{
+            requirements(Category.liquid, with(Items.metaglass, 20, Items.titanium, 20, Items.thorium, 15, Items.silicon, 15, LIitems.QSZ, 1));
+            health = 120;
+            range = 264f;
+            reload = 150f;
+            bulletOrbSize = 2f;
+            knockback = 2f;
+            liquidCapacity = 1200f;
+            minDistribute = 100f;
+            consumePower(0.8f);
         }};
 
         //region 钻头

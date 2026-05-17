@@ -140,6 +140,7 @@ public class LItechTree {
 
     private static void loadOverride(){
         addTechNode(XZBXZQ, unloader);
+        addTechNode(WXZQ, massDriver);
         addTechNode(GYFSQ, itemBridge);
         addTechNode(DXZHCSD, payloadConveyor);
         addTechNode(GZQ, payloadConveyor);
@@ -149,14 +150,16 @@ public class LItechTree {
         addTechNode(node(SCD, Seq.with(new Research(platedConduit)), () -> {
             node(SCJCQ, () -> {
                 node(SCLYQ, () -> {
-                    node(SCQ, Seq.with(new Research(massDriver)/* 液体质驱 */), () -> {});
+                    node(SCQ, Seq.with(new Research(massDriver), new Research(YTZQ)), () -> {});
                 });
             });
         }), plastaniumConveyor);
         addTechNode(JXLTCG, liquidTank);
         addTechNode(YTZXQ, liquidTank);
         addTechNode(TDGQ, bridgeConduit);
-        //液体质驱，微型液体质驱
+        addTechNode(node(YTZQ, () -> {
+            node(WXYTZQ);
+        }), phaseConduit);
         addTechNode(ZKB, impulsePump);
         addTechNode(YZSYZJ, oilExtractor);
         addTechNode(node(LDYCQJ, () -> {
