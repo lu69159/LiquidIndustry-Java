@@ -126,6 +126,7 @@ public class LIunits {
                     absorbable = reflectable = false;
                     killShooter = instantDisappear = true;
                     ammoMultiplier = 1;
+                    reloadMultiplier = 0.8f;
                     splashDamage = 10000;
                     splashDamageRadius = 240f;
                     splashDamagePierce = true;
@@ -762,7 +763,6 @@ public class LIunits {
             speed = 0.65f;
             accel = 0.07f;
             itemCapacity = 50;
-            immunities.add(StatusEffects.burning);
 
             abilities.add(new EnergyFieldAbility(220f, 75f, 260f){{
                 color = Color.valueOf("8AA3F4");
@@ -850,7 +850,6 @@ public class LIunits {
             speed = 0.5f;
             accel = 0.06f;
             itemCapacity = 100;
-            immunities.add(StatusEffects.burning);
 
             abilities.add(new ShieldArcAbility(){{
                 region = "液体工艺-巨蟹-shield";
@@ -936,7 +935,7 @@ public class LIunits {
             speed = 0.45f;
             accel = 0.06f;
             itemCapacity = 175;
-            immunities.addAll(StatusEffects.burning, LIstatus.BF);
+            immunities.add(LIstatus.BF);
 
             abilities.add(new RegenAbility(){{ amount = 3f; }});
             abilities.add(new StatusFieldAbility(StatusEffects.shielded, 720f, 720f, 192f){{

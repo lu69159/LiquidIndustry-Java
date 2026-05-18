@@ -13,7 +13,7 @@ public class LIliquids {
 
     public static void load(){
         ZS = new Liquid("重水", Color.valueOf("3D6E70")){{
-            lightColor = Color.valueOf("3CA37030");
+            lightColor = Color.valueOf("3CA370");
             effect = StatusEffects.electrified;
             temperature = 0.3f;
             heatCapacity = 0.6f;
@@ -22,7 +22,7 @@ public class LIliquids {
             coolant = false;
         }};
         CJLDY = new Liquid("超级冷冻液", Color.valueOf("C0ECFF")){{
-            lightColor = Color.valueOf("D8F3FF66");
+            lightColor = Color.valueOf("D8F3FF");
             effect = LIstatus.BF;
             temperature = 0.01f;
             heatCapacity = 2.1f;
@@ -58,7 +58,7 @@ public class LIliquids {
             }
         };
         FY0 = new Liquid("冰冷废液", Color.valueOf("9B928B")){{
-            lightColor = Color.valueOf("E0B28D10");
+            lightColor = Color.valueOf("E0B28D");
             temperature = 0.1f;
             heatCapacity = 0.5f;
             viscosity = 0.5f;
@@ -66,7 +66,7 @@ public class LIliquids {
             coolant = false;
         }};
         FY1 = new Liquid("一级精炼废液", Color.valueOf("848695")){{
-            lightColor = Color.valueOf("989BAD20");
+            lightColor = Color.valueOf("989BAD");
             temperature = 0.15f;
             heatCapacity = 0.4f;
             viscosity = 0.6f;
@@ -74,7 +74,7 @@ public class LIliquids {
             coolant = false;
         }};
         FY2 = new Liquid("二级精炼废液", Color.valueOf("9A9DBF")){{
-            lightColor = Color.valueOf("EDEDED0A");
+            lightColor = Color.valueOf("EDEDED");
             temperature = 0.25f;
             heatCapacity = 0.3f;
             viscosity = 0.7f;
@@ -82,7 +82,7 @@ public class LIliquids {
             coolant = false;
         }};
         FY3 = new Liquid("三级精华废液", Color.valueOf("B7BADA")){{
-            lightColor = Color.valueOf("FFFFFF10");
+            lightColor = Color.valueOf("EFEFEF");
             temperature = 0.5f;
             heatCapacity = 0.2f;
             viscosity = 0.75f;
@@ -90,7 +90,7 @@ public class LIliquids {
             coolant = false;
         }};
         FY4 = new Liquid("四级浓缩精华液", Color.valueOf("C7C9DC")){{
-            lightColor = Color.valueOf("FFFFFF30");
+            lightColor = Color.white.cpy();
             temperature = 0.75f;
             heatCapacity = 0.12f;
             viscosity = 0.85f;
@@ -98,7 +98,7 @@ public class LIliquids {
             coolant = false;
         }};
         FY5 = new Liquid("超浓缩精华液", Color.valueOf("EFEFEF")){{
-            lightColor = Color.valueOf("FFFFFF80");
+            lightColor = Color.white.cpy();
             effect = LIstatus.SY;
             temperature = 1.5f;
             heatCapacity = 0.05f;

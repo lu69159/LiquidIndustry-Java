@@ -28,7 +28,7 @@ public class RainbowContinuousTurret extends ContinuousTurret {
     public RainbowContinuousTurret(String name) {
         super(name);
         rotate = emitLight = scaleDamageEfficiency = true;
-        canOverdrive = false;
+        canOverdrive = playerControllable = false;
         shootSound = Sounds.none;
         loopSoundVolume = 1f;
         loopSound = Sounds.beamLustre;
@@ -38,7 +38,6 @@ public class RainbowContinuousTurret extends ContinuousTurret {
         aimChangeSpeed = 0.9f;
         rotateSpeed = 0.9f;
         shootWarmupSpeed = 0.01f;
-        targetInterval = newTargetInterval = 30f;
         unitSort = UnitSorts.strongest;
         shootType = new RainbowPointLaserBulletType(){{
             pierceArmor = true;

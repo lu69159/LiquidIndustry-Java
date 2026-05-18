@@ -65,7 +65,7 @@ public class PowerCore extends CoreBlock {
     public class PowerCoreBuild extends CoreBuild{
         private float attackTimer = 0f;
 
-        private PowerCoreBuild build = this;
+        private final PowerCoreBuild build = this;
         private final Cons<Unit> unitConsumer = unit -> {
             float dst = unit.hitSize/2 * range * tilesize - unit.dst(build);
             if(dst > 0){

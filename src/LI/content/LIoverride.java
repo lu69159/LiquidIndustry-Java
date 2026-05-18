@@ -4,6 +4,7 @@ import arc.struct.*;
 import mindustry.content.*;
 import mindustry.entities.Puddles;
 import mindustry.entities.bullet.*;
+import mindustry.entities.effect.ParticleEffect;
 import mindustry.gen.Bullet;
 import mindustry.graphics.Pal;
 import mindustry.type.*;
@@ -17,6 +18,7 @@ import mindustry.ctype.UnlockableContent;
 
 import static mindustry.Vars.world;
 import static mindustry.content.Blocks.*;
+import static mindustry.content.StatusEffects.*;
 
 public class LIoverride {
     public static void loadOverride(){
@@ -46,6 +48,19 @@ public class LIoverride {
         ((Reconstructor)multiplicativeReconstructor).upgrades.add(new UnitType[]{LIunits.FZ, LIunits.HL});
         ((Reconstructor)exponentialReconstructor).upgrades.add(new UnitType[]{LIunits.HL, LIunits.DY});
         ((Reconstructor)tetrativeReconstructor).upgrades.add(new UnitType[]{LIunits.DY, LIunits.JX});
+
+        //状态相关
+        shielded.effect = new ParticleEffect(){{
+            particles = 1;
+            baseLength = 10;
+            length = 30;
+            lifetime = 30;
+            spin = 8;
+            region = "液体工艺-六角";
+            sizeFrom = 3;
+            sizeTo = 0;
+            colorFrom = colorTo = Pal.accent;
+        }};
 
         loadTurretOverride();
     }

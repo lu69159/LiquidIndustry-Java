@@ -33,7 +33,6 @@ public class LiquidProjector extends Block {
     public float boostRange = 48f;
     public boolean hasBoost = true;
     public Color baseColor = Color.valueOf("6F80E8");
-    public Color boostColor = Color.valueOf("88A4FF");
 
     public LiquidProjector(String name, float transferAmount){
         super(name);
@@ -133,7 +132,7 @@ public class LiquidProjector extends Block {
             charge += heat * Time.delta;
 
             if (hasBoost) {
-                boostHeat = Mathf.lerpDelta(boostHeat, optionalEfficiency, 0.1f);
+                boostHeat = Mathf.lerpDelta(boostHeat, optionalEfficiency, 0.08f);
             }
 
             if(charge >= reload){
@@ -167,10 +166,13 @@ public class LiquidProjector extends Block {
         @Override
         public void drawSelect(){
             if(liquids.current() != null && liquids.currentAmount() > 0.1f){
+                Drawf.dashCircle(x, y, realRange(), liquids.current().color);
                 var color = liquids.current().color.cpy().a(Mathf.absin(4f, 1f));
                 indexer.eachBlock(this, realRange(), this::canTransferLiquid, other -> Drawf.selected(other, color));
             }
-            Drawf.dashCircle(x, y, realRange(), baseColor);
+            else{
+                Drawf.dashCircle(x, y, realRange(), baseColor);
+            }
         }
 
         @Override
@@ -179,31 +181,34 @@ public class LiquidProjector extends Block {
             drawLiquid();
             super.draw();
 
-            float f = 1f - (Time.time / 100f) % 1f;
-            Draw.color(baseColor, boostColor, boostHeat);
-            Draw.alpha(heat * Mathf.absin(Time.time, 50f / Mathf.PI2, 1f) * 0.5f);
-            Draw.rect(topRegion, x, y);
-            Draw.alpha(1f);
-            Lines.stroke((2f * f + 0.1f) * heat);
+            if(liquids != null && liquids.currentAmount() > 0.1f) {
+                float f = 1f - (Time.time / 100f) % 1f;
+                Draw.color(liquids.current().color.cpy());
+                Draw.alpha(boostHeat * Mathf.absin(Time.time, 50f / Mathf.PI2, 1f) * 0.5f);
+                Draw.rect(topRegion, x, y);
+                Draw.alpha(1f);
+                Lines.stroke((2f * f + 0.1f) * heat);
 
-            float r = Math.max(0f, Mathf.clamp(2f - f * 2f) * size * tilesize / 2f - f - 0.2f), w = Mathf.clamp(0.5f - f) * size * tilesize;
-            Lines.beginLine();
-            for(int i = 0; i < 4; i++){
-                Lines.linePoint(x + Geometry.d4(i).x * r + Geometry.d4(i).y * w, y + Geometry.d4(i).y * r - Geometry.d4(i).x * w);
-                if(f < 0.5f) Lines.linePoint(x + Geometry.d4(i).x * r - Geometry.d4(i).y * w, y + Geometry.d4(i).y * r + Geometry.d4(i).x * w);
+                float r = Math.max(0f, Mathf.clamp(2f - f * 2f) * size * tilesize / 2f - f - 0.2f), w = Mathf.clamp(0.5f - f) * size * tilesize;
+                Lines.beginLine();
+                for (int i = 0; i < 4; i++) {
+                    Lines.linePoint(x + Geometry.d4(i).x * r + Geometry.d4(i).y * w, y + Geometry.d4(i).y * r - Geometry.d4(i).x * w);
+                    if (f < 0.5f)
+                        Lines.linePoint(x + Geometry.d4(i).x * r - Geometry.d4(i).y * w, y + Geometry.d4(i).y * r + Geometry.d4(i).x * w);
+                }
+                Lines.endLine(true);
+
+                Draw.reset();
             }
-            Lines.endLine(true);
-
-            Draw.reset();
         }
 
         public void drawLiquid(){
-            var liquidRegion = Tmp.tr1;
+            TextureRegion liquidRegion = Tmp.tr1;
             liquidRegion.set(renderer.fluidFrames[liquids.current().gas ? 1 : 0][liquids.current().getAnimationFrame()]);
-            var threshold = (size - 1) / 2;
+            float threshold = (size - 1) / 2f;
             for(int tx = 0; tx < size; tx++){
                 for(int ty = 0; ty < size; ty++){
-                    Drawf.liquid(liquidRegion, x - threshold * tilesize + tx * tilesize, y - threshold * tilesize + ty * tilesize, liquids.currentAmount() / block.liquidCapacity, liquids.current().color.write(Tmp.c1));
+                    Drawf.liquid(liquidRegion, x - (threshold - tx) * tilesize, y - (threshold - ty) * tilesize, liquids.currentAmount() / block.liquidCapacity, liquids.current().color.write(Tmp.c1));
                 }
             }
         }

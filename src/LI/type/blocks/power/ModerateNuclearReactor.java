@@ -2,8 +2,7 @@ package LI.type.blocks.power;
 
 import arc.Events;
 import arc.graphics.Color;
-import arc.graphics.g2d.Draw;
-import arc.graphics.g2d.Fill;
+import arc.graphics.g2d.*;
 import arc.math.Mathf;
 import arc.util.*;
 import mindustry.content.*;
@@ -74,8 +73,8 @@ public class ModerateNuclearReactor extends NuclearReactor {
         public void updateTile(){
             int fuel = items.get(fuelItem);
             float moderatorFullness = liquids.get(moderator) >= moderateThreshold ? 1f : liquids.get(moderator) / moderateThreshold;
-            float fullness = moderatorFullness * fuel / itemCapacity ;
-            productionEfficiency = fullness;
+            float fullness = (float) fuel / itemCapacity;
+            productionEfficiency = moderatorFullness * fullness;
 
             if(fuel > 0 && enabled){
                 heat += fullness * heating * Math.min(delta(), 4f);
@@ -109,8 +108,9 @@ public class ModerateNuclearReactor extends NuclearReactor {
                 }
             }
 
-            if(heat > smokeThreshold){
-                float smoke = 1.0f + (heat - smokeThreshold) / (1f - smokeThreshold); //ranges from 1.0 to 2.0
+            if(heat > smokeThreshold || outputLiquidHeat > smokeThreshold){
+                var h = Math.max(heat, outputLiquidHeat);
+                float smoke = 1.0f + (h - smokeThreshold) / (1f - smokeThreshold); //ranges from 1.0 to 2.0
                 if(Mathf.chance(smoke / 20.0 * delta())){
                     Fx.reactorsmoke.at(x + Mathf.range(size * tilesize / 2f),y + Mathf.range(size * tilesize / 2f));
                 }

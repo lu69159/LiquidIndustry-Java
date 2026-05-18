@@ -42,7 +42,7 @@ public class OutputsItemNuclearReactor extends NuclearReactor {
     @Override
     public void setBars() {
         super.setBars();
-        addBar("items", (OutputsItemNuclearReactorBuild entity) -> new Bar(Core.bundle.get(outputItem.name), outputItem.color, () -> (float) entity.items.get(outputItem) / itemCapacity));
+        addBar("items", (OutputsItemNuclearReactorBuild entity) -> new Bar(outputItem.localizedName, outputItem.color, () -> (float) entity.items.get(outputItem) / itemCapacity));
     }
 
     public class OutputsItemNuclearReactorBuild extends NuclearReactorBuild {

@@ -44,8 +44,10 @@ import static mindustry.type.ItemStack.*;
 public class LIblocks {
     /** 部分方块还未搬入JAVA：力场墙，极光。液体质驱和卸载类。所有生产类。 */
     public static Block
-    //地板
-    JHXQ,
+    //environment
+    JHXQ,BS,JBQ,JB,JBBS,BDFY,BLFYC,QBLFYC,CJLDYC,SBRYC,
+    //props
+    BSJC,
 
     //单位
     BCJDWZGGC,DMJDWZGGC,WLJDWZGGC,FZGC,GZQ,DXZHCSD,
@@ -64,14 +66,11 @@ public class LIblocks {
     DCFB,TFP,DLY,DL,JK,PF,MF,BP,JG,ZBPT,
 
     //墙
-    JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ, //LCQ,
+    JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ,LCQ,
 
     //生产
-    /*
     BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY,JHNSC,FYLXJ,FYHHQ,ZJLGL,JHTQGC,SNPSJ,JNZJLL,QSZHCQ,ZYZYSJ,
     CDLJQ,GL,DXFSJ,MFSJ,LDYJBJ,CLHHQ,ZSSCQ,GL2,SGFJQ,XZBFJQ,JLHJFJQ,GYZHQ,JTRZQ,
-
-    */
 
     //物流
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
@@ -85,10 +84,96 @@ public class LIblocks {
     ;
 
     public static void load(){
-        //region 地板
+        //region environment
         JHXQ = new Floor("禁核心区"){{
             variants = 0;
         }};
+        BS = new Floor("冰沙"){{
+            playerUnmineable = false;
+            variants = 3;
+            itemDrop = Items.sand;
+            attributes.set(Attribute.oil, 0.55f);
+            attributes.set(Attribute.water, 0.2f);
+            attributes.set(LIattr.cryofluid, 0.1f);
+        }};
+        JBQ = new StaticWall("极冰墙"){{
+            variants = 2;
+            albedo = 0.65f;
+        }};
+        JB = new Floor("极冰"){{
+            variants = 3;
+            dragMultiplier = 0.2f;
+            speedMultiplier = 0.8f;
+            albedo = 0.7f;
+            attributes.set(Attribute.water, 0.8f);
+            attributes.set(LIattr.cryofluid, 1f);
+            wall = JBQ;
+        }};
+        JBBS = new Floor("极冰冰沙"){{
+            playerUnmineable = false;
+            variants = 3;
+            itemDrop = Items.sand;
+            attributes.set(Attribute.oil, 0.4f);
+            attributes.set(Attribute.water, 0.4f);
+            attributes.set(LIattr.cryofluid, 0.4f);
+        }};
+        BDFY = new Floor("冰冻废液"){{
+            variants = 3;
+            dragMultiplier = 0.8f;
+            albedo = 0.7f;
+            attributes.set(Attribute.water, 0.2f);
+            attributes.set(LIattr.cryofluid, 0.05f);
+            attributes.set(LIattr.scrapfluid, 0.75f);
+        }};
+        BLFYC = new Floor("冰冷废液池"){{
+            isLiquid = supportsOverlay = true;
+            liquidDrop = LIliquids.FY0;
+            variants = 0;
+            speedMultiplier = 0.5f;
+            albedo = 0.5f;
+            drownTime = 200f;
+            cacheLayer = CacheLayer.water;
+        }};
+        QBLFYC = new Floor("浅冰冷废液池"){{
+            isLiquid = supportsOverlay = shallow = true;
+            liquidDrop = LIliquids.FY0;
+            variants = 0;
+            speedMultiplier = 0.75f;
+            albedo = 0.5f;
+            cacheLayer = CacheLayer.water;
+        }};
+        CJLDYC = new Floor("超级冷冻液池"){{
+            isLiquid = supportsOverlay = emitLight = true;
+            liquidDrop = LIliquids.CJLDY;
+            liquidMultiplier = 1/3f;
+            variants = 0;
+            drownTime = 150f;
+            speedMultiplier = 0.1f;
+            albedo = 0.9f;
+            cacheLayer = CacheLayer.cryofluid;
+            lightColor = LIliquids.CJLDY.lightColor.cpy();
+            lightRadius = 32f;
+            status = LIliquids.CJLDY.effect;
+        }};
+        SBRYC = new Floor("衰变熔岩池"){{
+            isLiquid = emitLight = true;
+            liquidDrop = LIliquids.SBRY;
+            liquidMultiplier = 0.5f;
+            variants = 0;
+            drownTime = 240f;
+            speedMultiplier = 0.2f;
+            cacheLayer = CacheLayer.slag;
+            lightColor = LIliquids.SBRY.lightColor;
+            lightRadius = 80f;
+            attributes.set(Attribute.heat, 1.5f);
+            status = StatusEffects.burning;
+            statusDuration = 600f;
+        }};
+        BSJC = new TallBlock("冰水晶簇"){{
+            variants = 3;
+            clipSize = 128;
+        }};
+
         //region 单位
         BCJDWZGGC = new Reconstructor("倍乘级单位直构工厂"){{
             requirements(Category.units, with(Items.lead, 600, Items.titanium, 300, Items.thorium, 200, Items.silicon, 400, LIitems.ZYZ, 75));
@@ -318,13 +403,10 @@ public class LIblocks {
                         plasma2 = Color.valueOf("008282");
                         flameRadiusScl = 0.5f;
                     }},
-                    new DrawDefault(){
-                        @Override
-                        public void draw(Building build) {
-                            Draw.z(Layer.blockAfterCracks);
-                            Draw.rect(build.block.region, build.x, build.y, build.drawrot());
-                        }
-                    }
+                    new DrawDefault(),
+                    new DrawRegion("-liquidTop"){{
+                        layer = Layer.blockAfterCracks;
+                    }}
             );
         }};
         BRFYL = new OutputsItemNuclearReactor("爆燃反应炉"){{
@@ -349,6 +431,9 @@ public class LIblocks {
             explosionDamage = 28500;
             explodeSound = Sounds.explosionReactorNeoplasm;
             explodeEffect = LIfx.deflagExplosion;
+
+            consumeItem(fuelItem);
+            consumeLiquid(LIliquids.CJLDY, heating / coolantPower).update(false);
         }};
 
         //region 辅助
@@ -684,6 +769,7 @@ public class LIblocks {
                         fragBullets = 16;
 
                         shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = Fx.none;
                     }},
                     LIitems.GTZS, new BasicBulletType(12.8f, 2000f){{
                         lifetime = 60f;
@@ -724,6 +810,7 @@ public class LIblocks {
                         fragBullets = 16;
 
                         shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = Fx.none;
                     }},
                     LIitems.GTSY, new BasicBulletType(12.8f, 200f){{
                         lifetime = 60f;
@@ -733,6 +820,8 @@ public class LIblocks {
                         splashDamage = 540;
                         splashDamageRadius = 160f;
                         splashDamagePierce = true;
+                        incendAmount = 1;
+                        incendChance = 1f;
                         puddles = 1;
                         puddleAmount = 450f;
                         puddleLiquid = Liquids.oil;
@@ -1089,6 +1178,7 @@ public class LIblocks {
                         fragBullets = 20;
 
                         shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = Fx.none;
                     }},
                     Items.surgeAlloy, new BasicBulletType(12.8f, 800f){{
                         lifetime = 50.625f;
@@ -1127,6 +1217,7 @@ public class LIblocks {
                         fragBullets = 16;
 
                         shootEffect = LIfx.DCFBshoot(hitColor);
+                        hitEffect = despawnEffect = Fx.none;
                     }}
             );
         }
@@ -1272,7 +1363,7 @@ public class LIblocks {
             consumePower(2.8f);
             coolant = consumeCoolant(0.2f);
             shootType = new FlakBulletType(6f, 5f){{
-                collidesAir = false;
+                collidesGround = false;
                 lifetime = 46.67f;
                 splashDamage = 50f;
                 splashDamageRadius = 36f;
@@ -1385,7 +1476,7 @@ public class LIblocks {
                 despawnEffect = Fx.none;
                 hitSound = Sounds.shootArc;
                 despawnSound = Sounds.none;
-                status = StatusEffects.electrified;
+                status = LIstatus.GZ;
                 statusDuration = 360f;
                 lightning = 6;
                 lightningCone = 360f;
@@ -1428,7 +1519,7 @@ public class LIblocks {
                     }};
                     hitSound = Sounds.explosionTitan;
                     despawnSound = Sounds.explosionTitan;
-                    status = StatusEffects.electrified;
+                    status = LIstatus.GZ;
                     statusDuration = 180f;
                     lightning = 6;
                     lightningCone = 360f;
@@ -2237,9 +2328,13 @@ public class LIblocks {
             lightningDamage = 50f;
             chanceDeflect = 40f;
         }};
+        LCQ = new ShieldDoor("力场墙"){{
+            requirements(Category.defense, with(Items.phaseFabric, 32, Items.plastanium, 24, Items.silicon, 16, LIitems.CDZ, 1));
+            consumePower(1/6f);
+        }};
 
         //region 生产
-        /* 太多了... */
+
 
         //region 物流
         SCD = new ILduct("双传带"){{

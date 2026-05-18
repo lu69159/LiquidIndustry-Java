@@ -14,7 +14,6 @@ import arc.util.pooling.*;
 import mindustry.content.*;
 import mindustry.entities.*;
 import mindustry.entities.bullet.*;
-import mindustry.entities.units.BuildPlan;
 import mindustry.gen.*;
 import mindustry.graphics.*;
 import mindustry.logic.*;
@@ -34,7 +33,6 @@ public class LiquidMassDriver extends Block{
     public float knockback = 4f;
     public float reload = 180f;
     public float bulletOrbSize = 4f;
-    public LiquidMassDriverBolt bullet;
     public float bulletSpeed = 5.5f;
     public float bulletLifetime = 200f;
     public Effect shootEffect = Fx.shootLiquid;
@@ -55,7 +53,6 @@ public class LiquidMassDriver extends Block{
         hasPower = true;
         sync = true;
         liquidCapacity = 4800f;
-        bullet = new LiquidMassDriverBolt(bulletOrbSize);
 
         //point2 is relative
         config(Point2.class, (LiquidMassDriverBuild tile, Point2 point) -> tile.link = Point2.pack(point.x + tile.tileX(), point.y + tile.tileY()));
@@ -67,9 +64,7 @@ public class LiquidMassDriver extends Block{
         super.setStats();
 
         stats.add(Stat.shootRange, range / tilesize, StatUnit.blocks);
-        stats.add(Stat.reload, table -> {
-            table.add(Strings.autoFixed(60f / reload, 2) + StatUnit.perSecond.localized());
-        });
+        stats.add(Stat.reload, table -> table.add(Strings.autoFixed(60f / reload, 2) + StatUnit.perSecond.localized()));
         //stats.add(Stat.receiveRate, 60f, StatUnit.itemsSecond);
     }
 
@@ -327,6 +322,9 @@ public class LiquidMassDriver extends Block{
 
             float angle = tile.angleTo(target);
 
+            LiquidMassDriverBolt bullet = new LiquidMassDriverBolt(bulletOrbSize){{
+                hitColor = data.liquidType.color;
+            }};
             bullet.create(this, this.team,
                     this.x + Angles.trnsx(angle, translation), this.y + Angles.trnsy(angle, translation),
                     angle, 80f * data.liquidAmount / liquidCapacity, bulletSpeed, bulletLifetime, data);

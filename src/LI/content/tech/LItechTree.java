@@ -25,7 +25,7 @@ public class LItechTree {
         loadOverride();
     }
 
-    private static void loadNT(){
+    public static void loadNT(){
         NT.techTree = TechTree.nodeRoot(NT.localizedName, NT, () -> {
             node(WXHXJZ, Seq.with(new OnSector(map1)), () -> {
                 node(SDHX, () -> {
@@ -58,12 +58,12 @@ public class LItechTree {
                     node(JG, Seq.with(new SectorComplete(map5)), () -> {});
                     node(JK, Seq.with(new SectorComplete(ZXmap3), new OnSector(map6)), () -> {});
                 });
-                node(CNQ, Seq.with(new OnSector(map6)/* 要求:研究力场墙 */), () -> {
+                node(CNQ, Seq.with(new OnSector(map6), new Research(LCQ)), () -> {
                     node(DXCNQ, () -> {
                         node(JXCNQ);
                     });
                 });
-                //力场墙
+                node(LCQ, Seq.with(new OnSector(map5)), () -> {});
             });
 
             node(CDJD, Seq.with(new SectorComplete(map2)), () -> {
@@ -138,7 +138,7 @@ public class LItechTree {
         });
     }
 
-    private static void loadOverride(){
+    public static void loadOverride(){
         addTechNode(XZBXZQ, unloader);
         addTechNode(WXZQ, massDriver);
         addTechNode(GYFSQ, itemBridge);

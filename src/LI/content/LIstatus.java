@@ -59,6 +59,22 @@ public class LIstatus {
             reloadMultiplier = 0.25f;
             speedMultiplier = 0f;
             transitionDamage = 40f;
+            effectChance = 0.1f;
+            effect = new ParticleEffect(){{
+                particles = 1;
+                baseLength = 10;
+                length = -5;
+                lifetime = 60;
+                spin = 3;
+                region = "液体工艺-snow";
+                interp = Interp.pow3Out;
+                sizeInterp = Interp.pow5In;
+                sizeFrom = 3;
+                sizeTo = 0;
+                lightColor = Color.valueOf("D8F3FF");
+                colorFrom = LIcolor.CJLDYcolor.cpy();
+                colorTo = LIcolor.CJLDYcolor.cpy().a(70/255f);
+            }};
 
             init(() -> {
                 opposite(melting, burning);
