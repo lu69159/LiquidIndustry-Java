@@ -145,6 +145,13 @@ public class LIfx {
         alpha(e.fout() * 1);
         rect(region, unit.x, unit.y, region.width * 0.8f, region.height * 0.8f, unit.rotation - 90);
     }),
+    shootBigSmokeColor = new Effect(18f, e -> {
+        color(e.color);
+
+        randLenVectors(e.id, 9, e.finpow() * 23f, e.rotation, 20f, (x, y) -> {
+            Fill.circle(e.x + x, e.y + y, e.fout() * 2.4f + 0.2f);
+        });
+    }),
     moderateReactorExplosion = new MultiEffect(
         new WaveEffect(){{
             lifetime = 20f;
@@ -181,6 +188,44 @@ public class LIfx {
             baseLength = 40f;
             colorFrom = Color.valueOf("C9A0FF");
             colorTo = Color.valueOf("C9A0FF");
+        }}
+    ),
+    SBFYDExplosion = new MultiEffect(
+        new WaveEffect(){{
+            lifetime = 20f;
+            sizeFrom = 0f;
+            sizeTo = 300f;
+            strokeFrom = 16f;
+            strokeTo = 0f;
+            colorFrom = Color.valueOf("8EFFEA");
+            colorTo = Color.white;
+        }},
+        new ParticleEffect(){{
+            lifetime = 480;
+            particles = 30;
+            interp = Interp.pow5Out;
+            sizeInterp = Interp.pow3In;
+            sizeFrom = 40;
+            sizeTo = 0;
+            length = 250;
+            baseLength = 0;
+            colorFrom = Color.valueOf("8EFFEA80");
+            colorTo = Color.valueOf("8EFFEA00");
+        }},
+        new ParticleEffect(){{
+            lifetime = 50;
+            particles = 20;
+            line = true;
+            interp = Interp.pow3Out;
+            sizeInterp = Interp.pow2In;
+            strokeFrom = 2f;
+            strokeTo = 0f;
+            lenFrom = 120f;
+            lenTo = 0f;
+            length = 180f;
+            baseLength = 40f;
+            colorFrom = Color.valueOf("8EFFEA");
+            colorTo = Color.valueOf("8EFFEA");
         }}
     ),
     deflagExplosion = new MultiEffect(
