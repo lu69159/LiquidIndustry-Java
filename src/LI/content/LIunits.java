@@ -50,7 +50,7 @@ public class LIunits {
             health = 700f;
             armor = 1000f;
             speed = 10f;
-            maxRange = 16f;
+            maxRange = 24f;
             lifetime = 80f;
             hitSize = 10f;
             engineColor = Color.valueOf("A97BFF");
@@ -99,9 +99,9 @@ public class LIunits {
             health = 1000f;
             armor = 1500f;
             speed = 10f;
-            maxRange = 16f;
+            maxRange = 32f;
             lifetime = 80f;
-            hitSize = 10f;
+            hitSize = 16f;
             engineColor = Color.valueOf("A97BFF");
             engineLayer = 110;
             engineSize = 4f;
