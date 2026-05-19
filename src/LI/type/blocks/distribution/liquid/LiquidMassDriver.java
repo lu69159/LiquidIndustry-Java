@@ -21,6 +21,7 @@ import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.*;
 import mindustry.world.meta.*;
+import LI.content.LIfx;
 import LI.type.bullets.LiquidMassDriverBolt;
 
 import static mindustry.Vars.*;
@@ -36,7 +37,7 @@ public class LiquidMassDriver extends Block{
     public float bulletSpeed = 5.5f;
     public float bulletLifetime = 200f;
     public Effect shootEffect = Fx.shootLiquid;
-    public Effect smokeEffect = Fx.shootBigSmoke2;
+    public Effect smokeEffect = LIfx.shootBigSmokeColor;
     public Effect receiveEffect = Fx.hitLiquid;
     public Sound shootSound = Sounds.massdriver;
     public Sound receiveSound = Sounds.massdriverReceive;
@@ -329,8 +330,8 @@ public class LiquidMassDriver extends Block{
                     this.x + Angles.trnsx(angle, translation), this.y + Angles.trnsy(angle, translation),
                     angle, 80f * data.liquidAmount / liquidCapacity, bulletSpeed, bulletLifetime, data);
 
-            shootEffect.at(x + Angles.trnsx(angle, translation), y + Angles.trnsy(angle, translation), angle);
-            smokeEffect.at(x + Angles.trnsx(angle, translation), y + Angles.trnsy(angle, translation), angle);
+            shootEffect.at(x + Angles.trnsx(angle, translation), y + Angles.trnsy(angle, translation), angle, data.liquidType.color);
+            smokeEffect.at(x + Angles.trnsx(angle, translation), y + Angles.trnsy(angle, translation), angle, data.liquidType.color);
 
             Effect.shake(shake, shake, this);
 
@@ -347,7 +348,7 @@ public class LiquidMassDriver extends Block{
             }
 
             Effect.shake(shake, shake, this);
-            receiveEffect.at(bullet);
+            receiveEffect.at(bullet.getX(), bullet.getY(), data.liquidType.color);
             receiveSound.at(x, y, 1f + Mathf.range(0.2f), shootSoundVolume);
 
             reloadCounter = 1f;
