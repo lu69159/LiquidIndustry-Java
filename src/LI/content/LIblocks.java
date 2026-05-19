@@ -2655,7 +2655,7 @@ public class LIblocks {
             size = 4;
             liquidCapacity = 30f;
             craftTime = 360f;
-            craftEffect = Fx.steam;
+            craftEffect = Fx.drillSteam;
             consumePower(11.2f);
             consumeItem(LIitems.QSZ, 8);
             consumeItem(Items.phaseFabric, 6);
@@ -2664,6 +2664,32 @@ public class LIblocks {
             drawer = new DrawMulti(
                     new DrawRegion("-bottom"), new DrawFlame(),
                     new DrawLiquidTile(Liquids.cryofluid), new DrawDefault()
+            );
+        }};
+        CDLJQ = new GenericCrafter("超导裂解器"){{
+            requirements(Category.crafting, with(Items.titanium, 120, Items.thorium, 80, Items.silicon, 100, Items.graphite, 55, Items.surgeAlloy, 5));
+            hasPower = true;
+            health = 580;
+            size = 3;
+            itemCapacity = 5;
+            baseExplosiveness = 15f;
+            craftTime = 240f;
+            craftEffect = Fx.steam;
+            consumePower(9.9f);
+            consumeItem(LIitems.GTS, 1);
+            outputItem = new ItemStack(LIitems.CDZ, 1);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"),
+                    new DrawFrames(){{
+                        frames = 38;
+                        interval = 6f;
+                        sine = false;
+                    }},
+                    new DrawGlowRegion(){{
+                        color = Color.white.cpy();
+                        glowScale = 4f;
+                    }},
+                    new DrawRegion("-top")
             );
         }};
 

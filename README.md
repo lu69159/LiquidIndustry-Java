@@ -1,3 +1,5 @@
+# **（Can't play campaign yet！）**
+
 # 液体工艺Java版本
 ## 目前该版本还在完善中，新星球战役尚未完成
 
