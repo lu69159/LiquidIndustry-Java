@@ -1,10 +1,12 @@
+# 液体工艺Java版本
+## 目前该版本还在完善中
+
+- 新增了一个矿物稀缺但液体丰富的寒冷星球，添加了更多的建筑
+- 新星球科技树资源与赛普罗互通
+
 # Liquid Industry Java Version
-## 未完成！ (WIP!)
+## WIP!
+- Added a new cold planet that is scarce in minerals but rich in liquids. Also expanded other buildings.
+- Resources from the new planet's tech tree are now interoperable with Serpulo
 
-### Building through Github Actions
-
-This repository is set up with Github Actions CI to automatically build the mod for you every commit. This requires a Github repository, for obvious reasons.
-To get a jar file that works for every platform, do the following:
-1. Make a Github repository with your mod name, and upload the contents of this repo to it. Perform any modifications necessary, then commit and push. 
-2. Check the "Actions" tab on your repository page. Select the most recent commit in the list. If it completed successfully, there should be a download link under the "Artifacts" section. 
-3. Click the download link (should be the name of your repo). This will download a **zipped jar** - **not** the jar file itself! Unzip this file and import the jar contained within in Mindustry. This version should work both on Android and Desktop.
+![LiquidIndustry](./assets/icon.png)
