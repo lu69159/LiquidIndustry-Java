@@ -2,21 +2,22 @@ package LI.type.blocks.effect;
 
 import arc.graphics.Color;
 import arc.graphics.g2d.*;
+import arc.math.Mathf;
 import arc.struct.Seq;
-import arc.util.Time;
-import arc.util.io.Reads;
-import arc.util.io.Writes;
+import arc.util.io.*;
 import mindustry.Vars;
 import mindustry.entities.*;
 import mindustry.entities.effect.WaveEffect;
 import mindustry.gen.Unit;
 import mindustry.type.StatusEffect;
+import mindustry.ui.Bar;
 import mindustry.world.blocks.defense.OverdriveProjector;
 import mindustry.graphics.*;
 import mindustry.world.meta.*;
 
 public class StatusProjector extends OverdriveProjector {
     public Seq<StatusEffect> status = new Seq<>();
+    public float effectTime = 60f;
     public Effect applyEffect;
     public Color applyColor;
 
@@ -37,8 +38,9 @@ public class StatusProjector extends OverdriveProjector {
     public void init() {
         super.init();
         applyEffect = new WaveEffect(){{
+            lifetime = effectTime;
             sizeTo = range;
-            colorFrom = colorTo = applyColor = status.size == 1 ? status.first().color : applyOnEnemies ? Color.gray : Color.white;
+            colorFrom = colorTo = applyColor = status.size == 1 ? status.first().color : applyOnEnemies ? Color.gray : Pal.accent;
         }};
     }
 
@@ -64,6 +66,7 @@ public class StatusProjector extends OverdriveProjector {
     public void setBars() {
         super.setBars();
         removeBar("boost");
+        addBar("cooldown", (StatusProjectorBuild entity) -> new Bar("bar.cooldown", Pal.lightOrange, () -> entity.refresh / reload));
     }
 
     @Override
@@ -76,34 +79,40 @@ public class StatusProjector extends OverdriveProjector {
     public class StatusProjectorBuild extends OverdriveBuild{
         Seq<Unit> targets = new Seq<Unit>();
         float refresh;
-        boolean done;
+        boolean hasTarget;
+
+        @Override
+        public boolean shouldConsume() {
+            return enabled && (hasTarget || refresh > 0);
+        }
 
         @Override
         public void updateTile(){
-            done = false;
-            if(efficiency > 0 && (refresh += delta() * efficiency) >= reload){
-                targets.clear();
-                if(applyOnEnemies){
-                    Units.nearbyEnemies(team, x, y, range, u -> {
-                        targets.add(u);
-                        if(!done) done = true;
-                    });
-                }else{
-                    Units.nearby(team, x, y, range, u -> {
-                        targets.add(u);
-                        if(!done) done = true;
-                    });
-                }
+            smoothEfficiency = Mathf.lerpDelta(smoothEfficiency, efficiency, 0.05f);
+            heat = (reload - refresh)/effectTime;
+
+            targets.clear();
+            if(applyOnEnemies){
+                Units.nearbyEnemies(team, x, y, range, u -> {
+                    targets.add(u);
+                });
+            }else{
+                Units.nearby(team, x, y, range, u -> {
+                    targets.add(u);
+                });
             }
 
-            if(refresh > reload) refresh = reload;
+            hasTarget = targets.size > 0;
 
-            if(done){
-                refresh = 0;
-                applyEffect.at(x, y);
-                for(var u : targets){
-                    for(var s : status){
-                        u.apply(s, useTime);
+            if(efficiency > 0){
+                if(refresh > 0) refresh = Math.max(refresh - delta() * efficiency, 0f);
+                if(refresh <= 0 && hasTarget){
+                    refresh = reload;
+                    applyEffect.at(x, y);
+                    for(var u : targets){
+                        for(var s : status){
+                            u.apply(s, useTime);
+                        }
                     }
                 }
             }
@@ -112,13 +121,15 @@ public class StatusProjector extends OverdriveProjector {
         @Override
         public void draw() {
             Draw.rect(region, x, y, 0);
-            float f = 1f - (Time.time / 100f) % 1f;
-            Draw.alpha(1);
-            Draw.color(applyColor);
-            Lines.stroke((2f * f + 0.2f) * efficiency);
-            Lines.square(x, y, Math.min(1 + (1 - f) * size * Vars.tilesize / 2, (float) (size * Vars.tilesize) / 2));
+            if(heat <= 1f){
+                Draw.alpha(1);
+                Draw.color(applyColor.cpy());
+                float f = 2 * heat - 1;
+                Lines.stroke(1.5f * (1 - f*f) * smoothEfficiency);
+                Lines.square(x, y, Math.min(heat * size * Vars.tilesize / 2, (float) (size * Vars.tilesize) / 2));
 
-            Draw.reset();
+                Draw.reset();
+            }
         }
 
         @Override
