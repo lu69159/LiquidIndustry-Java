@@ -69,11 +69,11 @@ public class LIblocks {
     JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ,LCQ,
 
     //生产
-    BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY, //废液提取物品
-    FYLXJ,ZJLGL,JHTQGC,JHNSC,JNZJLL,SNPSJ,FYHHQ, //废液精炼相关
+    BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY,JHTQY, //废液提取物品
+    FYLXJ,ZJLGL,JHTQGC,JHNSC,ZNJHQ,SNNJY,JNZJLL,SNPSJ,FYHHQ, //废液精炼相关
     QSZHCQ,ZYZYSJ,CDLJQ,MFSJ,JTRZQ,ZSSCQ,CLHHQ, //GYZHQ //MOD物品生产
     GL,DXFSJ,LDYJBJ,GL2,SGFJQ, //原版扩展
-    XZBFJQ,JLHJFJQ,GYZHQ, //分解器
+    XZBFJQ,JLHJFJQ, //分解器
 
     //物流
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
@@ -2692,8 +2692,172 @@ public class LIblocks {
                     new DrawRegion("-top")
             );
         }};
+        MFSJ = new GenericCrafter("煤粉碎机"){{
+            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25, Items.graphite, 5));
+            hasPower = true;
+            craftTime = 40f;
+            craftEffect = Fx.pulverize;
+            updateEffect = Fx.pulverizeSmall;
+            ambientSound = Sounds.loopGrind;
+            ambientSoundVolume = 0.025f;
+            consumePower(0.5f);
+            consumeItem(Items.coal, 1);
+            outputItem = new ItemStack(LIitems.TF, 1);
+            drawer = new DrawMulti(
+                    new DrawDefault(), new DrawRegion("-rotator", 2f, true), new DrawRegion("-top")
+            );
+        }};
+        JTRZQ = new GenericCrafter("晶体熔铸器"){{
+            requirements(Category.crafting, with(Items.lead, 80, Items.metaglass, 65, Items.graphite, 125, LIitems.QSZ, 5));
+            hasPower = true;
+            health = 420;
+            size = 3;
+            itemCapacity = 12;
+            craftTime = 720f;
+            consumePower(8f);
+            consumeItem(LIitems.QSZ, 3);
+            consumeItem(LIitems.TF, 12);
+            outputItem = new ItemStack(LIitems.NRJT, 1);
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+        }};
+        ZSSCQ = new GenericCrafter("重水生产器"){{
+            requirements(Category.crafting, with(Items.copper, 100, Items.titanium, 125, Items.thorium, 50, Items.silicon, 50));
+            hasPower = hasLiquids = outputsLiquid = true;
+            health = 400;
+            size = 2;
+            itemCapacity = 5;
+            liquidCapacity = 30f;
+            craftTime = 120f;
+            craftEffect = Fx.bubble;
+            consumePower(3f);
+            consumeItem(Items.thorium, 1);
+            consumeLiquid(Liquids.water, 0.25f);
+            outputLiquid = new LiquidStack(LIliquids.ZS, 0.25f);
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame(Color.valueOf("9ADEBC")));
+        }};
+        CLHHQ = new GenericCrafter("超冷混合器"){{
+            requirements(Category.crafting, with(Items.lead, 160, Items.titanium, 80, Items.metaglass, 40, Items.silicon, 40));
+            hasPower = hasLiquids = outputsLiquid = true;
+            hasItems = false;
+            health = 480;
+            size = 3;
+            liquidCapacity = 30f;
+            updateEffect = Fx.freezing;
+            consumePower(2f);
+            consumeLiquid(Liquids.cryofluid, 0.9f);
+            consumeLiquid(LIliquids.FY3, 0.1f);
+            outputLiquid = new LiquidStack(LIliquids.CJLDY, 1f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.cryofluid),
+                    new DrawDefault(), new DrawLiquidRegion(LIliquids.CJLDY)
+            );
+        }};
 
-        //其他
+        //原版扩展
+        GL = new GenericCrafter("高炉"){{
+            requirements(Category.crafting, with(Items.copper, 90, Items.lead, 105, Items.graphite, 120, Items.metaglass, 20));
+            hasPower = hasLiquids = outputsLiquid = true;
+            size = 2;
+            itemCapacity = 20;
+            liquidCapacity = 90f;
+            craftTime = 15f;
+            updateEffect = Fx.smeltsmoke;
+            consumePower(3f);
+            consumeItem(Items.scrap, 4);
+            outputLiquid = new LiquidStack(Liquids.slag, 1.25f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.slag), new DrawDefault()
+            );
+        }};
+        DXFSJ = new GenericCrafter("大型粉碎机"){{
+            requirements(Category.crafting, with(Items.copper, 90, Items.lead, 75, Items.silicon, 20));
+            hasPower = true;
+            size = 2;
+            itemCapacity = 20;
+            craftTime = 10f;
+            updateEffect = Fx.pulverizeSmall;
+            ambientSound = Sounds.loopGrind;
+            ambientSoundVolume = 0.025f;
+            consumePower(1.75f);
+            consumeItem(Items.scrap, 4);
+            outputItem = new ItemStack(Items.sand, 5);
+            drawer = new DrawMulti(new DrawRegion("-bottom"), new DrawBlurSpin("-suffix", 15), new DrawDefault());
+        }};
+        LDYJBJ = new GenericCrafter("冷冻液搅拌机"){{
+            requirements(Category.crafting, with(Items.lead, 200, Items.thorium, 120, Items.metaglass, 40, Items.silicon, 40, LIitems.QSZ, 5));
+            hasPower = hasLiquids = outputsLiquid = true;
+            size = 3;
+            itemCapacity = 20;
+            liquidCapacity = 120f;
+            craftTime = 240f;
+            updateEffect = Fx.freezing;
+            consumePower(2.5f);
+            consumeItem(LIitems.QSZ, 1);
+            consumeItem(Items.titanium, 12);
+            consumeLiquid(Liquids.cryofluid, 0.1f);
+            outputLiquid = new LiquidStack(Liquids.cryofluid, 2f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.cryofluid),
+                    new DrawBlurSpin("-suffix", 15), new DrawDefault()
+            );
+        }};
+        GL2 = new GenericCrafter("硅炉"){{
+            requirements(Category.crafting, with(Items.copper, 30, Items.lead, 25, Items.graphite, 10));
+            hasPower = true;
+            health = 180;
+            size = 2;
+            craftTime = 40f;
+            craftEffect = Fx.smeltsmoke;
+            ambientSound = Sounds.loopSmelter;
+            ambientSoundVolume = 0.07f;
+            consumePower(1.25f);
+            consumeItem(Items.graphite, 1);
+            consumeItem(Items.sand, 4);
+            outputItem = new ItemStack(Items.silicon, 2);
+            drawer = new DrawMulti(new DrawDefault(), new DrawFlame());
+        }};
+
+        //分解器
+        SGFJQ = new GenericCrafter("塑钢分解器"){{
+            requirements(Category.crafting, with(Items.lead, 160, Items.silicon, 120, Items.plastanium, 10));
+            hasPower = hasLiquids = outputsLiquid = true;
+            health = 200;
+            size = 2;
+            liquidCapacity = 20f;
+            craftTime = 60f;
+            consumePower(1f);
+            consumeItem(Items.plastanium, 1);
+            outputItem = new ItemStack(Items.titanium, 2);
+            outputLiquid = new LiquidStack(Liquids.oil, 0.25f);
+        }};
+        XZBFJQ = new GenericCrafter("相织布分解器"){{
+            requirements(Category.crafting, with(Items.lead, 160, Items.silicon, 120, Items.phaseFabric, 10));
+            hasPower = true;
+            health = 200;
+            size = 2;
+            itemCapacity = 20;
+            consumePower(1f);
+            consumeItem(Items.phaseFabric, 1);
+            outputItems = new ItemStack[]{
+                    new ItemStack(Items.thorium, 4),
+                    new ItemStack(Items.sand, 10)
+            };
+        }};
+        JLHJFJQ = new GenericCrafter("巨浪合金分解器"){{
+            requirements(Category.crafting, with(Items.lead, 160, Items.silicon, 120, Items.surgeAlloy, 10));
+            hasPower = true;
+            health = 200;
+            size = 2;
+            itemCapacity = 20;
+            consumePower(1f);
+            consumeItem(Items.surgeAlloy, 1);
+            outputItems = new ItemStack[]{
+                    new ItemStack(Items.copper, 3),
+                    new ItemStack(Items.lead, 4),
+                    new ItemStack(Items.titanium, 2),
+                    new ItemStack(Items.silicon, 3)
+            };
+        }};
 
         //region 物流
         SCD = new ILduct("双传带"){{

@@ -26,7 +26,7 @@ public class LItechTree {
     }
 
     public static void loadNT(){
-        NT.techTree = TechTree.nodeRoot(NT.localizedName, NT, () -> {
+        NT.techTree = TechTree.nodeRoot("Nepture", NT, () -> {
             node(WXHXJZ, Seq.with(new OnSector(map1)), () -> {
                 node(SDHX, () -> {
                     node(LTHX, Seq.with(new SectorComplete(map4)), () -> {});
@@ -47,7 +47,36 @@ public class LItechTree {
                 });
             });
 
-            //NT生产建筑科技树后续插入在这里
+            node(BLFYFLJ, Seq.with(new Research(WXHXJZ)), () -> {
+                node(FYLXJ, () -> {
+                    node(FYLXJ, Seq.with(new SectorComplete(map2)), () -> {
+                        node(YJFYJLJ);
+                        node(ZJLGL, Seq.with(new SectorComplete(map3)), () -> {
+                            node(EJFYJLQ);
+                            node(JHTQGC, Seq.with(new SectorComplete(map4)), () -> {
+                                node(SJJHZHQ);
+                                node(JHNSC, Seq.with(new SectorComplete(map6)), () -> {
+                                    node(SJJHZHY);
+                                    //神能凝聚仪等还未制作到对应地图
+                                });
+                            });
+                            node(JNZJLL, Seq.with(new SectorComplete(ZXmap3)), () -> {});
+                        });
+                        node(FYCQJ, Seq.with(new SectorComplete(ZXmap3)), () -> {});
+                    });
+                });
+                node(GL, () -> {
+                    node(SGFJQ, Seq.with(new Research(EJFYJLQ)), () -> {
+                        node(XZBFJQ, () -> {
+                            node(JLHJFJQ);
+                        });
+                    });
+                    node(CLHHQ, Seq.with(new SectorComplete(ZXmap1)), () -> {});
+                });
+                node(TFDJ, () -> {
+                    node(BRFYL, Seq.with(new OnSector(map6)), () -> {});
+                });
+            });
 
             node(PF, Seq.with(new Research(WXHXJZ)), () -> {
                 node(YJLD, Seq.with(new OnSector(ZXmap3)), () -> {});
@@ -169,9 +198,18 @@ public class LItechTree {
             node(DXCSJ);
         }), waterExtractor);
         addTechNode(WXCSJ, waterExtractor);
-
-        //没添加的生产建筑...
-
+        addTechNode(node(QSZHCQ, () -> {
+            //固液转化器接晶体熔铸器
+            node(ZYZYSJ);
+            node(CDLJQ);
+        }), multiPress);
+        addTechNode(ZSSCQ, plastaniumCompressor);
+        addTechNode(phaseWeaver, ZSSCQ);
+        addTechNode(LDYJBJ, cryofluidMixer);
+        addTechNode(node(FYHHQ, Seq.with(new Research(BLFYFLJ)), () -> {}), cryofluidMixer);
+        addTechNode(GL, melter);
+        addTechNode(DXFSJ, pulverizer);
+        addTechNode(MFSJ, pulverizer);
         addTechNode(CSTQ, overdriveDome);
         addTechNode(node(LTFPLC, () -> {
             node(LTTSLC);

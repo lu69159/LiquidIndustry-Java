@@ -29,6 +29,7 @@ public class LIstartDialog {
             table.row();
 
             dialog.cont.pane(table).grow().center().maxWidth(900);
+            dialog.buttons.button("Github", Icon.github, () -> Core.app.openURI("https://github.com/lu69159/LiquidIndustry-Java")).size(210, 64);
             dialog.buttons.button("[accent]" + Core.bundle.format("updatelog"), () -> {
                 BaseDialog updatelog = new BaseDialog(Core.bundle.format("updatelog"));
 
@@ -46,7 +47,6 @@ public class LIstartDialog {
 
                 updatelog.cont.pane(updateTable).grow().center().maxWidth(540);
                 updatelog.buttons.defaults().size(210, 64);
-                updatelog.buttons.button("Github", Icon.github, () -> Core.app.openURI("https://github.com/lu69159/LiquidIndustry-Java")).size(210, 64);
                 updatelog.addCloseButton(210);
                 updatelog.show();
             }).size(210, 64);
