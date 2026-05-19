@@ -270,14 +270,28 @@ public class LIblocks {
             laserRange = 20;
             underBullets = true;
             crushFragile = true;
-        }};
+        }
+            @Override
+            public void load() {
+                super.load();
+                laser = Core.atlas.find("液体工艺-cyan-laser");
+                laserEnd = Core.atlas.find("液体工艺-cyan-laser-end");
+            }
+        };
         DXCDJD = new PowerNode("大型超导节点"){{
             requirements(Category.power, with(Items.titanium, 4, Items.silicon, 5, LIitems.CDZ, 2));
             health = 480;
             size = 2;
             maxNodes = 30;
             laserRange = 45;
-        }};
+        }
+            @Override
+            public void load() {
+                super.load();
+                laser = Core.atlas.find("液体工艺-cyan-laser");
+                laserEnd = Core.atlas.find("液体工艺-cyan-laser-end");
+            }
+        };
         CDDLT = new PowerNode("超导电力塔"){{
             requirements(Category.power, with(Items.titanium, 8, Items.silicon, 5, Items.surgeAlloy, 3, LIitems.CDZ, 5));
             health = 600;
@@ -285,7 +299,14 @@ public class LIblocks {
             maxNodes = 5;
             laserRange = 120;
             schematicPriority = -15;
-        }};
+        }
+            @Override
+            public void load() {
+                super.load();
+                laser = Core.atlas.find("液体工艺-cyan-laser");
+                laserEnd = Core.atlas.find("液体工艺-cyan-laser-end");
+            }
+        };
         CDDC = new Battery("超导电池"){{
             requirements(Category.power, with(Items.titanium, 5, Items.lead, 5, LIitems.CDZ, 1));
             health = 120;
@@ -373,6 +394,7 @@ public class LIblocks {
             heating = 0.125f;
             heatOutput = 30f;
             fuelItem = Items.phaseFabric;
+            explodeEffect = LIfx.SBFYDExplosion;
 
             outputLiquid = new LiquidStack(LIliquids.SBRY, 6f / 60);
             explodeOnFull = true;
