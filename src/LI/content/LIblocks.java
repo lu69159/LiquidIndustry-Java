@@ -69,8 +69,11 @@ public class LIblocks {
     JDQT,ZJCYG,DXZJCYG,SGZJCYG,DXSGZJCYG,HJZJCYG,DXHJZJCYG,XZZJCYG,DXXZZJCYG,CNQ,DXCNQ,JXCNQ,LCQ,
 
     //生产
-    BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY,JHNSC,FYLXJ,FYHHQ,ZJLGL,JHTQGC,SNPSJ,JNZJLL,QSZHCQ,ZYZYSJ,
-    CDLJQ,GL,DXFSJ,MFSJ,LDYJBJ,CLHHQ,ZSSCQ,GL2,SGFJQ,XZBFJQ,JLHJFJQ,GYZHQ,JTRZQ,
+    BLFYFLJ,YJFYJLJ,EJFYJLQ,SJJHZHQ,SJJHZHY, //废液提取物品
+    FYLXJ,ZJLGL,JHTQGC,JHNSC,JNZJLL,SNPSJ,FYHHQ, //废液精炼相关
+    QSZHCQ,ZYZYSJ,CDLJQ,MFSJ,JTRZQ,ZSSCQ,CLHHQ, //GYZHQ //MOD物品生产
+    GL,DXFSJ,LDYJBJ,GL2,SGFJQ, //原版扩展
+    XZBFJQ,JLHJFJQ,GYZHQ, //分解器
 
     //物流
     SCD,SCQ,SCLYQ,SCJCQ,TCSD,ZJCSGD,XZBXZQ,GYFSQ,WXZQ,
@@ -2356,7 +2359,315 @@ public class LIblocks {
         }};
 
         //region 生产
+        //废液提取物品
+        BLFYFLJ = new Separator("冰冷废液分离机"){{
+            requirements(Category.crafting, with(Items.copper, 40, Items.lead, 20, Items.graphite, 5, Items.metaglass, 5));
+            hasPower = hasLiquids = true;
+            health = 180;
+            size = 2;
+            liquidCapacity = 10f;
+            craftTime = 40f;
+            consumePower(0.8f);
+            consumeLiquid(LIliquids.FY0, 0.12f);
+            results = with(
+                    Items.sand, 4,
+                    Items.copper, 3,
+                    Items.lead, 3,
+                    Items.graphite, 2,
+                    Items.titanium, 1
+            );
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY0),
+                    new DrawBlurSpin("-suffix", 5), new DrawDefault()
+            );
+        }};
+        YJFYJLJ = new Separator("一级废液解离机"){{
+            requirements(Category.crafting, with(Items.titanium, 100, Items.metaglass, 35, Items.silicon, 30, Items.plastanium, 5));
+            hasPower = hasLiquids = true;
+            health = 480;
+            size = 3;
+            itemCapacity = 20;
+            liquidCapacity = 10f;
+            craftTime = 18f;
+            consumePower(3f);
+            consumeLiquid(LIliquids.FY1, 0.3f);
+            results = with(
+                    Items.titanium, 4,
+                    Items.graphite, 2,
+                    Items.thorium, 1
+            );
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY1),
+                    new DrawBlurSpin("-suffix", 5), new DrawDefault()
+            );
+        }};
+        EJFYJLQ = new Separator("二级废液精馏器"){{
+            requirements(Category.crafting, with(Items.thorium, 105, Items.metaglass, 85, Items.silicon, 60, Items.plastanium, 10, Items.phaseFabric, 10, Items.surgeAlloy, 5, LIitems.QSZ, 5));
+            hasPower = hasLiquids = true;
+            health = 780;
+            size = 4;
+            itemCapacity = 20;
+            liquidCapacity = 20f;
+            craftTime = 30f;
+            consumePower(4.2f);
+            consumeLiquid(LIliquids.FY2, 0.16f);
+            results = with(
+                    Items.phaseFabric, 3,
+                    Items.plastanium, 2,
+                    Items.surgeAlloy, 2
+            );
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY2),
+                    new DrawRegion("-rotator", 10f, true), new DrawDefault()
+            );
+        }};
+        SJJHZHQ = new Separator("三级精华转化器"){{
+            requirements(Category.crafting, with(Items.titanium, 325, Items.thorium, 185, Items.metaglass, 65, Items.silicon, 85, Items.plastanium, 35, LIitems.CDZ, 1));
+            hasPower = hasLiquids = true;
+            health = 1280;
+            size = 5;
+            itemCapacity = 20;
+            liquidCapacity = 40f;
+            craftTime = 6.6f;
+            consumePower(8.8f);
+            consumeLiquid(LIliquids.FY3, 0.15f);
+            results = with(
+                    Items.phaseFabric, 6,
+                    Items.plastanium, 6,
+                    Items.surgeAlloy, 4,
+                    LIitems.QSZ, 1
+            );
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY3){{ padding = 6f; }},
+                    new DrawRegion("-rotator", 10f, true), new DrawDefault(),
+                    new DrawFade(){{ suffix = "-glow"; }}
+            );
+        }};
+        SJJHZHY = new GenericCrafter("四级精华转化仪"){{
+            requirements(Category.crafting, with(Items.titanium, 425, Items.metaglass, 80, Items.silicon, 205, Items.surgeAlloy, 205, Items.plastanium, 125, LIitems.QSZ, 30, LIitems.CDZ, 10));
+            hasPower = hasLiquids = true;
+            health = 1660;
+            size = 4;
+            itemCapacity = 20;
+            liquidCapacity = 20f;
+            craftTime = 75f;
+            consumePower(12.6f);
+            consumeLiquid(LIliquids.FY4, 0.1f);
+            outputItems = new ItemStack[]{
+                    new ItemStack(Items.graphite, 5),
+                    new ItemStack(Items.titanium, 4),
+                    new ItemStack(Items.thorium, 3),
+                    new ItemStack(Items.plastanium, 2),
+                    new ItemStack(Items.surgeAlloy, 2),
+                    new ItemStack(Items.phaseFabric, 2),
+                    new ItemStack(LIitems.QSZ, 2)
+            };
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY4),
+                    new DrawPlasma(){{
+                        plasma1 = Color.valueOf("6F6F6F");
+                        plasma2 = Color.valueOf("8F8F8F");
+                    }},
+                    new DrawDefault(), new DrawFade(){{ suffix = "-glow"; }}
+            );
+        }};
+        // 精华提取源
 
+        //废液精炼
+        FYLXJ = new GenericCrafter("废液离心机"){{
+            requirements(Category.crafting, with(Items.copper, 75, Items.lead, 55, Items.titanium, 20, Items.metaglass, 10, LIitems.QSZ, 1));
+            hasPower = hasLiquids = outputsLiquid = true;
+            health = 280;
+            size = 3;
+            itemCapacity = 30;
+            liquidCapacity = 90f;
+            craftTime = 60f;
+            consumePower(2.8f);
+            consumeLiquid(LIliquids.FY0, 1.8f);
+            outputLiquid = new LiquidStack(LIliquids.FY1, 0.8f);
+            outputItem = new ItemStack(Items.scrap, 15);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawArcSmelt(){{ flameColor = Color.valueOf("989BAD80"); }},
+                    new DrawLiquidTile(LIliquids.FY0), new DrawLiquidTile(LIliquids.FY1),
+                    new DrawRegion("-rotator", 10f, true), new DrawDefault()
+            );
+        }};
+        ZJLGL = new GenericCrafter("再精炼高炉"){{
+            requirements(Category.crafting, with(Items.titanium, 225, Items.metaglass, 75, Items.silicon, 100, LIitems.QSZ, 5));
+            hasPower = hasLiquids = outputsLiquid = true;
+            health = 580;
+            size = 4;
+            itemCapacity = 30;
+            liquidCapacity = 60f;
+            craftTime = 80f;
+            consumePower(5f);
+            consumeLiquid(LIliquids.FY1, 0.6f);
+            outputLiquid = new LiquidStack(LIliquids.FY2, 0.2f);
+            outputItems = new ItemStack[]{
+                    new ItemStack(Items.copper, 4),
+                    new ItemStack(Items.lead, 3),
+                    new ItemStack(Items.titanium, 2),
+                    new ItemStack(Items.thorium, 1),
+                    new ItemStack(Items.graphite, 1)
+            };
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawArcSmelt(){{ flameColor = Color.valueOf("9A9DBFA0"); }},
+                    new DrawLiquidTile(LIliquids.FY1), new DrawLiquidTile(LIliquids.FY2),
+                    new DrawFade(), new DrawDefault()
+            );
+        }};
+        JHTQGC = new GenericCrafter("精华提取工厂"){{
+            requirements(Category.crafting, with(Items.titanium, 280, Items.metaglass, 75, Items.graphite, 180, Items.silicon, 120, Items.plastanium, 40, Items.surgeAlloy, 30, LIitems.NRJT, 3));
+            hasPower = hasLiquids = outputsLiquid = dumpExtraLiquid = true;
+            hasItems = false;
+            health = 960;
+            size = 5;
+            liquidCapacity = 60f;
+            craftEffect = LIfx.FY3craft;
+            consumePower(8f);
+            consumeLiquid(LIliquids.FY2, 0.4f);
+            consumeLiquid(Liquids.slag, 0.8f);
+            outputLiquids = new LiquidStack[]{
+                    new LiquidStack(LIliquids.FY3, 0.3f),
+                    new LiquidStack(Liquids.water, 0.6f)
+            };
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY2), new DrawLiquidTile(Liquids.slag),
+                    new DrawPistons(){{
+                        sinMag = 3f;
+                        sinScl = 5f;
+                        sideOffset = 180f;
+                    }},
+                    new DrawRegion("-mid"), new DrawCrucibleFlame(),
+                    new DrawLiquidTile(Liquids.water), new DrawLiquidTile(LIliquids.FY3),
+                    new DrawGlowRegion(){{
+                        alpha = 0.5f;
+                        glowScale = 5f;
+                        color = Color.valueOf("FFCD66");
+                    }},
+                    new DrawDefault()
+            );
+        }};
+        JHNSC = new GenericCrafter("精华浓缩厂"){{
+            requirements(Category.crafting, with(Items.copper, 680, Items.lead, 420, Items.titanium, 400, Items.metaglass, 125, Items.graphite, 205, Items.silicon, 180, Items.plastanium, 105, Items.surgeAlloy, 30, LIitems.NRJT, 5, LIitems.CDZ, 5));
+            hasPower = hasLiquids = outputsLiquid = true;
+            health = 1200;
+            size = 4;
+            liquidCapacity = 60f;
+            craftTime = 120f;
+            consumePower(16.4f);
+            consumeLiquid(LIliquids.FY3, 0.6f);
+            consumeLiquid(Liquids.oil, 0.6f);
+            consumeItem(LIitems.QSZ, 4);
+            outputLiquid = new LiquidStack(LIliquids.FY4, 0.2f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(Liquids.oil), new DrawLiquidTile(LIliquids.FY3),
+                    new DrawLiquidTile(LIliquids.FY4),
+                    new DrawCrucibleFlame(){{
+                        flameColor = Color.valueOf("C7C9DCEE");
+                        midColor = Color.white.cpy().a(238/255f);
+                    }},
+                    new DrawPistons(){{
+                        sinMag = 6f;
+                        sinScl = 3f;
+                        sideOffset = 180f;
+                    }},
+                    new DrawDefault()
+            );
+        }};
+        // 神能凝聚仪
+        JNZJLL = new GenericCrafter("聚能再精炼炉"){{
+            requirements(Category.crafting, with(Items.titanium, 175, Items.metaglass, 50, Items.silicon, 75, LIitems.ZYZ, 20, LIitems.QSZ, 5));
+            hasPower = hasLiquids = outputsLiquid = true;
+            hasItems = false;
+            health = 580;
+            size = 3;
+            liquidCapacity = 40f;
+            consumePower(5.5f);
+            consumeLiquid(LIliquids.FY1, 0.4f);
+            outputLiquid = new LiquidStack(LIliquids.FY2, 0.4f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawArcSmelt(){{ flameColor = Color.valueOf("B0BAC0"); }},
+                    new DrawLiquidTile(LIliquids.FY1), new DrawLiquidTile(LIliquids.FY2), new DrawDefault()
+            );
+        }};
+        SNPSJ = new GenericCrafter("神能破碎机"){{
+            requirements(Category.crafting, with(Items.surgeAlloy, 175, Items.silicon, 75, LIitems.NRJT, 5, LIitems.CDZ, 3, LIitems.SMWZ, 1));
+            hasPower = hasLiquids = true;
+            health = 1760;
+            size = 3;
+            itemCapacity = 20;
+            liquidCapacity = 60f;
+            craftTime = 300f;
+            craftEffect = Fx.steam;
+            consumePower(5f);
+            consumeItem(LIitems.SMWZ, 1);
+            consumeLiquid(Liquids.cryofluid, 2.5f);
+            outputItem = new ItemStack(LIitems.SMSP, 20);
+            drawer = new DrawMulti(
+                    new DrawRegion("bottom"), new DrawLiquidTile(Liquids.cryofluid),
+                    new DrawDefault(),
+                    new DrawFlame(Color.valueOf("CFCFCF")){{
+                        flameRadius = 1.9f;
+                        flameRadiusIn = 1f;
+                    }}
+            );
+        }};
+        FYHHQ = new GenericCrafter("废液混合器"){{
+            requirements(Category.crafting, with(Items.lead, 65, Items.silicon, 40, Items.thorium, 15));
+            hasPower =hasLiquids = outputsLiquid = true;
+            health = 180;
+            size = 2;
+            itemCapacity = 15;
+            liquidCapacity = 20f;
+            craftTime = 120f;
+            consumePower(1.5f);
+            consumeItem(Items.scrap, 3);
+            consumeLiquid(Liquids.cryofluid, 0.1f);
+            outputLiquid = new LiquidStack(LIliquids.FY0, 0.3f);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawLiquidTile(LIliquids.FY0), new DrawDefault()
+            );
+        }};
+
+        //MOD物品生产
+        QSZHCQ = new GenericCrafter("亲水质合成器"){{
+            requirements(Category.crafting, with(Items.lead, 75, Items.titanium, 20, Items.graphite, 100, Items.metaglass, 30));
+            hasPower = hasLiquids = true;
+            health = 350;
+            size = 3;
+            liquidCapacity = 20f;
+            craftTime = 240f;
+            craftEffect = Fx.steam;
+            consumePower(2f);
+            consumeItem(Items.graphite, 4);
+            consumeLiquid(Liquids.water, 0.2f);
+            outputItem = new ItemStack(LIitems.QSZ, 1);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawFlame(),
+                    new DrawLiquidTile(Liquids.water), new DrawDefault()
+            );
+        }};
+        ZYZYSJ = new GenericCrafter("治愈质压缩机"){{
+            requirements(Category.crafting, with(Items.lead, 300, Items.thorium, 50, Items.silicon, 120, Items.graphite, 150, Items.metaglass, 180));
+            hasPower = hasLiquids = true;
+            health = 750;
+            size = 4;
+            liquidCapacity = 30f;
+            craftTime = 360f;
+            craftEffect = Fx.steam;
+            consumePower(11.2f);
+            consumeItem(LIitems.QSZ, 8);
+            consumeItem(Items.phaseFabric, 6);
+            consumeLiquid(Liquids.cryofluid, 0.5f);
+            outputItem = new ItemStack(LIitems.ZYZ, 6);
+            drawer = new DrawMulti(
+                    new DrawRegion("-bottom"), new DrawFlame(),
+                    new DrawLiquidTile(Liquids.cryofluid), new DrawDefault()
+            );
+        }};
+
+        //其他
 
         //region 物流
         SCD = new ILduct("双传带"){{
