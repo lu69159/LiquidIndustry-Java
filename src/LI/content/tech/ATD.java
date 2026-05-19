@@ -15,7 +15,16 @@ public class ATD {
                     (u.shownPlanets.contains(Planets.serpulo) && !(u instanceof SectorPreset ||
                             u == Blocks.advancedLaunchPad || u == Blocks.landingPad || u == Blocks.interplanetaryAccelerator));
         });
-        AddToDatabase(Planets.serpulo, (u) -> u.shownPlanets.contains(LIplanets.NT));
+        for(var planet : Vars.content.planets()){
+            boolean shouldATD = true;
+            for(var item : Items.serpuloItems){
+                if(!item.shownPlanets.contains(planet)){
+                    shouldATD = false;
+                    break;
+                }
+            }
+            if(shouldATD) AddToDatabase(planet, (u) -> u.shownPlanets.contains(LIplanets.NT));
+        }
     }
 
     private static void AddToDatabase(Planet planet, Boolf<UnlockableContent> pred){

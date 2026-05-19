@@ -260,7 +260,18 @@ public class LIfx {
             colorFrom = Color.red;
             colorTo = Color.valueOf("FFFFFF80");
         }}
-    );
+    ),
+    FY3craft = new ParticleEffect(){{
+        interp = Interp.pow5Out;
+        sizeInterp = Interp.pow3In;
+        sizeFrom = 3f;
+        sizeTo = 0f;
+        length = 20f;
+        baseLength = 0f;
+        lifetime = 180f;
+        colorFrom = Color.valueOf("FFCD668F");
+        colorTo = Color.valueOf("E286548F");
+    }};
 
     public static Effect DCFBshoot(Color hitcolor){
         return new MultiEffect(
